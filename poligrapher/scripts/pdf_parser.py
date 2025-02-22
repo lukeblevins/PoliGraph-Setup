@@ -81,11 +81,12 @@ def main():
         logging.error("File %r not found", pdf_path)
         exit(1)
 
-    # Convert PDF to DOCX
-    cv = Converter(str(pdf_path))
     output_docx = Path(args.output) / "policy.docx"
-    cv.convert(str(output_docx), start=0, end=None)
-    cv.close()
+    # Convert PDF to DOCX
+    with open(output_docx, "x") as docx_file:
+        cv = Converter(str(pdf_path))
+        cv.convert(docx_file)
+        cv.close()
 
     # Convert DOCX to HTML
     with open(output_docx, "rb") as docx_file:
