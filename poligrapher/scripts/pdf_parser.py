@@ -4,12 +4,12 @@
 import argparse
 import logging
 import requests
+import markdown
 import urllib.parse as urlparse
 import tempfile
+import pymupdf4llm
 
 from pathlib import Path
-from pdf2docx import Converter
-from bs4 import BeautifulSoup
 
 REQUESTS_TIMEOUT = 10
 
@@ -39,7 +39,7 @@ def download_pdf(url):
 def url_arg_handler(url):
     parsed_url = urlparse.urlparse(url)
 
-    # Not HTTP(s): interpret as a file path
+    # Not HTTP: interpret as a file path
     if parsed_url.scheme not in ["http", "https"]:
         parsed_path = Path(url).absolute()
 
@@ -81,19 +81,12 @@ def main():
         logging.error("File %r not found", pdf_path)
         exit(1)
 
-    output_docx = Path(args.output) / "policy.docx"
-    # Convert PDF to DOCX
-    with open(output_docx, "x") as docx_file:
-        cv = Converter(str(pdf_path))
-        cv.convert(docx_file)
-        cv.close()
+    md_text = pymupdf4llm.to_markdown(pdf_path)
+    html = markdown.markdown(md_text)
 
-    # Convert DOCX to HTML
-    with open(output_docx, "rb") as docx_file:
-        soup = BeautifulSoup(docx_file, "html.parser")
-
-    with open(Path(args.output) / "policy.html", "w") as html_file:
-        html_file.write(str(soup))
+    output_path = Path(args.output).joinpath("output.html")
+    with open(output_path, "x", encoding="utf-8") as output_file:
+        output_file.write(html)
 
 
 if __name__ == "__main__":
