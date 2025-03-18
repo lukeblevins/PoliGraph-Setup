@@ -81,6 +81,7 @@ def main():
         logging.error("File %r not found", pdf_path)
         exit(1)
 
+    # Convert the PDF to Markdown and then to HTML
     md_text = pymupdf4llm.to_markdown(pdf_path)
     html = markdown.markdown(md_text)
 
