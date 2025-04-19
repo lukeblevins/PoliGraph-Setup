@@ -18,8 +18,6 @@ numpy==1.26.4
 pandas==2.2.2
 playwright==1.48.0
 pyee==12.0.0
-pymupdf==1.25.3
-python_docx==1.1.2
 rapidfuzz==3.6.1
 regex==2024.9.11
 requests==2.32.3
