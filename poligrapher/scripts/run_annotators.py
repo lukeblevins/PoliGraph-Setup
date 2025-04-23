@@ -15,30 +15,28 @@ from poligrapher.document import PolicyDocument
 from poligrapher.utils import setup_nlp_pipeline
 
 
-def main():
-    logging.basicConfig(format='%(asctime)s [%(levelname)s] <%(name)s> %(message)s', level=logging.INFO)
+def main(workdirs, nlp_model_dir="", disable=""):
+    logging.basicConfig(
+        format="%(asctime)s [%(levelname)s] <%(name)s> %(message)s", level=logging.INFO
+    )
 
-    parser = argparse.ArgumentParser()
-    parser.add_argument("--nlp", default="", help="NLP model directory")
-    parser.add_argument("--disable", default="", help="Disable annotators for ablation study")
-    parser.add_argument("workdirs", nargs="+", help="Input directories")
-    args = parser.parse_args()
+    nlp = setup_nlp_pipeline(nlp_model_dir)
 
-    nlp = setup_nlp_pipeline(args.nlp)
-
-    disabled_annotators = frozenset(args.disable.split(","))
+    disabled_annotators = frozenset(disable.split(",")) if disable else frozenset()
     annotators = []
 
-    for annotator_class in (SubsumptionAnnotator,
-                            CoreferenceAnnotator,
-                            CollectionAnnotator,
-                            PurposeAnnotator,
-                            ListAnnotator,
-                            SubjectAnnotator):
+    for annotator_class in (
+        SubsumptionAnnotator,
+        CoreferenceAnnotator,
+        CollectionAnnotator,
+        PurposeAnnotator,
+        ListAnnotator,
+        SubjectAnnotator,
+    ):
         if annotator_class.__name__ not in disabled_annotators:
             annotators.append(annotator_class(nlp))
 
-    for d in args.workdirs:
+    for d in workdirs:
         logging.info("Processing %s ...", d)
 
         document = PolicyDocument.load(d, nlp)
@@ -51,4 +49,11 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--nlp", default="", help="NLP model directory")
+    parser.add_argument(
+        "--disable", default="", help="Disable annotators for ablation study"
+    )
+    parser.add_argument("workdirs", nargs="+", help="Input directories")
+    args = parser.parse_args()
+    main(args.workdirs, args.nlp, args.disable)

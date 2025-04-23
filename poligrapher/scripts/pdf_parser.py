@@ -138,11 +138,8 @@ def url_arg_handler(url, args):
             return exported
 
 
-def main():
-    parser = argparse.ArgumentParser()
-    parser.add_argument("url", help="Input URL or path")
-    parser.add_argument("output", help="Output dir")
-    args = parser.parse_args()
+def main(url, output):
+    args = argparse.Namespace(url=url, output=output)
 
     pdf_source = url_arg_handler(args.url, args)
     if pdf_source is None:
@@ -165,4 +162,10 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    # fallback to original CLI behavior
+    import sys
+
+    if len(sys.argv) != 3:
+        print("usage: pdf_parser.py <url_or_path> <output_dir>")
+        sys.exit(1)
+    main(sys.argv[1], sys.argv[2])

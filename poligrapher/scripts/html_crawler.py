@@ -17,7 +17,9 @@ import requests
 from requests_cache import CachedSession
 
 READABILITY_JS_COMMIT = "8e8ec27cd2013940bc6f3cc609de10e35a1d9d86"
-READABILITY_JS_URL = f"https://raw.githubusercontent.com/mozilla/readability/{READABILITY_JS_COMMIT}"
+READABILITY_JS_URL = (
+    f"https://raw.githubusercontent.com/mozilla/readability/{READABILITY_JS_COMMIT}"
+)
 REQUESTS_TIMEOUT = 10
 
 
@@ -30,7 +32,9 @@ def get_readability_js():
     js_code.append(res.text)
     js_code.append(res.text)
 
-    res = session.get(f"{READABILITY_JS_URL}/Readability-readerable.js", timeout=REQUESTS_TIMEOUT)
+    res = session.get(
+        f"{READABILITY_JS_URL}/Readability-readerable.js", timeout=REQUESTS_TIMEOUT
+    )
     res.raise_for_status()
     js_code.append(res.text)
 
@@ -51,9 +55,15 @@ def url_arg_handler(url):
         return parsed_path.as_uri()
 
     # Handle Google Docs URLs
-    if (parsed_url.hostname == "docs.google.com"
-            and not parsed_url.path.endswith("/pub")
-            and (m := re.match(r"/document/d/(1[a-zA-Z0-9_-]{42}[AEIMQUYcgkosw048])", parsed_url.path))):
+    if (
+        parsed_url.hostname == "docs.google.com"
+        and not parsed_url.path.endswith("/pub")
+        and (
+            m := re.match(
+                r"/document/d/(1[a-zA-Z0-9_-]{42}[AEIMQUYcgkosw048])", parsed_url.path
+            )
+        )
+    ):
         logging.info("Exporting HTML from Google Docs URL...")
 
         export_url = f"https://docs.google.com/feeds/download/documents/export/Export?id={m[1]}&exportFormat=html"
@@ -78,15 +88,12 @@ def url_arg_handler(url):
         return url
 
 
-def main():
-    logging.basicConfig(format='%(asctime)s [%(levelname)s] %(message)s', level=logging.INFO)
+def main(url, output):
+    logging.basicConfig(
+        format="%(asctime)s [%(levelname)s] %(message)s", level=logging.INFO
+    )
 
-    parser = argparse.ArgumentParser()
-    parser.add_argument("url", help="Input URL or path")
-    parser.add_argument("output", help="Output dir")
-    parser.add_argument("--no-readability-js", action="store_true", help="Disable readability.js")
-    args = parser.parse_args()
-
+    args = argparse.Namespace(url=url, output=output)
     access_url = url_arg_handler(args.url)
 
     if access_url is None:
@@ -129,7 +136,10 @@ def main():
         url_status = dict()
         navigated_urls = []
         page.on("response", lambda r: url_status.update({r.url: r.status}))
-        page.on("framenavigated", lambda f: f.parent_frame is None and navigated_urls.append(f.url))
+        page.on(
+            "framenavigated",
+            lambda f: f.parent_frame is None and navigated_urls.append(f.url),
+        )
 
         page.goto(access_url)
 
@@ -146,7 +156,8 @@ def main():
         # Apply readability.js
         page.evaluate("window.stop()")
         page.add_script_tag(content=get_readability_js())
-        readability_info = page.evaluate(r"""(no_readability_js) => {
+        readability_info = page.evaluate(
+            r"""(no_readability_js) => {
             window.stop();
 
             const documentClone = document.cloneNode(true);
@@ -168,11 +179,13 @@ def main():
                 elem.remove();
 
             return article;
-        }""", [args.no_readability_js])
+        }""",
+            [args.no_readability_js],
+        )
         cleaned_html = page.content()
 
         # Check language
-        soup = bs4.BeautifulSoup(cleaned_html, 'lxml')
+        soup = bs4.BeautifulSoup(cleaned_html, "lxml")
         soup_text = soup.body.text if soup.body else ""
 
         try:
@@ -192,7 +205,9 @@ def main():
         output_dir = Path(args.output)
         output_dir.mkdir(exist_ok=True)
 
-        with open(output_dir / "accessibility_tree.json", "w", encoding="utf-8") as fout:
+        with open(
+            output_dir / "accessibility_tree.json", "w", encoding="utf-8"
+        ) as fout:
             json.dump(snapshot, fout)
 
         with open(output_dir / "cleaned.html", "w", encoding="utf-8") as fout:
@@ -207,4 +222,10 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    # fallback to original CLI behavior
+    import sys
+
+    if len(sys.argv) != 3:
+        print("usage: html_crawler.py <url_or_path> <output_dir>")
+        sys.exit(1)
+    main(sys.argv[1], sys.argv[2])
