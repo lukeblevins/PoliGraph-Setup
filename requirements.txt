@@ -43,3 +43,4 @@ xxhash==3.5.0
 peft==0.8.2
 pymupdf4llm==0.0.17
 Markdown==3.7
+wheel==0.45.1
