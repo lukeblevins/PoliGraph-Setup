@@ -2,6 +2,7 @@
 
 import argparse
 from collections import defaultdict, deque
+from html import parser
 import importlib.resources as pkg_resources
 import itertools
 import logging
@@ -28,13 +29,19 @@ def dag_add_edge(G, n1, n2, *args, **kwargs):
 
 
 class GraphBuilder:
-    def __init__(self, phrase_map, entity_map, purpose_classification_model_path, variant):
+    def __init__(
+        self, phrase_map, entity_map, purpose_classification_model_path, variant
+    ):
         with open(phrase_map, "r", encoding="utf-8") as fin:
             phrase_map_rules = yaml.safe_load(fin)
 
         self.entity_mapper = EntityMatcher(entity_map)
-        self.data_phrase_normalizer = RuleBasedPhraseNormalizer(phrase_map_rules["DATA"])
-        self.actor_phrase_normalizer = RuleBasedPhraseNormalizer(phrase_map_rules["ACTOR"])
+        self.data_phrase_normalizer = RuleBasedPhraseNormalizer(
+            phrase_map_rules["DATA"]
+        )
+        self.actor_phrase_normalizer = RuleBasedPhraseNormalizer(
+            phrase_map_rules["ACTOR"]
+        )
         self.purpose_classifier = PurposeClassifier(purpose_classification_model_path)
         self.variant = variant
 
@@ -65,10 +72,15 @@ class GraphBuilder:
 
             data_type_purposes: dict[tuple, list[str]] = {}
 
-            for src1, src2, relationship in document.token_relationship.edges(keys=True):
+            for src1, src2, relationship in document.token_relationship.edges(
+                keys=True
+            ):
                 if relationship in CollectionAnnotator.EDGE_TYPES:
                     for src, expected_type in (src1, "ACTOR"), (src2, "DATA"):
-                        if token_type_map.setdefault(src, expected_type) != expected_type:
+                        if (
+                            token_type_map.setdefault(src, expected_type)
+                            != expected_type
+                        ):
                             break
                     else:
                         match self.variant:
@@ -86,7 +98,9 @@ class GraphBuilder:
             purpose_text_to_labels: dict[str, list[str]] = {}
 
             for data_type_src, purposes in data_type_purposes.items():
-                for _, purpose_src, relationship in document.token_relationship.edges(data_type_src, keys=True):
+                for _, purpose_src, relationship in document.token_relationship.edges(
+                    data_type_src, keys=True
+                ):
                     if relationship == "PURPOSE":
                         purpose_root = document.get_token_with_src(purpose_src)
 
@@ -97,8 +111,10 @@ class GraphBuilder:
                         purposes.append(purpose_text)
                         purpose_text_to_labels[purpose_text] = []
 
-            for (text, labels), predictions in zip(purpose_text_to_labels.items(),
-                                                   self.purpose_classifier(list(purpose_text_to_labels))):
+            for (text, labels), predictions in zip(
+                purpose_text_to_labels.items(),
+                self.purpose_classifier(list(purpose_text_to_labels)),
+            ):
                 logging.info("Purpose %r -> %s", text, predictions)
                 labels.extend(predictions)
 
@@ -109,7 +125,9 @@ class GraphBuilder:
                     for purpose in purpose_text_to_labels[purpose_text]:
                         edge_purposes.add((purpose, purpose_text))
 
-                for _, _, _, edge_data in G_collect.in_edges(data_type_src, keys=True, data=True):
+                for _, _, _, edge_data in G_collect.in_edges(
+                    data_type_src, keys=True, data=True
+                ):
                     edge_data["purposes"] = edge_purposes
 
         def build_subsum_and_coref_graphs():
@@ -128,7 +146,9 @@ class GraphBuilder:
                 in_edge_view = document.token_relationship.in_edges(src1, keys=True)
                 out_edge_view = document.token_relationship.out_edges(src1, keys=True)
 
-                for edge_from, edge_to, relationship in itertools.chain(in_edge_view, out_edge_view):
+                for edge_from, edge_to, relationship in itertools.chain(
+                    in_edge_view, out_edge_view
+                ):
                     if relationship in ["SUBSUM", "COREF"]:
                         src2 = edge_to if src1 == edge_from else edge_from
 
@@ -139,8 +159,10 @@ class GraphBuilder:
 
                             # Call dag_add_edge to safely add an edge without creating a circle
                             match relationship:
-                                case "SUBSUM": dag_add_edge(G_subsum, edge_from, edge_to)
-                                case "COREF": dag_add_edge(G_coref, edge_from, edge_to)
+                                case "SUBSUM":
+                                    dag_add_edge(G_subsum, edge_from, edge_to)
+                                case "COREF":
+                                    dag_add_edge(G_coref, edge_from, edge_to)
 
         def contract_coref_nodes():
             """Step 4: Follow G_coref to contract coreferences in G_subsum and
@@ -155,7 +177,7 @@ class GraphBuilder:
                     case 0:
                         continue
                     case 1:
-                        (_, src2), = G_coref.out_edges(src1)
+                        ((_, src2),) = G_coref.out_edges(src1)
 
                         if src1 in G_collect:
                             contracted_nodes(G_collect, src2, src1)
@@ -177,16 +199,24 @@ class GraphBuilder:
             G_subsum = nx.transitive_reduction(G_subsum)
 
             # Reduce G_collect
-            subsum_topo_order = {node: i for i, node in enumerate(nx.topological_sort(G_subsum))}
+            subsum_topo_order = {
+                node: i for i, node in enumerate(nx.topological_sort(G_subsum))
+            }
             edges_to_remove = set()
 
             for u in G_collect.nodes:
                 match token_type_map[u]:
                     case "DATA":
-                        edges = sorted(G_collect.in_edges(u, keys=True), key=lambda k: subsum_topo_order.get(k, 0))
+                        edges = sorted(
+                            G_collect.in_edges(u, keys=True),
+                            key=lambda k: subsum_topo_order.get(k, 0),
+                        )
                         other_idx = 0
                     case "ACTOR":
-                        edges = sorted(G_collect.out_edges(u, keys=True), key=lambda k: subsum_topo_order.get(k, 0))
+                        edges = sorted(
+                            G_collect.out_edges(u, keys=True),
+                            key=lambda k: subsum_topo_order.get(k, 0),
+                        )
                         other_idx = 1
 
                 for edge_tuple1, edge_tuple2 in itertools.combinations(edges, 2):
@@ -194,13 +224,15 @@ class GraphBuilder:
                     v2 = edge_tuple2[other_idx]
 
                     try:
-                        if edge_tuple1[-1] != edge_tuple2[-1] or not nx.has_path(G_subsum, v1, v2):
+                        if edge_tuple1[-1] != edge_tuple2[-1] or not nx.has_path(
+                            G_subsum, v1, v2
+                        ):
                             continue
                     except nx.exception.NodeNotFound:
                         continue
 
-                    purposes1 = G_collect.get_edge_data(*edge_tuple1)['purposes']
-                    purposes2 = G_collect.get_edge_data(*edge_tuple2)['purposes']
+                    purposes1 = G_collect.get_edge_data(*edge_tuple1)["purposes"]
+                    purposes2 = G_collect.get_edge_data(*edge_tuple2)["purposes"]
 
                     if not purposes2.difference(purposes1):
                         edges_to_remove.add(edge_tuple2)
@@ -215,29 +247,38 @@ class GraphBuilder:
 
             right_boundary = base_phrase.end
 
-            for child in sorted(filter(lambda t: t.i >= right_boundary, root_token.rights)):
+            for child in sorted(
+                filter(lambda t: t.i >= right_boundary, root_token.rights)
+            ):
                 child_indices = sorted(t.i for t in child.subtree)
 
                 if (
-                    child.dep_ not in {'punct', "dep", "meta", "cc", "preconj", "conj"}
-                    and all(t._.src not in token_type_map for t in child.subtree)      # No overlap w/ other nodes
-                    and right_boundary == child_indices[0]                             # Continuous
-                    and child_indices[-1] - child_indices[0] + 1 == len(child_indices) # Continuous subtree
+                    child.dep_ not in {"punct", "dep", "meta", "cc", "preconj", "conj"}
+                    and all(
+                        t._.src not in token_type_map for t in child.subtree
+                    )  # No overlap w/ other nodes
+                    and right_boundary == child_indices[0]  # Continuous
+                    and child_indices[-1] - child_indices[0] + 1
+                    == len(child_indices)  # Continuous subtree
                 ):
                     right_boundary = child_indices[-1] + 1
                 else:
                     break
 
-            return root_token.doc[base_phrase.start:right_boundary]
+            return root_token.doc[base_phrase.start : right_boundary]
 
         def _eliminate_intermediate_node(src):
             if G_collect.has_node(src):
                 if token_type_map[src] == "DATA":
-                    for u, _, rel, data in G_collect.in_edges(src, keys=True, data=True):
+                    for u, _, rel, data in G_collect.in_edges(
+                        src, keys=True, data=True
+                    ):
                         for _, v in G_subsum.out_edges(src):
                             G_collect.add_edge(u, v, rel, **data)
                 elif token_type_map[src] == "ACTOR":
-                    for _, v, rel, data in G_collect.out_edges(src, keys=True, data=True):
+                    for _, v, rel, data in G_collect.out_edges(
+                        src, keys=True, data=True
+                    ):
                         for _, u in G_subsum.out_edges(src):
                             G_collect.add_edge(u, v, rel, **data)
 
@@ -274,7 +315,9 @@ class GraphBuilder:
 
                 match token_type:
                     case "DATA":
-                        terms.update(self.data_phrase_normalizer.normalize(phrase, flag_use_stem))
+                        terms.update(
+                            self.data_phrase_normalizer.normalize(phrase, flag_use_stem)
+                        )
                     case "ACTOR":
                         # If there is any proper noun, run entity_mapper to find company names
                         if any(t.pos_ == "PROPN" for t in phrase):
@@ -282,12 +325,21 @@ class GraphBuilder:
                             flag_use_stem = flag_use_stem and not terms
 
                         # Try rule-based normalizer
-                        terms.update(self.actor_phrase_normalizer.normalize(phrase, flag_use_stem))
+                        terms.update(
+                            self.actor_phrase_normalizer.normalize(
+                                phrase, flag_use_stem
+                            )
+                        )
 
                 has_subsum = G_subsum.has_node(src) and G_subsum.out_degree(src) > 0
                 be_subsumed = G_subsum.has_node(src) and G_subsum.in_degree(src) > 0
 
-                if "UNSPECIFIED" in terms and len(terms) == 1 and not has_subsum and not be_subsumed:
+                if (
+                    "UNSPECIFIED" in terms
+                    and len(terms) == 1
+                    and not has_subsum
+                    and not be_subsumed
+                ):
                     # UNSPECIFIED node cannot subsume or be subsumed by any other node
                     terms.remove("UNSPECIFIED")
                     terms.add(f"UNSPECIFIED_{token_type}")
@@ -302,8 +354,12 @@ class GraphBuilder:
                     case "extended":
                         # Extension: include data subject (if no subject info then this is no-op)
                         if token_type == "DATA":
-                            if subject := document.token_relationship.nodes[src].get('subject'):
-                                replaced_terms = [f"{term} @{subject}" for term in terms]
+                            if subject := document.token_relationship.nodes[src].get(
+                                "subject"
+                            ):
+                                replaced_terms = [
+                                    f"{term} @{subject}" for term in terms
+                                ]
                                 terms.clear()
                                 terms.update(replaced_terms)
                     case "per_sentence":
@@ -320,8 +376,15 @@ class GraphBuilder:
 
                 G_final.add_nodes_from(terms, type=token_type)
 
-                normalized_terms_map[src] = sorted(terms, reverse=True)  # Stablize set order for reproducibility
-                logging.info("Phrase %r (%s) -> %r", phrase.text, token_type, ", ".join(normalized_terms_map[src]))
+                normalized_terms_map[src] = sorted(
+                    terms, reverse=True
+                )  # Stablize set order for reproducibility
+                logging.info(
+                    "Phrase %r (%s) -> %r",
+                    phrase.text,
+                    token_type,
+                    ", ".join(normalized_terms_map[src]),
+                )
 
         def merge_subsum_graph():
             """Step 7: Populate SUBSUM edges in G_final from G_subsum."""
@@ -335,7 +398,11 @@ class GraphBuilder:
                 token_type = token_type_map[src1]
 
                 for n1, n2 in itertools.product(src1_terms, src2_terms):
-                    if not G_final.nodes[n1]['type'] == G_final.nodes[n2]['type'] == token_type:
+                    if (
+                        not G_final.nodes[n1]["type"]
+                        == G_final.nodes[n2]["type"]
+                        == token_type
+                    ):
                         continue
 
                     # Some sentences lead to subsumption relationship between 1st/3rd parties.
@@ -353,15 +420,27 @@ class GraphBuilder:
         def merge_collect_graph():
             """Step 8: Populate COLLECT edges in G_final from G_collect."""
 
-            for src1, src2, relationship, edge_data in G_collect.edges(keys=True, data=True):
+            for src1, src2, relationship, edge_data in G_collect.edges(
+                keys=True, data=True
+            ):
                 src1_terms = normalized_terms_map[src1]
                 src2_terms = normalized_terms_map[src2]
                 edge_purposes = sorted(edge_data["purposes"])
 
                 for n1, n2 in itertools.product(src1_terms, src2_terms):
-                    if G_final.nodes[n1]['type'] == "ACTOR" and G_final.nodes[n2]['type'] == "DATA":
+                    if (
+                        G_final.nodes[n1]["type"] == "ACTOR"
+                        and G_final.nodes[n2]["type"] == "DATA"
+                    ):
                         if not G_final.has_edge(n1, n2, key=relationship):
-                            dag_add_edge(G_final, n1, n2, key=relationship, ref=[], purposes=defaultdict(list))
+                            dag_add_edge(
+                                G_final,
+                                n1,
+                                n2,
+                                key=relationship,
+                                ref=[],
+                                purposes=defaultdict(list),
+                            )
 
                         if G_final.has_edge(n1, n2, key=relationship):
                             G_final[n1][n2][relationship]["ref"].extend((src1, src2))
@@ -441,24 +520,37 @@ def colorize_graph(graph):
         new_graph.add_node(label, label=label, type=data["type"])
 
     for i, (u, v, rel, data) in enumerate(graph.edges(keys=True, data=True)):
-        new_graph.add_edge(u, v, key=f"e{i}", relationship=rel, text="\n".join(data["text"]))
+        new_graph.add_edge(
+            u, v, key=f"e{i}", relationship=rel, text="\n".join(data["text"])
+        )
 
     return new_graph
 
 
-def main():
-    logging.basicConfig(format='%(asctime)s [%(levelname)s] %(message)s', level=logging.INFO)
-
-    parser = argparse.ArgumentParser()
-    parser.add_argument("--nlp", default="", help="NLP model directory")
-    parser.add_argument("--purpose-classification", default="", help="Purpose classification model directory")
-    parser.add_argument("-p", "--phrase-map", default="", help="Path to phrase_map.yml")
-    parser.add_argument("-e", "--entity-info", default="", help="Path to entity_info.json")
-    parser.add_argument("-v", "--variant", choices=["original", "extended", "per_sentence", "per_section"],
-                        default="original", help="Variant of the graph")
-    parser.add_argument("--pretty", action="store_true", help="Generate pretty GraphML graph for visualization")
-    parser.add_argument("workdirs", nargs="+", help="Input directories")
-    args = parser.parse_args()
+def main(
+    nlp_model_dir="",
+    purpose_classification_dir="",
+    phrase_map_path="",
+    entity_info_path="",
+    variant="original",
+    workdirs=None,
+    pretty=False,
+):
+    logging.basicConfig(
+        format="%(asctime)s [%(levelname)s] %(message)s", level=logging.INFO
+    )
+    if workdirs is None:
+        workdirs = []
+    # Build args namespace from provided parameters
+    args = argparse.Namespace(
+        nlp=nlp_model_dir,
+        purpose_classification=purpose_classification_dir,
+        phrase_map=phrase_map_path,
+        entity_info=entity_info_path,
+        variant=variant,
+        pretty=pretty,
+        workdirs=workdirs,
+    )
 
     # Load resources from extra-data folder unless overridden in the args
     with pkg_resources.path(poligrapher, "extra-data") as extra_data:
@@ -472,7 +564,9 @@ def main():
             args.entity_info = extra_data / "entity_info.json"
 
     nlp = setup_nlp_pipeline(args.nlp)
-    graph_builder = GraphBuilder(args.phrase_map, args.entity_info, args.purpose_classification, args.variant)
+    graph_builder = GraphBuilder(
+        args.phrase_map, args.entity_info, args.purpose_classification, args.variant
+    )
 
     for d in args.workdirs:
         logging.info("Processing %s ...", d)
@@ -482,20 +576,79 @@ def main():
         # Full graph includes unused SUBSUM edges -- For debug use
         full_graph = graph_builder.build_graph(document)
 
-        with open(os.path.join(d, f"graph-{args.variant}.full.yml"), "w", encoding="utf-8") as fout:
+        with open(
+            os.path.join(d, f"graph-{args.variant}.full.yml"), "w", encoding="utf-8"
+        ) as fout:
             yaml_dump_graph(full_graph, fout)
 
         # Trimmed graph excludes unused SUBSUM edges
         trimmed_graph = trim_graph(full_graph)
 
-        with open(os.path.join(d, f"graph-{args.variant}.yml"), "w", encoding="utf-8") as fout:
+        with open(
+            os.path.join(d, f"graph-{args.variant}.yml"), "w", encoding="utf-8"
+        ) as fout:
             yaml_dump_graph(trimmed_graph, fout)
 
         # GraphML version for visualization
         if args.pretty:
             colored_graph = colorize_graph(trimmed_graph)
-            nx.write_graphml(colored_graph, os.path.join(d, f"graph-{args.variant}.graphml"))
+            nx.write_graphml(
+                colored_graph, os.path.join(d, f"graph-{args.variant}.graphml")
+            )
 
 
 if __name__ == "__main__":
-    main()
+    # fallback to original CLI behavior
+    import sys
+
+    if len(sys.argv) < 2:
+        print(
+            "usage: build_graph.py <workdir1> [<workdir2> ...] [--nlp MODEL_DIR] [--purpose-classification MODEL_DIR] [--phrase-map FILE] [--entity-info FILE] [--variant VARIANT] [--pretty]"
+        )
+        sys.exit(1)
+    # parse sys.argv manually or via argparse then call:
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        "--nlp", default="", help="NLP model directory (default: use spacy default)"
+    )
+    parser.add_argument(
+        "--purpose-classification",
+        default="",
+        help="Purpose classification model directory (default: use built-in)",
+    )
+    parser.add_argument(
+        "--phrase-map",
+        default="",
+        help="Phrase map file (default: use built-in)",
+    )
+    parser.add_argument(
+        "--entity-info",
+        default="",
+        help="Entity info file (default: use built-in)",
+    )
+    parser.add_argument(
+        "--variant",
+        default="original",
+        choices=["original", "extended", "per_sentence", "per_section"],
+        help="Graph variant to build",
+    )
+    parser.add_argument(
+        "--pretty",
+        action="store_true",
+        help="Generate a pretty GraphML version of the graph",
+    )
+    parser.add_argument(
+        "workdirs",
+        nargs="+",
+        help="Input directories containing policy documents",
+    )
+    args = parser.parse_args()
+    main(
+        args.nlp,
+        args.purpose_classification,
+        args.phrase_map,
+        args.entity_info,
+        args.variant,
+        args.workdirs,
+        args.pretty,
+    )
