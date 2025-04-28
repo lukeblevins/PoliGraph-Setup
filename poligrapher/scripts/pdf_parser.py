@@ -67,7 +67,7 @@ def create_pdf(url, args):
         return temp_pdf_path
 
 
-def download_pdf(url):
+def download_pdf(url, args):
     logging.info("Downloading PDF from %r", url)
     try:
         response = requests.get(url, stream=True, timeout=REQUESTS_TIMEOUT)
@@ -80,7 +80,8 @@ def download_pdf(url):
     if not filename.endswith(".pdf"):
         filename = "downloaded.pdf"
 
-    temp_pdf_path = Path(tempfile.gettempdir()) / filename
+    temp_pdf_path = Path(args.output).joinpath("output.pdf")
+    # temp_pdf_path = Path(tempfile.gettempdir()) / filename
     with open(temp_pdf_path, "wb") as pdf_file:
         for chunk in response.iter_content(chunk_size=8192):
             if chunk:
@@ -122,12 +123,12 @@ def url_arg_handler(url, args):
         if url.endswith(".pdf"):
             logging.error("Interpreting %r as a PDF URL", url)
             # Download and return the local file path
-            downloaded = download_pdf(url)
+            downloaded = download_pdf(url, args)
             if downloaded is None:
                 logging.error("Failed to download PDF from %r", url)
                 return None
             logging.error("PDF downloaded successfully from %r", url)
-            return downloaded.as_uri()
+            return downloaded
         else:
             logging.error("Interpreting %r as a website URL", url)
             exported = create_pdf(url, args)
@@ -146,18 +147,17 @@ def main(url, output):
         logging.error("Invalid input path or URL")
         exit(1)
 
-    # Convert the file URI to an absolute path
-    pdf_path = Path(pdf_source).absolute()
-    if not pdf_path.is_file():
-        logging.error("File %r not found", pdf_path)
-        exit(1)
+    pdf_path = pdf_source
+    # if not pdf_path.is_file():
+    #     logging.error("File %r not found", pdf_path)
+    #     exit(1)
 
     # Convert the PDF to Markdown and then to HTML
     md_text = pymupdf4llm.to_markdown(pdf_path)
     html = markdown.markdown(md_text)
 
     output_path = Path(args.output).joinpath("output.html")
-    with open(output_path, "x", encoding="utf-8") as output_file:
+    with open(output_path, "w", encoding="utf-8") as output_file:
         output_file.write(html)
 
 
