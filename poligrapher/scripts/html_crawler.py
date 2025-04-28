@@ -93,7 +93,7 @@ def main(url, output):
         format="%(asctime)s [%(levelname)s] %(message)s", level=logging.INFO
     )
 
-    args = argparse.Namespace(url=url, output=output)
+    args = argparse.Namespace(url=url, output=output, no_readability_js=False)
     access_url = url_arg_handler(args.url)
 
     if access_url is None:
