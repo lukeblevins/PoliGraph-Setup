@@ -204,7 +204,7 @@ def setup_nlp_pipeline(ner_path: str):
     else:
         our_ner = spacy.load(ner_path)
 
-    nlp = spacy.load("en_core_web_trf", disable=["ner"])
+    nlp = spacy.load("en_core_web_md", disable=["ner"])
 
     # Disable spaCy's NER and use our NER
     our_ner.replace_listeners("transformer", "ner", ["model.tok2vec"])
