@@ -198,7 +198,7 @@ def main():
     root_dir = Path(args.root_dir)
 
     spacy.prefer_gpu()
-    nlp = spacy.load("en_core_web_trf")
+    nlp = spacy.load("en_core_web_md")
     nlp.add_pipe("align_noun_phrases", name="align_noun_phrases", after="ner")
 
     doc_bin = spacy.tokens.DocBin(attrs=["ENT_IOB", "ENT_TYPE"])
