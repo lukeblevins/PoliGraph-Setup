@@ -1,0 +1,19 @@
+{
+    "policy_urls": [
+        {
+            "name": "Healow HTML",
+            "kind": "webpage",
+            "path": "https://healow.com/apps/jsp/webview/policy.jsp"
+        },
+        {
+            "name": "Target PDF",
+            "kind": "pdf",
+            "path": "https://www.target.com/c/target-privacy-policy/-/N-4sr7p"
+        },
+        {
+            "name": "Target HTML",
+            "kind": "webpage",
+            "path": "https://www.target.com/c/target-privacy-policy/-/N-4sr7p"
+        }
+    ]
+}

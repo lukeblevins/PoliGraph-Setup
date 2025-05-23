@@ -162,3 +162,4 @@ profile*.bin
 */extra-data/entity_info.json
 */extra-data/named_entity_recognition/
 */extra-data/purpose_classification/
+poligrapher/cache/
