@@ -12,7 +12,10 @@ import urllib.parse as urlparse
 
 import bs4
 import langdetect
-from playwright.sync_api import TimeoutError as PlaywrightTimeoutError, sync_playwright
+from playwright.async_api import (
+    TimeoutError as PlaywrightTimeoutError,
+    async_playwright,
+)
 import requests
 from requests_cache import CachedSession
 
@@ -88,7 +91,7 @@ def url_arg_handler(url):
         return url
 
 
-def main(url, output):
+async def main(url, output):
     logging.basicConfig(
         format="%(asctime)s [%(levelname)s] %(message)s", level=logging.INFO
     )
@@ -116,20 +119,20 @@ def main(url, output):
         "privacy.trackingprotection.socialtracking.enabled": True,
     }
 
-    with sync_playwright() as p:
+    async with async_playwright() as p:
         # Firefox generates simpler accessibility tree than chromium
         # Tested on Debian's firefox-esr 91.5.0esr-1~deb11u1
-        browser = p.firefox.launch(firefox_user_prefs=firefox_configs)
-        context = browser.new_context(bypass_csp=True)
+        browser = await p.firefox.launch(firefox_user_prefs=firefox_configs)
+        context = await browser.new_context(bypass_csp=True)
 
-        def error_cleanup(msg):
+        async def error_cleanup(msg):
             logging.error(msg)
-            context.close()
-            browser.close()
+            await context.close()
+            await browser.close()
             sys.exit(-1)
 
-        page = context.new_page()
-        page.set_viewport_size({"width": 1080, "height": 1920})
+        page = await context.new_page()
+        await page.set_viewport_size({"width": 1080, "height": 1920})
         logging.info("Navigating to %r", access_url)
 
         # Record HTTP status and navigated URLs so we can check errors later
@@ -141,10 +144,10 @@ def main(url, output):
             lambda f: f.parent_frame is None and navigated_urls.append(f.url),
         )
 
-        page.goto(access_url)
+        await page.goto(access_url)
 
         try:
-            page.wait_for_load_state("networkidle")
+            await page.wait_for_load_state("networkidle")
         except PlaywrightTimeoutError:
             logging.warning("Cannot reach networkidle but will continue")
 
@@ -154,14 +157,17 @@ def main(url, output):
                 error_cleanup(f"Got HTTP error {status_code}")
 
         # Apply readability.js
-        page.evaluate("window.stop()")
-        page.add_script_tag(content=get_readability_js())
-        readability_info = page.evaluate(
+        await page.evaluate("window.stop()")
+        await page.add_script_tag(content=get_readability_js())
+        readability_info = await page.evaluate(
             r"""(no_readability_js) => {
             window.stop();
 
             const documentClone = document.cloneNode(true);
             const article = new Readability(documentClone).parse();
+            if (!article) {
+                throw new Error("Readability.js failed to parse the document");
+            }
             article.applied = false;
 
             document.querySelectorAll('[aria-hidden=true]').forEach((x) => x.setAttribute("aria-hidden", false));
@@ -182,7 +188,7 @@ def main(url, output):
         }""",
             [args.no_readability_js],
         )
-        cleaned_html = page.content()
+        cleaned_html = await page.content()
 
         # Check language
         soup = bs4.BeautifulSoup(cleaned_html, "lxml")
@@ -200,7 +206,7 @@ def main(url, output):
             error_cleanup("Not like a privacy policy")
 
         # obtain the accessibility tree
-        snapshot = page.accessibility.snapshot(interesting_only=False)
+        snapshot = await page.accessibility.snapshot(interesting_only=False)
 
         output_dir = Path(args.output)
         output_dir.mkdir(exist_ok=True)
@@ -217,15 +223,16 @@ def main(url, output):
             json.dump(readability_info, fout)
 
         logging.info("Saved to %s", output_dir)
-        context.close()
-        browser.close()
+        await context.close()
+        await browser.close()
 
 
 if __name__ == "__main__":
     # fallback to original CLI behavior
-    import sys
-
     if len(sys.argv) != 3:
         print("usage: html_crawler.py <url_or_path> <output_dir>")
         sys.exit(1)
-    main(sys.argv[1], sys.argv[2])
+
+    import asyncio
+
+    asyncio.run(main(sys.argv[1], sys.argv[2]))
