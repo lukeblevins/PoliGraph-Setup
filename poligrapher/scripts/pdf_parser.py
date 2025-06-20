@@ -11,28 +11,31 @@ import tempfile
 import pymupdf4llm
 
 from pathlib import Path
-from playwright.sync_api import TimeoutError as PlaywrightTimeoutError, sync_playwright
+from playwright.async_api import (
+    TimeoutError as PlaywrightTimeoutError,
+    async_playwright,
+)
 
 REQUESTS_TIMEOUT = 10
 
 
-def create_pdf(url, args):
+async def create_pdf(url, args):
     if url is None:
         logging.error("URL failed pre-tests. Exiting...")
         sys.exit(-1)
 
-    with sync_playwright() as p:
-        browser = p.chromium.launch(headless=True)
-        context = browser.new_context(bypass_csp=True)
+    async with async_playwright() as p:
+        browser = await p.chromium.launch(headless=True)
+        context = await browser.new_context(bypass_csp=True)
 
-        def error_cleanup(msg):
+        async def error_cleanup(msg):
             logging.error(msg)
-            context.close()
-            browser.close()
+            await context.close()
+            await browser.close()
             sys.exit(-1)
 
-        page = context.new_page()
-        page.set_viewport_size({"width": 1080, "height": 1920})
+        page = await context.new_page()
+        await page.set_viewport_size({"width": 1080, "height": 1920})
         logging.info("Navigating to %r", url)
 
         # Record HTTP status and navigated URLs so we can check errors later
@@ -44,11 +47,11 @@ def create_pdf(url, args):
             lambda f: f.parent_frame is None and navigated_urls.append(f.url),
         )
 
-        page.emulate_media(media="print")
-        page.goto(url)
+        await page.emulate_media(media="print")
+        await page.goto(url)
 
         try:
-            page.wait_for_load_state("networkidle")
+            await page.wait_for_load_state("networkidle")
         except PlaywrightTimeoutError:
             logging.warning("Cannot reach networkidle but will continue")
 
@@ -59,11 +62,11 @@ def create_pdf(url, args):
 
         output_dir = Path(args.output)
         temp_pdf_path = output_dir / "output.pdf"
-        page.pdf(path=temp_pdf_path)
+        await page.pdf(path=temp_pdf_path)
 
         logging.info("Saved to %s", temp_pdf_path)
-        context.close()
-        browser.close()
+        await context.close()
+        await browser.close()
         return temp_pdf_path
 
 
@@ -90,7 +93,7 @@ def download_pdf(url, args):
     return temp_pdf_path
 
 
-def url_arg_handler(url, args):
+async def url_arg_handler(url, args):
     parsed_url = urlparse.urlparse(url)
     logging.error("Parsed URL: %s", parsed_url)
     # check if URL or local file:
@@ -131,7 +134,7 @@ def url_arg_handler(url, args):
             return downloaded
         else:
             logging.error("Interpreting %r as a website URL", url)
-            exported = create_pdf(url, args)
+            exported = await create_pdf(url, args)
             if exported is None:
                 logging.error("Failed to create PDF from website %r", url)
                 return None
@@ -139,15 +142,14 @@ def url_arg_handler(url, args):
             return exported
 
 
-def main(url, output):
+async def main(url, output):
     args = argparse.Namespace(url=url, output=output)
 
-    pdf_source = url_arg_handler(args.url, args)
-    if pdf_source is None:
+    pdf_path = await url_arg_handler(args.url, args)
+    if pdf_path is None:
         logging.error("Invalid input path or URL")
         exit(1)
 
-    pdf_path = pdf_source
     # if not pdf_path.is_file():
     #     logging.error("File %r not found", pdf_path)
     #     exit(1)
@@ -163,9 +165,10 @@ def main(url, output):
 
 if __name__ == "__main__":
     # fallback to original CLI behavior
-    import sys
-
     if len(sys.argv) != 3:
         print("usage: pdf_parser.py <url_or_path> <output_dir>")
         sys.exit(1)
-    main(sys.argv[1], sys.argv[2])
+
+    import asyncio
+
+    asyncio.run(main(sys.argv[1], sys.argv[2]))
