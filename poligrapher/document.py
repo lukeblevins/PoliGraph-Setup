@@ -276,30 +276,109 @@ class PolicyDocument:
             yield src_dst_tokens[0], src_dst_tokens[1], relationship
 
 
-IGNORED_ELEMENTS = frozenset({
-    "img", "figure", "image map", "separator", "whitespace", "form", "radio",
-    "list item marker", "insertion", "diagram", "dialog", "tab", "checkbox",
-    "menu", "menubar", "menuitem", "parent menuitem", "toolbar", "tooltip",
-    "internal frame", "listbox", "progressbar", "spinbutton", "switch",
-    "details", "summary", "alert", "status", "mark", "note",
-    "button", "buttonmenu", "slider", "textbox", "deletion",
-    "combobox", "combobox list", "combobox option", "gridcell", "option",
-    "application", "canvas", "caption", "toggle button", "password text",
-    # TODO: are definition lists relevant?
-    "definition", "definitionlist", "term",
-    # FIXME: can tree role be lists?
-    "tree", "treeitem", "treegrid",
-})
-SECTION_ELEMENTS = frozenset({
-    "document", "article", "landmark", "section", "blockquote", "group",
-    "tablist", "tabpanel", "region",
-    # TODO: treat table elements as sections before we actually handle them
-    "table", "row", "rowgroup",
-})
-TEXT_CONTAINER_ELEMENTS = frozenset({
-    "paragraph", "text", "link", "statictext", "label", "text container", "text leaf", "superscript", "subscript",
-    "cell", "columnheader", "rowheader", # TODO: table cells
-})
+# WAI-ARIA 1.2 roles (https://www.w3.org/TR/wai-aria-1.2/#role_definitions)
+# This list is mostly up to date, but some roles may be missing.
+# Review and update as needed.
+
+IGNORED_ELEMENTS = frozenset(
+    {
+        # Widget roles and non-informative elements
+        "img",
+        "figure",
+        "image map",
+        "separator",
+        "whitespace",
+        "form",
+        "radio",
+        "list item marker",
+        "insertion",
+        "diagram",
+        "dialog",
+        "tab",
+        "checkbox",
+        "menu",
+        "menubar",
+        "menuitem",
+        "parent menuitem",
+        "toolbar",
+        "tooltip",
+        "internal frame",
+        "listbox",
+        "progressbar",
+        "spinbutton",
+        "switch",
+        "details",
+        "summary",
+        "alert",
+        "status",
+        "mark",
+        "note",
+        "button",
+        "buttonmenu",
+        "slider",
+        "textbox",
+        "deletion",
+        "combobox",
+        "combobox list",
+        "combobox option",
+        "gridcell",
+        "option",
+        "application",
+        "canvas",
+        "caption",
+        "toggle button",
+        "password text",
+        # Definition list roles (rarely used for main content)
+        "definition",
+        "definitionlist",
+        "term",
+        # Tree roles (can be lists, but often navigation)
+        "tree",
+        "treeitem",
+        "treegrid",
+        # WAI-ARIA 1.2 additions (add if needed): "feed", "searchbox", "meter", "rowheader", "columnheader"
+    }
+)
+
+SECTION_ELEMENTS = frozenset(
+    {
+        # Landmark and sectioning roles
+        "document",
+        "article",
+        "landmark",
+        "section",
+        "blockquote",
+        "group",
+        "tablist",
+        "tabpanel",
+        "region",
+        # Table as section containers
+        "table",
+        "row",
+        "rowgroup",
+        # WAI-ARIA 1.2: consider adding "main", "complementary", "navigation", "form", "banner", "contentinfo"
+    }
+)
+
+TEXT_CONTAINER_ELEMENTS = frozenset(
+    {
+        # Textual content roles
+        "paragraph",
+        "text",
+        "link",
+        "statictext",
+        "label",
+        "text container",
+        "text leaf",
+        "superscript",
+        "subscript",
+        "cell",
+        "columnheader",
+        "rowheader",  # Table cells and headers
+        "strong",
+        # WAI-ARIA 1.2: consider adding "code", "mark", "strong", "emphasis", "time"
+    }
+)
 
 
 class SegmentExtractor:
