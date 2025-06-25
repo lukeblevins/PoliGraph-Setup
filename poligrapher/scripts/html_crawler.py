@@ -71,25 +71,32 @@ def url_arg_handler(url):
 
         export_url = f"https://docs.google.com/feeds/download/documents/export/Export?id={m[1]}&exportFormat=html"
 
-        req = requests.get(export_url)
+        req = requests.get(export_url, timeout=REQUESTS_TIMEOUT)
         req.raise_for_status()
 
         base64_url = "data:text/html;base64," + base64.b64encode(req.content).decode()
-
+        req.close()
         return base64_url
 
-    # Handle other URLs: test with a HEAD request before starting browser
-    logging.info("Testing URL %r with HEAD request", url)
-
+    # Test connection
+    headers = {
+        "User-Agent": (
+            "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
+            "AppleWebKit/537.36 (KHTML, like Gecko) "
+            "Chrome/120.0.0.0 Safari/537.36"
+        ),
+        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+        "Accept-Language": "en-US,en;q=0.5",
+        "Range": "bytes=0-1023",  # Only fetch the first 1KB
+    }
     try:
-        requests.head(url, timeout=REQUESTS_TIMEOUT)
-    except (requests.exceptions.ConnectionError, requests.exceptions.Timeout) as e:
-        logging.error("Failed to connect to %r", url)
-        logging.error("Error message: %s", e)
-        return None
-    else:
+        resp = requests.get(url, headers=headers, timeout=REQUESTS_TIMEOUT, stream=True)
+        resp.raise_for_status()
+        resp.close()
         return url
-
+    except Exception as e:
+        logging.error("Failed to connect to %r: %s", url, e)
+        return None
 
 async def main(url, output):
     logging.basicConfig(

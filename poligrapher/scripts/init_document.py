@@ -37,13 +37,33 @@ def main(workdirs, nlp_model_dir="", debug=False, gpu_memory_threshold=0.9):
                 fout.write(document.print_tree())
 
         if use_gpu:
-            current_device = torch.cuda.current_device()
-            gmem_total = torch.cuda.get_device_properties(current_device).total_memory
-            gmem_reserved = torch.cuda.memory_reserved(current_device)
-
-            if gmem_reserved / gmem_total > gpu_memory_threshold:
-                logging.warning("Empty GPU cache...")
-                torch.cuda.empty_cache()
+            device = torch.device(
+                "cuda"
+                if torch.cuda.is_available()
+                else (
+                    "mps"
+                    if getattr(torch, "has_mps", False)
+                    and torch.backends.mps.is_available()
+                    else "cpu"
+                )
+            )
+            if device.type == "cuda":
+                current_device = torch.cuda.current_device()
+                gmem_total = torch.cuda.get_device_properties(
+                    current_device
+                ).total_memory
+                gmem_reserved = torch.cuda.memory_reserved(current_device)
+                if gmem_reserved / gmem_total > gpu_memory_threshold:
+                    logging.info("Empty GPU cache...")
+                    torch.cuda.empty_cache()
+            elif device.type == "mps":
+                # PyTorch MPS backend does not expose memory stats, but we can still clear cache
+                logging.info("Empty GPU cache...")
+                if hasattr(torch.mps, "empty_cache"):
+                    torch.mps.empty_cache()
+            else:
+                # CPU: nothing to clear
+                pass
 
 
 if __name__ == "__main__":

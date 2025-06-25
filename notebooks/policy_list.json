@@ -1,19 +1,1004 @@
 {
     "policy_urls": [
         {
-            "name": "Healow HTML",
-            "kind": "webpage",
-            "path": "https://healow.com/apps/jsp/webview/policy.jsp"
+            "name": "Accenture",
+            "kind": "auto",
+            "path": "https://www.accenture.com/us-en/support/privacy-policy"
         },
         {
-            "name": "Target PDF",
-            "kind": "pdf",
-            "path": "https://www.target.com/c/target-privacy-policy/-/N-4sr7p"
+            "name": "Adobe Inc.",
+            "kind": "auto",
+            "path": "https://www.adobe.com/privacy/policy.html"
         },
         {
-            "name": "Target HTML",
-            "kind": "webpage",
-            "path": "https://www.target.com/c/target-privacy-policy/-/N-4sr7p"
+            "name": "Advanced Micro Devices",
+            "kind": "auto",
+            "path": "https://www.amd.com/en/legal/privacy.html"
+        },
+        {
+            "name": "Akamai Technologies",
+            "kind": "auto",
+            "path": "https://www.akamai.com/legal/privacy-statement"
+        },
+        {
+            "name": "Amphenol",
+            "kind": "auto",
+            "path": "https://amphenol.com/privacy-policy"
+        },
+        {
+            "name": "Analog Devices",
+            "kind": "auto",
+            "path": "https://www.analog.com/en/who-we-are/legal-and-risk-oversight/data-privacy/privacy-policy.html"
+        },
+        {
+            "name": "Ansys",
+            "kind": "auto",
+            "path": "https://www.ansys.com/legal/privacy-notice"
+        },
+        {
+            "name": "Apple Inc.",
+            "kind": "auto",
+            "path": "https://www.apple.com/legal/privacy/pdfs/apple-privacy-policy-en-ww.pdf"
+        },
+        {
+            "name": "Applied Materials",
+            "kind": "auto",
+            "path": "https://www.appliedmaterials.com/us/en/pages/privacy.html"
+        },
+        {
+            "name": "Arista Networks",
+            "kind": "auto",
+            "path": "https://www.arista.com/en/privacy-policy"
+        },
+        {
+            "name": "Autodesk",
+            "kind": "auto",
+            "path": "https://www.autodesk.com/company/legal-notices-trademarks/privacy-statement"
+        },
+        {
+            "name": "Broadcom",
+            "kind": "auto",
+            "path": "https://www.broadcom.com/company/legal/privacy/policy"
+        },
+        {
+            "name": "Cadence Design Systems",
+            "kind": "auto",
+            "path": "https://www.cadence.com/en_US/home/privacy/privacy-policy.html"
+        },
+        {
+            "name": "CDW Corporation",
+            "kind": "auto",
+            "path": "https://www.cdw.com/content/cdw/en/terms-conditions/privacy-notice.html"
+        },
+        {
+            "name": "Cisco",
+            "kind": "auto",
+            "path": "https://www.cisco.com/c/en/us/about/legal/privacy-full.html"
+        },
+        {
+            "name": "Cognizant",
+            "kind": "auto",
+            "path": "https://www.cognizant.com/en_us/general/documents/cognizant-privacy-notice.pdf"
+        },
+        {
+            "name": "Corning Inc.",
+            "kind": "auto",
+            "path": "https://www.corning.com/worldwide/en/privacy-policy/privacy-notice-for-customers.html"
+        },
+        {
+            "name": "CrowdStrike",
+            "kind": "auto",
+            "path": "https://www.crowdstrike.com/en-us/legal/privacy-notice/"
+        },
+        {
+            "name": "Dell Technologies",
+            "kind": "auto",
+            "path": "https://www.dell.com/en-us/lp/legal/policies-privacy"
+        },
+        {
+            "name": "Enphase Energy",
+            "kind": "auto",
+            "path": "https://enphase.com/legal/privacy-policy"
+        },
+        {
+            "name": "EPAM Systems",
+            "kind": "auto",
+            "path": "https://privacy.epam.com/core/interaction/showpolicy?type=CommonPrivacyPolicy"
+        },
+        {
+            "name": "F5, Inc.",
+            "kind": "auto",
+            "path": "https://www.f5.com/company/policies/privacy-notice"
+        },
+        {
+            "name": "Fair Isaac",
+            "kind": "auto",
+            "path": "https://www.fico.com/en/privacy-policy"
+        },
+        {
+            "name": "First Solar",
+            "kind": "auto",
+            "path": "https://www.firstsolar.com/en/Policies/Privacy-Policy"
+        },
+        {
+            "name": "Fortinet",
+            "kind": "auto",
+            "path": "https://www.fortinet.com/corporate/about-us/privacy"
+        },
+        {
+            "name": "Gartner",
+            "kind": "auto",
+            "path": "https://www.gartner.com/en/about/policies/privacy"
+        },
+        {
+            "name": "Gen Digital",
+            "kind": "auto",
+            "path": "https://www.nortonlifelock.com/us/en/privacy/global-privacy-statement/?inid=nortonlifelock-privacy_teaser-1_global-privacy-statement"
+        },
+        {
+            "name": "GoDaddy",
+            "kind": "auto",
+            "path": "https://www.godaddy.com/legal/agreements/privacy-policy"
+        },
+        {
+            "name": "Hewlett Packard Enterprise",
+            "kind": "auto",
+            "path": "https://www.hpe.com/us/en/legal/privacy.html"
+        },
+        {
+            "name": "HP Inc.",
+            "kind": "auto",
+            "path": "https://www.hp.com/us-en/privacy/privacy.html"
+        },
+        {
+            "name": "IBM",
+            "kind": "auto",
+            "path": "https://www.ibm.com/us-en/privacy"
+        },
+        {
+            "name": "Intel",
+            "kind": "auto",
+            "path": "https://www.intel.com/content/www/us/en/privacy/intel-privacy-notice.html"
+        },
+        {
+            "name": "Intuit",
+            "kind": "auto",
+            "path": "https://www.intuit.com/privacy/statement/"
+        },
+        {
+            "name": "Jabil",
+            "kind": "auto",
+            "path": "https://www.jabil.com/about-us/the-jabil-code/privacy.html"
+        },
+        {
+            "name": "Juniper Networks",
+            "kind": "auto",
+            "path": "https://www.juniper.net/us/en/privacy-policy.html"
+        },
+        {
+            "name": "Keysight Technologies",
+            "kind": "auto",
+            "path": "https://www.keysight.com/us/en/contact/privacy.html"
+        },
+        {
+            "name": "KLA Corporation",
+            "kind": "auto",
+            "path": "https://www.kla.com/privacy-policy"
+        },
+        {
+            "name": "Lam Research",
+            "kind": "auto",
+            "path": "https://www.lamresearch.com/privacy/"
+        },
+        {
+            "name": "Microchip Technology",
+            "kind": "auto",
+            "path": "https://www.microchip.com/en-us/about/legal-information/privacy-notice"
+        },
+        {
+            "name": "Micron Technology",
+            "kind": "auto",
+            "path": "https://assets.micron.com/adobe/assets/urn:aaid:aem:4bfdaf4e-099d-46a2-ace1-854cd58fd299/renditions/original/as/micronprivacynotice-en-us.pdf"
+        },
+        {
+            "name": "Microsoft",
+            "kind": "auto",
+            "path": "https://www.microsoft.com/en-us/privacy/privacystatement"
+        },
+        {
+            "name": "Monolithic Power Systems",
+            "kind": "auto",
+            "path": "https://www.monolithicpower.com/en/privacy-policy/"
+        },
+        {
+            "name": "Motorola Solutions",
+            "kind": "auto",
+            "path": "https://www.motorolasolutions.com/en_us/about/privacy-policy.html"
+        },
+        {
+            "name": "NetApp",
+            "kind": "auto",
+            "path": "https://www.netapp.com/company/legal/privacy-policy/"
+        },
+        {
+            "name": "Nvidia",
+            "kind": "auto",
+            "path": "https://www.nvidia.com/en-us/about-nvidia/privacy-policy/"
+        },
+        {
+            "name": "NXP Semiconductors",
+            "kind": "auto",
+            "path": "https://www.nxp.com/pages/privacy-statement:PRIVACYPRACTICES"
+        },
+        {
+            "name": "ON Semiconductor",
+            "kind": "auto",
+            "path": "https://www.onsemi.com/privacy"
+        },
+        {
+            "name": "Oracle Corporation",
+            "kind": "auto",
+            "path": "https://www.oracle.com/legal/privacy/privacy-policy/"
+        },
+        {
+            "name": "Palantir Technologies",
+            "kind": "auto",
+            "path": "https://www.palantir.com/privacy-and-security/"
+        },
+        {
+            "name": "Palo Alto Networks",
+            "kind": "auto",
+            "path": "https://www.paloaltonetworks.com/legal-notices/privacy.html"
+        },
+        {
+            "name": "PTC Inc.",
+            "kind": "auto",
+            "path": "https://www.ptc.com/en/documents/policies/privacy"
+        },
+        {
+            "name": "Qualcomm",
+            "kind": "auto",
+            "path": "https://www.qualcomm.com/site/privacy"
+        },
+        {
+            "name": "Roper Technologies",
+            "kind": "auto",
+            "path": "https://www.ropertech.com/privacy-policy"
+        },
+        {
+            "name": "Salesforce",
+            "kind": "auto",
+            "path": "https://www.salesforce.com/company/legal/privacy/#privacy-statement"
+        },
+        {
+            "name": "Seagate Technology",
+            "kind": "auto",
+            "path": "https://www.seagate.com/legal/privacy/privacy-policy/"
+        },
+        {
+            "name": "ServiceNow",
+            "kind": "auto",
+            "path": "https://www.servicenow.com/privacy-statement.html"
+        },
+        {
+            "name": "Skyworks Solutions",
+            "kind": "auto",
+            "path": "https://www.skyworksinc.com/en/Articles/Privacy-Policy"
+        },
+        {
+            "name": "Supermicro",
+            "kind": "auto",
+            "path": "https://www.supermicro.com/en/about/policies/privacy"
+        },
+        {
+            "name": "Synopsys",
+            "kind": "auto",
+            "path": "https://www.synopsys.com/content/dam/synopsys/company/about/legal/synopsys-data-privacy-and-protection-statement_31May2024.pdf"
+        },
+        {
+            "name": "TE Connectivity",
+            "kind": "auto",
+            "path": "https://www.te.com/en/policies-agreements/privacy-policy.html"
+        },
+        {
+            "name": "Teledyne Technologies",
+            "kind": "auto",
+            "path": "https://www.teledyne.com/en-us/Pages/Privacy-Notice.aspx"
+        },
+        {
+            "name": "Teradyne",
+            "kind": "auto",
+            "path": "https://www.teradyne.com/privacy-policy/"
+        },
+        {
+            "name": "Texas Instruments",
+            "kind": "auto",
+            "path": "https://www.ti.com/legal/terms-conditions/privacy-policy/north-america.html"
+        },
+        {
+            "name": "Trimble Inc.",
+            "kind": "auto",
+            "path": "https://www.trimble.com/en/our-commitment/responsible-business/data-privacy-and-security/data-privacy-center/privacy-notice"
+        },
+        {
+            "name": "Tyler Technologies",
+            "kind": "auto",
+            "path": "https://www.tylertech.com/privacy-03-10-23"
+        },
+        {
+            "name": "Verisign",
+            "kind": "auto",
+            "path": "https://www.verisign.com/en_US/verisign-privacy-statement/index.xhtml"
+        },
+        {
+            "name": "Western Digital",
+            "kind": "auto",
+            "path": "https://documents.westerndigital.com/content/dam/doc-library/en_us/assets/public/western-digital/collateral/company/western-digital-privacy-policy-en.pdf"
+        },
+        {
+            "name": "Workday, Inc.",
+            "kind": "auto",
+            "path": "https://www.workday.com/content/dam/web/en-us/documents/legal/workday-privacy-statement.pdf"
+        },
+        {
+            "name": "Zebra Technologies",
+            "kind": "auto",
+            "path": "https://www.zebra.com/us/en/about-zebra/company-information/legal/privacy-statement.html"
+        },
+        {
+            "name": "Abbott Laboratories",
+            "kind": "auto",
+            "path": "https://www.abbott.com/privacy-policy.html"
+        },
+        {
+            "name": "AbbVie",
+            "kind": "auto",
+            "path": "https://privacy.abbvie/privacy-policies/us-privacy-policy.html"
+        },
+        {
+            "name": "Agilent Technologies",
+            "kind": "auto",
+            "path": "https://www.agilent.com/home/privacy-policy"
+        },
+        {
+            "name": "Align Technology",
+            "kind": "auto",
+            "path": "https://www.aligntech.com/privacy_policy"
+        },
+        {
+            "name": "Amgen",
+            "kind": "auto",
+            "path": "https://www.amgen.com/privacy-statement"
+        },
+        {
+            "name": "Baxter International",
+            "kind": "auto",
+            "path": "https://www.baxter.com/us-privacy"
+        },
+        {
+            "name": "Becton Dickinson",
+            "kind": "auto",
+            "path": "https://www.bd.com/en-us/about-bd/policies/privacy-policy-statement"
+        },
+        {
+            "name": "Bio-Techne",
+            "kind": "auto",
+            "path": "https://www.bio-techne.com/privacy-and-cookie-policy#privacy"
+        },
+        {
+            "name": "Biogen",
+            "kind": "auto",
+            "path": "https://www.biogen.com/privacy-center.html"
+        },
+        {
+            "name": "Boston Scientific",
+            "kind": "auto",
+            "path": "https://www.bostonscientific.com/en-US/privacy-policy.html"
+        },
+        {
+            "name": "Bristol Myers Squibb",
+            "kind": "auto",
+            "path": "https://www.bms.com/assets/bms/us/en-us/pdf/general-privacy-notice.pdf"
+        },
+        {
+            "name": "Cardinal Health",
+            "kind": "auto",
+            "path": "https://www.cardinalhealth.com/en/support/privacy-policy.html"
+        },
+        {
+            "name": "Cencora",
+            "kind": "auto",
+            "path": "https://www.cencora.com/global-privacy-statement"
+        },
+        {
+            "name": "Centene Corporation",
+            "kind": "auto",
+            "path": "https://www.centene.com/privacy-policy.html"
+        },
+        {
+            "name": "Charles River Laboratories",
+            "kind": "auto",
+            "path": "https://criver.widen.net/content/t093dbdulb/original/CRL---Website-Privacy-Notice.pdf?u=g99hbp&download=true"
+        },
+        {
+            "name": "Cigna",
+            "kind": "auto",
+            "path": "https://www.cigna.com/static/www-cigna-com/docs/cigna-health-care-and-cigna-supplemental-benefits-privacy-notice-eng.pdf"
+        },
+        {
+            "name": "Cooper Companies (The)",
+            "kind": "auto",
+            "path": "https://www.coopersurgical.com/privacy-policy/"
+        },
+        {
+            "name": "CVS Health",
+            "kind": "auto",
+            "path": "https://www.cvshealth.com/privacy-policy.html"
+        },
+        {
+            "name": "Danaher Corporation",
+            "kind": "auto",
+            "path": "https://www.danaher.com/data-privacy-policy"
+        },
+        {
+            "name": "DaVita",
+            "kind": "auto",
+            "path": "https://www.davita.com/privacy-policy"
+        },
+        {
+            "name": "Dexcom",
+            "kind": "auto",
+            "path": "https://www.dexcom.com/legal/privacy-policy"
+        },
+        {
+            "name": "Edwards Lifesciences",
+            "kind": "auto",
+            "path": "https://assets-us-01.kc-usercontent.com/6239a81e-8f0f-0040-a1df-b4932a10f6ae/91f57e11-7fba-4a99-91c3-2d586c807c3c/Privacy-Policy_US.pdf"
+        },
+        {
+            "name": "Elevance Health",
+            "kind": "auto",
+            "path": "https://www.elevancehealth.com/privacy-policy"
+        },
+        {
+            "name": "GE HealthCare",
+            "kind": "auto",
+            "path": "https://www.gehealthcare.com/about/privacy/privacy-policy?showPopup=false"
+        },
+        {
+            "name": "Gilead Sciences",
+            "kind": "auto",
+            "path": "https://www.gilead.com/privacy-statement"
+        },
+        {
+            "name": "HCA Healthcare",
+            "kind": "auto",
+            "path": "https://hcahealthcare.com/legal/index.dot#privacy-policy"
+        },
+        {
+            "name": "Henry Schein",
+            "kind": "auto",
+            "path": "https://www.henryschein.com/us-en/Privacy.aspx?PageType=popup#"
+        },
+        {
+            "name": "Hologic",
+            "kind": "auto",
+            "path": "https://www.hologic.com/privacy-policy"
+        },
+        {
+            "name": "Humana",
+            "kind": "auto",
+            "path": "https://www.humana.com/legal/privacy-policy"
+        },
+        {
+            "name": "Idexx Laboratories",
+            "kind": "auto",
+            "path": "https://www.idexx.com/en/about-idexx/privacy-policy/"
+        },
+        {
+            "name": "Incyte",
+            "kind": "auto",
+            "path": "https://incyte.com/privacy-policy"
+        },
+        {
+            "name": "Insulet Corporation",
+            "kind": "auto",
+            "path": "https://www.insulet.com/privacy-policy"
+        },
+        {
+            "name": "Intuitive Surgical",
+            "kind": "auto",
+            "path": "https://www.intuitive.com/en-us/about-us/company/legal/privacy-policy"
+        },
+        {
+            "name": "IQVIA",
+            "kind": "auto",
+            "path": "https://www.iqvia.com/about-us/privacy/privacy-policy"
+        },
+        {
+            "name": "Johnson & Johnson",
+            "kind": "auto",
+            "path": "https://www.jnj.com/privacy-policy"
+        },
+        {
+            "name": "Labcorp",
+            "kind": "auto",
+            "path": "https://www.labcorp.com/compliance/privacy/web"
+        },
+        {
+            "name": "Lilly (Eli)",
+            "kind": "auto",
+            "path": "https://www.lilly.com/privacy"
+        },
+        {
+            "name": "McKesson Corporation",
+            "kind": "auto",
+            "path": "https://www.mckesson.com/privacy-notice/"
+        },
+        {
+            "name": "Medtronic",
+            "kind": "auto",
+            "path": "https://www.medtronic.com/content/dam/medtronic-wide/public/brand-corporate-assets/company-information/october-2024-privacy-notice.pdf"
+        },
+        {
+            "name": "Merck & Co.",
+            "kind": "auto",
+            "path": "https://www.msdprivacy.com/us/en/"
+        },
+        {
+            "name": "Moderna",
+            "kind": "auto",
+            "path": "https://www.modernatx.com/privacy-policy"
+        },
+        {
+            "name": "Molina Healthcare",
+            "kind": "auto",
+            "path": "https://www.molinahealthcare.com/members/common/en-US/terms_privacy.aspx"
+        },
+        {
+            "name": "Pfizer",
+            "kind": "auto",
+            "path": "https://www.pfizer.com/privacy"
+        },
+        {
+            "name": "Quest Diagnostics",
+            "kind": "auto",
+            "path": "https://www.questdiagnostics.com/our-company/privacy/privacy-notice"
+        },
+        {
+            "name": "Regeneron Pharmaceuticals",
+            "kind": "auto",
+            "path": "https://www.regeneron.com/privacy-policy"
+        },
+        {
+            "name": "ResMed",
+            "kind": "auto",
+            "path": "https://www.resmed.com/en-us/privacy/"
+        },
+        {
+            "name": "Revvity",
+            "kind": "auto",
+            "path": "https://www.revvity.com/policies/website-privacy-notice"
+        },
+        {
+            "name": "Solventum",
+            "kind": "auto",
+            "path": "https://www.solventum.com/en-us/home/our-company/hipaa-privacy/"
+        },
+        {
+            "name": "Steris",
+            "kind": "auto",
+            "path": "https://www.steris.com/sustainability/corporate-governance/privacy"
+        },
+        {
+            "name": "Stryker Corporation",
+            "kind": "auto",
+            "path": "https://www.stryker.com/us/en/legal/privacy.html"
+        },
+        {
+            "name": "Thermo Fisher Scientific",
+            "kind": "auto",
+            "path": "https://www.thermofisher.com/us/en/home/global/privacy-policy.html"
+        },
+        {
+            "name": "UnitedHealth Group",
+            "kind": "auto",
+            "path": "https://www.unitedhealthgroup.com/privacy.html"
+        },
+        {
+            "name": "Universal Health Services",
+            "kind": "auto",
+            "path": "https://uhs.com/compliance-ethics-program/online-privacy-policy/"
+        },
+        {
+            "name": "Viatris",
+            "kind": "auto",
+            "path": "https://www.viatris.com/en/privacy-policy"
+        },
+        {
+            "name": "Waters Corporation",
+            "kind": "auto",
+            "path": "https://waters.navexone.com/content/dotNet/documents/download.aspx?docid=1755&DocRevisionNum=0&access=3LxDCV8eguNjS9P8GYcIbTtxmKk8xrTVekQtZHrU2OM!"
+        },
+        {
+            "name": "West Pharmaceutical Services",
+            "kind": "auto",
+            "path": "https://www.westpharma.com/privacy-policy"
+        },
+        {
+            "name": "Zimmer Biomet",
+            "kind": "auto",
+            "path": "https://www.zimmerbiomet.com/en/corporate/privacy-notice.html"
+        },
+        {
+            "name": "Zoetis",
+            "kind": "auto",
+            "path": "https://www.zoetis.com/privacy-policy"
+        },
+        {
+            "name": "Aflac",
+            "kind": "auto",
+            "path": "https://www.aflac.com/privacy-policy"
+        },
+        {
+            "name": "Allstate",
+            "kind": "auto",
+            "path": "https://www.allstate.com/privacy-center/aic-privacy-statement"
+        },
+        {
+            "name": "American Express",
+            "kind": "auto",
+            "path": "https://www.americanexpress.com/us/company/privacy-center/online-privacy-disclosures/#privacy-statement"
+        },
+        {
+            "name": "American International Group",
+            "kind": "auto",
+            "path": "https://www.aig.com/privacy-policy"
+        },
+        {
+            "name": "Ameriprise Financial",
+            "kind": "auto",
+            "path": "https://www.ameriprise.com/binaries/content/assets/ampcom/wcm/AMP_PRIVACY-NOTICE.PDF"
+        },
+        {
+            "name": "Aon plc",
+            "kind": "auto",
+            "path": "https://www.aon.com/privacy-statement"
+        },
+        {
+            "name": "Apollo Global Management",
+            "kind": "auto",
+            "path": "https://www.apollo.com/governance/privacy-policy"
+        },
+        {
+            "name": "Arch Capital Group",
+            "kind": "auto",
+            "path": "https://www.archgroup.com/privacy-policy/"
+        },
+        {
+            "name": "Arthur J. Gallagher & Co.",
+            "kind": "auto",
+            "path": "https://www.ajg.com/us/privacy-policy/"
+        },
+        {
+            "name": "Assurant",
+            "kind": "auto",
+            "path": "https://www.assurant.com/privacypolicy"
+        },
+        {
+            "name": "Bank of America",
+            "kind": "auto",
+            "path": "https://www.bankofamerica.com/content/documents/privacy/us-consumer-privacy-notice-en.pdf"
+        },
+        {
+            "name": "Berkshire Hathaway",
+            "kind": "auto",
+            "path": "https://www.bhhs.com/privacy-policy"
+        },
+        {
+            "name": "BlackRock",
+            "kind": "auto",
+            "path": "https://www.blackrock.com/corporate/compliance/privacy-notice"
+        },
+        {
+            "name": "Blackstone Inc.",
+            "kind": "auto",
+            "path": "https://www.blackstone.com/privacy/online-privacy-notice/"
+        },
+        {
+            "name": "BNY Mellon",
+            "kind": "auto",
+            "path": "https://www.bny.com/corporate/global/en/disclaimers/privacy-california.html"
+        },
+        {
+            "name": "Brown & Brown",
+            "kind": "auto",
+            "path": "https://www.bbinsurance.com/privacy-statement/"
+        },
+        {
+            "name": "Capital One",
+            "kind": "auto",
+            "path": "https://ecm.capitalone.com/WCM/privacy/2025-capital-one-online-privacy-policy.pdf"
+        },
+        {
+            "name": "Cboe Global Markets",
+            "kind": "auto",
+            "path": "https://www.cboe.com/privacy"
+        },
+        {
+            "name": "Charles Schwab Corporation",
+            "kind": "auto",
+            "path": "https://disclosures.schwab.com/SchwabDashboard/61306/REG60835FM.pdf"
+        },
+        {
+            "name": "Chubb Limited",
+            "kind": "auto",
+            "path": "https://www.chubb.com/us-en/online-privacy-policy.html"
+        },
+        {
+            "name": "Cincinnati Financial",
+            "kind": "auto",
+            "path": "https://edge.sitecorecloud.io/cincinna-x33xq9h6/media/Project/Cincinnati-Financial/CinFin/Files/legal-footer/privacy-policy/Electronic-Privacy-Policy.pdf"
+        },
+        {
+            "name": "Citigroup",
+            "kind": "auto",
+            "path": "https://www.citi.com/policies/us-privacy-notice-for-consumers"
+        },
+        {
+            "name": "Citizens Financial Group",
+            "kind": "auto",
+            "path": "https://www.citizensbank.com/account-safeguards/privacy.aspx#online-privacy-policy"
+        },
+        {
+            "name": "CME Group",
+            "kind": "auto",
+            "path": "https://www.cmegroup.com/privacy-policy/general.html"
+        },
+        {
+            "name": "Coinbase",
+            "kind": "auto",
+            "path": "https://www.coinbase.com/legal/privacy"
+        },
+        {
+            "name": "Corpay",
+            "kind": "auto",
+            "path": "https://www.corpay.com/privacy-policy/unitedstates"
+        },
+        {
+            "name": "Erie Indemnity",
+            "kind": "auto",
+            "path": "https://edge.sitecorecloud.io/erieindemni8d2b-erieinsurandcab-prd6c2e-0c08/media/Project/ErieInsurance/ErieWebsite/Files/PrivacyNotice.pdf"
+        },
+        {
+            "name": "Everest Group",
+            "kind": "auto",
+            "path": "https://www.everestglobal.com/us-en/about-us/privacy/privacy-security-and-trust"
+        },
+        {
+            "name": "FactSet",
+            "kind": "auto",
+            "path": "https://www.factset.com/legal"
+        },
+        {
+            "name": "Fidelity National Information Services",
+            "kind": "auto",
+            "path": "https://www.fisglobal.com/privacy/online-privacy-notice"
+        },
+        {
+            "name": "Fifth Third Bancorp",
+            "kind": "auto",
+            "path": "https://www.53.com/content/dam/fifth-third/docs/legal/privacy-notice-for-consumers.pdf"
+        },
+        {
+            "name": "Fiserv",
+            "kind": "auto",
+            "path": "https://www.fiserv.com/en/about-fiserv/privacy-notice.html"
+        },
+        {
+            "name": "Franklin Resources",
+            "kind": "auto",
+            "path": "https://www.franklintempleton.com/help/privacy-policy"
+        },
+        {
+            "name": "Global Payments",
+            "kind": "auto",
+            "path": "https://www.globalpayments.com/privacy-statement"
+        },
+        {
+            "name": "Globe Life",
+            "kind": "auto",
+            "path": "https://home.globelifeinsurance.com/privacy-policy"
+        },
+        {
+            "name": "Goldman Sachs",
+            "kind": "auto",
+            "path": "https://www.goldmansachs.com/privacy-and-cookies.html"
+        },
+        {
+            "name": "Hartford (The)",
+            "kind": "auto",
+            "path": "https://www.thehartford.com/online-privacy-policy"
+        },
+        {
+            "name": "Huntington Bancshares",
+            "kind": "auto",
+            "path": "https://www.huntington.com/-/media/pdf/privacypolicy.pdf"
+        },
+        {
+            "name": "Intercontinental Exchange",
+            "kind": "auto",
+            "path": "https://www.ice.com/privacy-security-center#intercontinental-exchange-privacy-policy"
+        },
+        {
+            "name": "Invesco",
+            "kind": "auto",
+            "path": "https://www.invesco.com/us-rest/contentdetail?contentId=4b607f49-7548-4a82-8c5a-77cfaeb3ea87"
+        },
+        {
+            "name": "Jack Henry & Associates",
+            "kind": "auto",
+            "path": "https://www.jackhenry.com/privacy-policy"
+        },
+        {
+            "name": "JPMorgan Chase",
+            "kind": "auto",
+            "path": "https://www.jpmorgan.com/privacy"
+        },
+        {
+            "name": "KeyCorp",
+            "kind": "auto",
+            "path": "https://online1.keybank.com/dcm/GetEdasDisclosure?action=special&pa=PRIV&pg=PVY&sp=OLPS&bn=101&pd=101&output=html_complete&name=KOP-Stmt"
+        },
+        {
+            "name": "KKR & Co.",
+            "kind": "auto",
+            "path": "https://www.kkr.com/privacy-and-cookies"
+        },
+        {
+            "name": "Loews Corporation",
+            "kind": "auto",
+            "path": "https://loews.com/privacy-policy/default.aspx"
+        },
+        {
+            "name": "MT Bank",
+            "kind": "auto",
+            "path": "https://www.mtb.com/content/dam/mtb-web/pdfs/US%20Consumer%20Privacy%20Notice_052022.pdf"
+        },
+        {
+            "name": "MarketAxess",
+            "kind": "auto",
+            "path": "https://www.marketaxess.com/privacy-policy/"
+        },
+        {
+            "name": "Marsh McLennan",
+            "kind": "auto",
+            "path": "https://www.marsh.com/en/compliance-pages/us-privacy-notice.html"
+        },
+        {
+            "name": "Mastercard",
+            "kind": "auto",
+            "path": "https://www.mastercard.us/en-us/vision/corp-responsibility/commitment-to-privacy/privacy.html"
+        },
+        {
+            "name": "MetLife",
+            "kind": "auto",
+            "path": "https://www.metlife.com/about-us/privacy-policy/us-consumer/"
+        },
+        {
+            "name": "Moody's Corporation",
+            "kind": "auto",
+            "path": "https://www.moodys.com/web/en/us/legal/privacy-policy.html"
+        },
+        {
+            "name": "Morgan Stanley",
+            "kind": "auto",
+            "path": "https://www.morganstanley.com/disclaimers/us-privacy-policy-and-notice"
+        },
+        {
+            "name": "MSCI Inc.",
+            "kind": "auto",
+            "path": "https://www.msci.com/privacy-pledge"
+        },
+        {
+            "name": "Nasdaq, Inc.",
+            "kind": "auto",
+            "path": "https://www.nasdaq.com/privacy-statement"
+        },
+        {
+            "name": "Northern Trust",
+            "kind": "auto",
+            "path": "https://www.northerntrust.com/content/dam/northerntrust/pws/nt/documents/legal/us-privacy-notice.pdf"
+        },
+        {
+            "name": "PayPal",
+            "kind": "auto",
+            "path": "https://www.paypal.com/us/legalhub/privacy-full"
+        },
+        {
+            "name": "PNC Financial Services",
+            "kind": "auto",
+            "path": "https://www.pnc.com/content/dam/pnc-com/pdf/Privacy%20Policy/privacy_notice_english.pdf"
+        },
+        {
+            "name": "Principal Financial Group",
+            "kind": "auto",
+            "path": "https://secure02.principal.com/publicvsupply/GetFile?fm=WW728&ty=VOP&EXT=.VOP"
+        },
+        {
+            "name": "Progressive Corporation",
+            "kind": "auto",
+            "path": "https://www.progressive.com/privacy/#GA"
+        },
+        {
+            "name": "Prudential Financial",
+            "kind": "auto",
+            "path": "https://www.prudential.com/links/privacy-policy"
+        },
+        {
+            "name": "Raymond James Financial",
+            "kind": "auto",
+            "path": "https://www.raymondjames.com/privacy-security-and-account-protection/privacy-notice"
+        },
+        {
+            "name": "Regions Financial Corporation",
+            "kind": "auto",
+            "path": "https://www.regions.com/about-regions/privacy-security/online-privacy-notice"
+        },
+        {
+            "name": "S&P Global",
+            "kind": "auto",
+            "path": "https://www.spglobal.com/content/dam/spglobal/corporate/en/privacy/Corp_SPGI-Corporate-Privacy-Policy-March-2025.pdf"
+        },
+        {
+            "name": "State Street Corporation",
+            "kind": "auto",
+            "path": "https://www.statestreet.com/disclosures-and-disclaimers/privacy"
+        },
+        {
+            "name": "Synchrony Financial",
+            "kind": "auto",
+            "path": "https://www.synchrony.com/legal/privacy-policy"
+        },
+        {
+            "name": "T. Rowe Price",
+            "kind": "auto",
+            "path": "https://www.troweprice.com/enterprise/legal/us/en/privacy-notices.html"
+        },
+        {
+            "name": "Travelers Companies (The)",
+            "kind": "auto",
+            "path": "https://www.travelers.com/about-travelers/privacy-statements"
+        },
+        {
+            "name": "Truist Financial",
+            "kind": "auto",
+            "path": "https://www.truist.com/content/dam/truist-bank/us/en/documents/footer/privacy-policy-truist-english.pdf"
+        },
+        {
+            "name": "U.S. Bancorp",
+            "kind": "auto",
+            "path": "https://www.usbank.com/dam/en/documents/pdfs/disclosures/consumer-privacy-notice.pdf"
+        },
+        {
+            "name": "Visa Inc.",
+            "kind": "auto",
+            "path": "https://usa.visa.com/legal/global-privacy-notice.html"
+        },
+        {
+            "name": "W. R. Berkley Corporation",
+            "kind": "auto",
+            "path": "https://www.berkley.com/privacy#websitePrivacyPolicy"
+        },
+        {
+            "name": "Wells Fargo",
+            "kind": "auto",
+            "path": "https://www.wellsfargo.com/assets/pdf/personal/privacy-security/us_consumer_privacy_notice_english.pdf"
+        },
+        {
+            "name": "Willis Towers Watson",
+            "kind": "auto",
+            "path": "https://www.wtwco.com/en-us/notices/global-website-privacy-notice"
         }
     ]
 }

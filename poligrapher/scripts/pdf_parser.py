@@ -62,7 +62,7 @@ async def create_pdf(url, args):
 
         output_dir = Path(args.output)
         temp_pdf_path = output_dir / "output.pdf"
-        await page.pdf(path=temp_pdf_path)
+        await page.pdf(path=temp_pdf_path, tagged=True)
 
         logging.info("Saved to %s", temp_pdf_path)
         await context.close()
@@ -95,50 +95,61 @@ def download_pdf(url, args):
 
 async def url_arg_handler(url, args):
     parsed_url = urlparse.urlparse(url)
-    logging.error("Parsed URL: %s", parsed_url)
+    logging.info("Parsed URL: %s", parsed_url)
     # check if URL or local file:
     if not parsed_url.scheme in ["https", "http"] and not parsed_url.netloc:
         # No scheme or netloc: local file path
-        logging.error("Interpreting %r as a local file path", url)
+        logging.info("Interpreting %r as a local file path", url)
         parsed_path = Path(url).absolute()
 
         if not parsed_path.is_file():
             logging.error("File %r not found", url)
             return None
 
-        logging.error("Local file path %r is valid", parsed_path)
+        logging.info("Local file path %r is valid", parsed_path)
         return parsed_path.as_uri()
     else:
-        # No scheme: assume HTTP
-        parsed_url = parsed_url._replace(scheme="http")
+        # No scheme: assume HTTPS
+        parsed_url = parsed_url._replace(scheme="https")
         url = parsed_url.geturl()
-        # Test connection via HEAD request
-        logging.error("Testing URL %r with HEAD request", url)
+        # Test connection
+        headers = {
+            "User-Agent": (
+                "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
+                "AppleWebKit/537.36 (KHTML, like Gecko) "
+                "Chrome/120.0.0.0 Safari/537.36"
+            ),
+            "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+            "Accept-Language": "en-US,en;q=0.5",
+            "Range": "bytes=0-1023",  # Only fetch the first 1KB
+        }
         try:
-            requests.head(url, timeout=REQUESTS_TIMEOUT)
-        except (requests.exceptions.ConnectionError, requests.exceptions.Timeout) as e:
-            logging.error("Failed to connect to %r", url)
-            logging.error("Error message: %s", e)
+            resp = requests.get(
+                url, headers=headers, timeout=REQUESTS_TIMEOUT, stream=True
+            )
+            resp.raise_for_status()
+            resp.close()
+        except Exception as e:
+            logging.error("Failed to connect to %r: %s", url, e)
             return None
 
-        logging.error("URL %r passed HEAD request", url)
         # Determine if website or PDF link
         if url.endswith(".pdf"):
-            logging.error("Interpreting %r as a PDF URL", url)
+            logging.info("Interpreting %r as a PDF URL", url)
             # Download and return the local file path
             downloaded = download_pdf(url, args)
             if downloaded is None:
                 logging.error("Failed to download PDF from %r", url)
                 return None
-            logging.error("PDF downloaded successfully from %r", url)
+            logging.info("PDF downloaded successfully from %r", url)
             return downloaded
         else:
-            logging.error("Interpreting %r as a website URL", url)
+            logging.info("Interpreting %r as a website URL", url)
             exported = await create_pdf(url, args)
             if exported is None:
                 logging.error("Failed to create PDF from website %r", url)
                 return None
-            logging.error("PDF created successfully from website %r", url)
+            logging.info("PDF created successfully from website %r", url)
             return exported
 
 
