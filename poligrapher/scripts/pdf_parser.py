@@ -7,7 +7,6 @@ import sys
 import requests
 import markdown
 import urllib.parse as urlparse
-import tempfile
 import pymupdf4llm
 
 from pathlib import Path
@@ -25,7 +24,7 @@ async def create_pdf(url, args):
         sys.exit(-1)
 
     async with async_playwright() as p:
-        browser = await p.chromium.launch(headless=True)
+        browser = await p.chromium.launch(channel="msedge", headless=True)
         context = await browser.new_context(bypass_csp=True)
 
         async def error_cleanup(msg):
@@ -58,7 +57,7 @@ async def create_pdf(url, args):
         # Check HTTP errors
         for url in navigated_urls:
             if (status_code := url_status.get(url, 0)) >= 400:
-                error_cleanup(f"Got HTTP error {status_code}")
+                await error_cleanup(f"Got HTTP error {status_code}")
 
         output_dir = Path(args.output)
         temp_pdf_path = output_dir / "output.pdf"
@@ -80,7 +79,7 @@ def download_pdf(url, args):
         return None
 
     filename = Path(urlparse.urlparse(url).path).name
-    if not filename.endswith(".pdf"):
+    if not filename.endswith([".pdf", ".PDF"]):
         filename = "downloaded.pdf"
 
     temp_pdf_path = Path(args.output).joinpath("output.pdf")
@@ -112,29 +111,9 @@ async def url_arg_handler(url, args):
         # No scheme: assume HTTPS
         parsed_url = parsed_url._replace(scheme="https")
         url = parsed_url.geturl()
-        # Test connection
-        headers = {
-            "User-Agent": (
-                "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
-                "AppleWebKit/537.36 (KHTML, like Gecko) "
-                "Chrome/120.0.0.0 Safari/537.36"
-            ),
-            "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
-            "Accept-Language": "en-US,en;q=0.5",
-            "Range": "bytes=0-1023",  # Only fetch the first 1KB
-        }
-        try:
-            resp = requests.get(
-                url, headers=headers, timeout=REQUESTS_TIMEOUT, stream=True
-            )
-            resp.raise_for_status()
-            resp.close()
-        except Exception as e:
-            logging.error("Failed to connect to %r: %s", url, e)
-            return None
 
         # Determine if website or PDF link
-        if url.endswith(".pdf"):
+        if url.endswith(".pdf") or url.endswith(".PDF"):
             logging.info("Interpreting %r as a PDF URL", url)
             # Download and return the local file path
             downloaded = download_pdf(url, args)
@@ -155,15 +134,7 @@ async def url_arg_handler(url, args):
 
 async def main(url, output):
     args = argparse.Namespace(url=url, output=output)
-
     pdf_path = await url_arg_handler(args.url, args)
-    if pdf_path is None:
-        logging.error("Invalid input path or URL")
-        exit(1)
-
-    # if not pdf_path.is_file():
-    #     logging.error("File %r not found", pdf_path)
-    #     exit(1)
 
     # Convert the PDF to Markdown and then to HTML
     md_text = pymupdf4llm.to_markdown(pdf_path)

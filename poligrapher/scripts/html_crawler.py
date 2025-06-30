@@ -19,7 +19,7 @@ from playwright.async_api import (
 import requests
 from requests_cache import CachedSession
 
-READABILITY_JS_COMMIT = "8e8ec27cd2013940bc6f3cc609de10e35a1d9d86"
+READABILITY_JS_COMMIT = "04fd32f72b448c12b02ba6c40928b67e510bac49"
 READABILITY_JS_URL = (
     f"https://raw.githubusercontent.com/mozilla/readability/{READABILITY_JS_COMMIT}"
 )
@@ -78,25 +78,7 @@ def url_arg_handler(url):
         req.close()
         return base64_url
 
-    # Test connection
-    headers = {
-        "User-Agent": (
-            "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
-            "AppleWebKit/537.36 (KHTML, like Gecko) "
-            "Chrome/120.0.0.0 Safari/537.36"
-        ),
-        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
-        "Accept-Language": "en-US,en;q=0.5",
-        "Range": "bytes=0-1023",  # Only fetch the first 1KB
-    }
-    try:
-        resp = requests.get(url, headers=headers, timeout=REQUESTS_TIMEOUT, stream=True)
-        resp.raise_for_status()
-        resp.close()
-        return url
-    except Exception as e:
-        logging.error("Failed to connect to %r: %s", url, e)
-        return None
+    return url
 
 async def main(url, output):
     logging.basicConfig(
@@ -105,10 +87,6 @@ async def main(url, output):
 
     args = argparse.Namespace(url=url, output=output, no_readability_js=False)
     access_url = url_arg_handler(args.url)
-
-    if access_url is None:
-        logging.error("URL failed pre-tests. Exiting...")
-        sys.exit(-1)
 
     firefox_configs = {
         # Bypass CSP so we can always inject scripts
@@ -129,7 +107,9 @@ async def main(url, output):
     async with async_playwright() as p:
         # Firefox generates simpler accessibility tree than chromium
         # Tested on Debian's firefox-esr 91.5.0esr-1~deb11u1
-        browser = await p.firefox.launch(firefox_user_prefs=firefox_configs)
+        browser = await p.firefox.launch(
+            firefox_user_prefs=firefox_configs, headless=True
+        )
         context = await browser.new_context(bypass_csp=True)
 
         async def error_cleanup(msg):
@@ -161,7 +141,7 @@ async def main(url, output):
         # Check HTTP errors
         for url in navigated_urls:
             if (status_code := url_status.get(url, 0)) >= 400:
-                error_cleanup(f"Got HTTP error {status_code}")
+                await error_cleanup(f"Got HTTP error {status_code}")
 
         # Apply readability.js
         await page.evaluate("window.stop()")
@@ -207,10 +187,10 @@ async def main(url, output):
             lang = "UNKNOWN"
 
         if not lang.lower().startswith("en"):
-            error_cleanup(f"Content language {lang} isn't English")
+            await error_cleanup(f"Content language {lang} isn't English")
 
         if re.search(r"(data|privacy)\s*(?:policy|notice)", soup_text, re.I) is None:
-            error_cleanup("Not like a privacy policy")
+            await error_cleanup("Not like a privacy policy")
 
         # obtain the accessibility tree
         snapshot = await page.accessibility.snapshot(interesting_only=False)
