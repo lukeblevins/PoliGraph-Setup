@@ -1,0 +1,28 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Python Debugger: Current File with Arguments",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${file}",
+            "console": "integratedTerminal",
+            "args": "${command:pickArgs}"
+        },
+        {
+            "name": "Python Debugger: PoliGraph Gradio App",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/poligrapher/gradio_app/app.py",
+            "console": "integratedTerminal",
+            "env": {
+                "GRADIO_DEBUG": "1",
+                "PYTHONPATH": "${workspaceFolder}"
+            },
+            "python": "/opt/homebrew/Caskroom/miniconda/base/envs/poligrapher/bin/python"
+        }
+    ]
+}

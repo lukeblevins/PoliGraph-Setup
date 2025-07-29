@@ -1,0 +1,141 @@
+[scoring_weights]
+data_collection = 25.0
+third_party_sharing = 25.0
+user_rights = 25.0
+data_security = 25.0
+
+[categories]
+data_collection = [
+    "collection_transparency",
+    "purpose_specification",
+    "data_minimization"
+]
+third_party_sharing = [
+    "sharing_transparency",
+    "third_party_limits",
+    "data_sale"
+]
+user_rights = [
+    "access_rights",
+    "deletion_rights",
+    "control_options"
+]
+data_security = [
+    "security_measures",
+    "breach_notification",
+    "data_retention"
+]
+
+[criteria.collection_transparency]
+points = 100.0
+required_phrases = ["collect", "information", "data"]
+matching_phrases = ["we collect", "information we gather", "data we process"]
+
+[criteria.purpose_specification]
+points = 100.0
+required_phrases = ["purpose", "use", "why"]
+matching_phrases = ["we use your data for", "purposes of processing", "why we collect"]
+
+[criteria.data_minimization]
+points = 100.0
+required_phrases = ["necessary", "required", "minimum"]
+matching_phrases = ["only collect what is necessary", "limited to what we need", "minimum required data"]
+
+[criteria.sharing_transparency]
+points = 100.0
+description = "Transparency about data sharing"
+options = [
+    {id = "none", score = 0, description = "No sharing practices mentioned"},
+    {id = "basic", score = 50, description = "Basic sharing practices outlined"},
+    {id = "detailed", score = 100, description = "Detailed sharing practices explained"}
+]
+required_phrases = ["share", "third party"]
+matching_phrases = ["we share", "third parties", "partners"]
+
+[criteria.third_party_limits]
+points = 100.0
+description = "Limitations on third-party sharing"
+options = [
+    {id = "none", score = 0, description = "No limits mentioned"},
+    {id = "some", score = 50, description = "Some limits mentioned"},
+    {id = "strict", score = 100, description = "Strict limits specified"}
+]
+required_phrases = ["third party", "share"]
+matching_phrases = ["restrictions", "limited", "only when"]
+
+[criteria.data_sale]
+points = 100.0
+description = "Data sale practices"
+options = [
+    {id = "unclear", score = 0, description = "Unclear about data sale"},
+    {id = "sells", score = 50, description = "Sells data with disclosure"},
+    {id = "no_sale", score = 100, description = "Does not sell data"}
+]
+required_phrases = ["sell", "sale"]
+matching_phrases = ["do not sell", "data sale", "sell your information"]
+
+[criteria.access_rights]
+points = 100.0
+description = "User access rights"
+options = [
+    {id = "none", score = 0, description = "No access rights mentioned"},
+    {id = "basic", score = 50, description = "Basic access rights mentioned"},
+    {id = "full", score = 100, description = "Full access rights detailed"}
+]
+required_phrases = ["access", "rights"]
+matching_phrases = ["access your data", "request access", "view your data"]
+
+[criteria.deletion_rights]
+points = 100.0
+description = "User deletion rights"
+options = [
+    {id = "none", score = 0, description = "No deletion rights mentioned"},
+    {id = "basic", score = 50, description = "Basic deletion rights mentioned"},
+    {id = "full", score = 100, description = "Full deletion rights detailed"}
+]
+required_phrases = ["delete", "remove"]
+matching_phrases = ["right to delete", "request deletion", "erase"]
+
+[criteria.control_options]
+points = 100.0
+description = "User control options"
+options = [
+    {id = "none", score = 0, description = "No control options mentioned"},
+    {id = "basic", score = 50, description = "Basic control options mentioned"},
+    {id = "full", score = 100, description = "Full control options detailed"}
+]
+required_phrases = ["control", "choice"]
+matching_phrases = ["opt-out", "preferences", "settings"]
+
+[criteria.security_measures]
+points = 100.0
+description = "Security measures in place"
+options = [
+    {id = "none", score = 0, description = "No security measures mentioned"},
+    {id = "basic", score = 50, description = "Basic security measures mentioned"},
+    {id = "detailed", score = 100, description = "Detailed security measures explained"}
+]
+required_phrases = ["security", "protect"]
+matching_phrases = ["encryption", "secure", "safeguards"]
+
+[criteria.breach_notification]
+points = 100.0
+description = "Breach notification policy"
+options = [
+    {id = "none", score = 0, description = "No breach notification mentioned"},
+    {id = "basic", score = 50, description = "Basic breach notification mentioned"},
+    {id = "detailed", score = 100, description = "Detailed breach notification policy"}
+]
+required_phrases = ["breach", "incident"]
+matching_phrases = ["notification", "alert", "inform"]
+
+[criteria.data_retention]
+points = 100.0
+description = "Data retention policy"
+options = [
+    {id = "none", score = 0, description = "No retention policy mentioned"},
+    {id = "basic", score = 50, description = "Basic retention policy mentioned"},
+    {id = "detailed", score = 100, description = "Detailed retention policy explained"}
+]
+required_phrases = ["retain", "store"]
+matching_phrases = ["retention period", "keep your data", "storage period"]

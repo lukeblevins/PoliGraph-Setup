@@ -12,9 +12,9 @@ import urllib.parse as urlparse
 
 import bs4
 import langdetect
-from playwright.async_api import (
+from playwright.sync_api import (
     TimeoutError as PlaywrightTimeoutError,
-    async_playwright,
+    sync_playwright,
 )
 import requests
 from requests_cache import CachedSession
@@ -80,7 +80,8 @@ def url_arg_handler(url):
 
     return url
 
-async def main(url, output):
+
+def main(url, output):
     logging.basicConfig(
         format="%(asctime)s [%(levelname)s] %(message)s", level=logging.INFO
     )
@@ -104,22 +105,20 @@ async def main(url, output):
         "privacy.trackingprotection.socialtracking.enabled": True,
     }
 
-    async with async_playwright() as p:
+    with sync_playwright() as p:
         # Firefox generates simpler accessibility tree than chromium
         # Tested on Debian's firefox-esr 91.5.0esr-1~deb11u1
-        browser = await p.firefox.launch(
-            firefox_user_prefs=firefox_configs, headless=True
-        )
-        context = await browser.new_context(bypass_csp=True)
+        browser = p.firefox.launch(firefox_user_prefs=firefox_configs, headless=True)
+        context = browser.new_context(bypass_csp=True)
 
-        async def error_cleanup(msg):
+        def error_cleanup(msg):
             logging.error(msg)
-            await context.close()
-            await browser.close()
+            context.close()
+            browser.close()
             sys.exit(-1)
 
-        page = await context.new_page()
-        await page.set_viewport_size({"width": 1080, "height": 1920})
+        page = context.new_page()
+        page.set_viewport_size({"width": 1080, "height": 1920})
         logging.info("Navigating to %r", access_url)
 
         # Record HTTP status and navigated URLs so we can check errors later
@@ -131,22 +130,22 @@ async def main(url, output):
             lambda f: f.parent_frame is None and navigated_urls.append(f.url),
         )
 
-        await page.goto(access_url)
+        page.goto(access_url)
 
         try:
-            await page.wait_for_load_state("networkidle")
+            page.wait_for_load_state("networkidle")
         except PlaywrightTimeoutError:
             logging.warning("Cannot reach networkidle but will continue")
 
         # Check HTTP errors
         for url in navigated_urls:
             if (status_code := url_status.get(url, 0)) >= 400:
-                await error_cleanup(f"Got HTTP error {status_code}")
+                error_cleanup(f"Got HTTP error {status_code}")
 
         # Apply readability.js
-        await page.evaluate("window.stop()")
-        await page.add_script_tag(content=get_readability_js())
-        readability_info = await page.evaluate(
+        page.evaluate("window.stop()")
+        page.add_script_tag(content=get_readability_js())
+        readability_info = page.evaluate(
             r"""(no_readability_js) => {
             window.stop();
 
@@ -175,7 +174,7 @@ async def main(url, output):
         }""",
             [args.no_readability_js],
         )
-        cleaned_html = await page.content()
+        cleaned_html = page.content()
 
         # Check language
         soup = bs4.BeautifulSoup(cleaned_html, "lxml")
@@ -187,13 +186,13 @@ async def main(url, output):
             lang = "UNKNOWN"
 
         if not lang.lower().startswith("en"):
-            await error_cleanup(f"Content language {lang} isn't English")
+            error_cleanup(f"Content language {lang} isn't English")
 
         if re.search(r"(data|privacy)\s*(?:policy|notice)", soup_text, re.I) is None:
-            await error_cleanup("Not like a privacy policy")
+            error_cleanup("Not like a privacy policy")
 
         # obtain the accessibility tree
-        snapshot = await page.accessibility.snapshot(interesting_only=False)
+        snapshot = page.accessibility.snapshot(interesting_only=False)
 
         output_dir = Path(args.output)
         output_dir.mkdir(exist_ok=True)
@@ -210,8 +209,8 @@ async def main(url, output):
             json.dump(readability_info, fout)
 
         logging.info("Saved to %s", output_dir)
-        await context.close()
-        await browser.close()
+        context.close()
+        browser.close()
 
 
 if __name__ == "__main__":
@@ -220,6 +219,4 @@ if __name__ == "__main__":
         print("usage: html_crawler.py <url_or_path> <output_dir>")
         sys.exit(1)
 
-    import asyncio
-
-    asyncio.run(main(sys.argv[1], sys.argv[2]))
+    main(sys.argv[1], sys.argv[2])

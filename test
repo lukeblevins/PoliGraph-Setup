@@ -1,0 +1,1728 @@
+langcodes==3.3.0
+  └─ python 3.12.11 [required: >=3.6]
+     ├─ pip 25.1.1 [required: any]
+     │  ├─ setuptools 80.9.0 [required: any]
+     │  │  └─ python 3.12.11 [required: >=3.9]
+     │  │     └─ dependencies of python displayed above
+     │  ├─ wheel 0.45.1 [required: any]
+     │  │  └─ python 3.12.11 [required: >=3.9]
+     │  │     └─ dependencies of python displayed above
+     │  └─ python 3.12.11 [required: >=3.9,<3.13.0a0]
+     │     └─ dependencies of python displayed above
+     ├─ tzdata 2025b [required: any]
+     ├─ __osx [required: >=11.0]
+     ├─ libzlib 1.3.1 [required: >=1.3.1,<2.0a0]
+     │  └─ __osx [required: >=11.0]
+     ├─ bzip2 1.0.8 [required: >=1.0.8,<2.0a0]
+     │  └─ __osx [required: >=11.0]
+     ├─ readline 8.2 [required: >=8.2,<9.0a0]
+     │  └─ ncurses 6.5 [required: >=6.5,<7.0a0]
+     │     └─ __osx [required: >=11.0]
+     ├─ ncurses 6.5 [required: >=6.5,<7.0a0]
+     │  └─ dependencies of ncurses displayed above
+     ├─ openssl 3.5.1 [required: >=3.5.0,<4.0a0]
+     │  ├─ ca-certificates 2025.6.15 [required: any]
+     │  │  └─ __unix [required: any]
+     │  └─ __osx [required: >=11.0]
+     ├─ tk 8.6.13 [required: >=8.6.13,<8.7.0a0]
+     │  ├─ __osx [required: >=11.0]
+     │  └─ libzlib 1.3.1 [required: >=1.3.1,<2.0a0]
+     │     └─ dependencies of libzlib displayed above
+     ├─ liblzma 5.8.1 [required: >=5.8.1,<6.0a0]
+     │  └─ __osx [required: >=11.0]
+     ├─ libexpat 2.7.0 [required: >=2.7.0,<3.0a0]
+     │  └─ __osx [required: >=11.0]
+     ├─ libffi 3.4.6 [required: >=3.4.6,<3.5.0a0]
+     │  └─ __osx [required: >=11.0]
+     └─ libsqlite 3.50.2 [required: >=3.50.0,<4.0a0]
+        ├─ __osx [required: >=11.0]
+        └─ libzlib 1.3.1 [required: >=1.3.1,<2.0a0]
+           └─ dependencies of libzlib displayed above
+fastapi==0.115.14
+  ├─ python 3.12.11 [required: >=3.9]
+  │  └─ dependencies of python displayed above
+  ├─ httpx 0.28.1 [required: >=0.23.0]
+  │  ├─ certifi 2025.6.15 [required: any]
+  │  │  └─ python 3.12.11 [required: >=3.9]
+  │  │     └─ dependencies of python displayed above
+  │  ├─ anyio 4.9.0 [required: any]
+  │  │  ├─ python 3.12.11 [required: >=3.9]
+  │  │  │  └─ dependencies of python displayed above
+  │  │  ├─ sniffio 1.3.1 [required: >=1.1]
+  │  │  │  └─ python 3.12.11 [required: >=3.9]
+  │  │  │     └─ dependencies of python displayed above
+  │  │  ├─ typing_extensions 4.14.0 [required: >=4.5]
+  │  │  │  └─ python 3.12.11 [required: >=3.9]
+  │  │  │     └─ dependencies of python displayed above
+  │  │  ├─ idna 3.10 [required: >=2.8]
+  │  │  │  └─ python 3.12.11 [required: >=3.9]
+  │  │  │     └─ dependencies of python displayed above
+  │  │  └─ exceptiongroup 1.3.0 [required: >=1.0.2]
+  │  │     ├─ python 3.12.11 [required: >=3.9]
+  │  │     │  └─ dependencies of python displayed above
+  │  │     └─ typing_extensions 4.14.0 [required: >=4.6.0]
+  │  │        └─ dependencies of typing_extensions displayed above
+  │  ├─ idna 3.10 [required: any]
+  │  │  └─ dependencies of idna displayed above
+  │  ├─ python 3.12.11 [required: >=3.9]
+  │  │  └─ dependencies of python displayed above
+  │  └─ httpcore 1.0.9 [required: 1.*]
+  │     ├─ python 3.12.11 [required: >=3.9]
+  │     │  └─ dependencies of python displayed above
+  │     ├─ certifi 2025.6.15 [required: any]
+  │     │  └─ dependencies of certifi displayed above
+  │     ├─ sniffio 1.3.1 [required: 1.*]
+  │     │  └─ dependencies of sniffio displayed above
+  │     ├─ h2 4.2.0 [required: >=3,<5]
+  │     │  ├─ python 3.12.11 [required: >=3.9]
+  │     │  │  └─ dependencies of python displayed above
+  │     │  ├─ hpack 4.1.0 [required: >=4.1,<5]
+  │     │  │  └─ python 3.12.11 [required: >=3.9]
+  │     │  │     └─ dependencies of python displayed above
+  │     │  └─ hyperframe 6.1.0 [required: >=6.1,<7]
+  │     │     └─ python 3.12.11 [required: >=3.9]
+  │     │        └─ dependencies of python displayed above
+  │     ├─ anyio 4.9.0 [required: >=4.0,<5.0]
+  │     │  └─ dependencies of anyio displayed above
+  │     └─ h11 0.16.0 [required: >=0.16]
+  │        ├─ typing_extensions 4.14.0 [required: any]
+  │        │  └─ dependencies of typing_extensions displayed above
+  │        └─ python 3.12.11 [required: >=3.9]
+  │           └─ dependencies of python displayed above
+  ├─ typing_extensions 4.14.0 [required: >=4.8.0]
+  │  └─ dependencies of typing_extensions displayed above
+  ├─ jinja2 3.1.6 [required: >=3.1.5]
+  │  ├─ python 3.12.11 [required: >=3.9]
+  │  │  └─ dependencies of python displayed above
+  │  └─ markupsafe [required: >=2.0]
+  ├─ pydantic 2.11.7 [required: >=1.7.4,!=1.8,!=1.8.1,!=2.0.0,!=2.0.1,!=2.1.0,<3.0.0]
+  │  ├─ python 3.12.11 [required: >=3.9]
+  │  │  └─ dependencies of python displayed above
+  │  ├─ typing_extensions 4.14.0 [required: >=4.12.2]
+  │  │  └─ dependencies of typing_extensions displayed above
+  │  ├─ typing-extensions 4.14.0 [required: >=4.6.1]
+  │  │  └─ typing_extensions 4.14.0 [required: ==4.14.0, pyhe01879c_0]
+  │  │     └─ dependencies of typing_extensions displayed above
+  │  ├─ typing-inspection 0.4.1 [required: >=0.4.0]
+  │  │  ├─ python 3.12.11 [required: >=3.9]
+  │  │  │  └─ dependencies of python displayed above
+  │  │  └─ typing_extensions 4.14.0 [required: >=4.12.0]
+  │  │     └─ dependencies of typing_extensions displayed above
+  │  ├─ annotated-types 0.7.0 [required: >=0.6.0]
+  │  │  ├─ python 3.12.11 [required: >=3.9]
+  │  │  │  └─ dependencies of python displayed above
+  │  │  └─ typing-extensions 4.14.0 [required: >=4.0.0]
+  │  │     └─ dependencies of typing-extensions displayed above
+  │  └─ pydantic-core 2.33.2 [required: 2.33.2]
+  │     ├─ python 3.12.11 [required: 3.12.*, *_cpython]
+  │     │  └─ dependencies of python displayed above
+  │     ├─ __osx [required: >=11.0]
+  │     ├─ python_abi 3.12 [required: 3.12.*, *_cp312]
+  │     └─ typing-extensions 4.14.0 [required: >=4.6.0,!=4.7.0]
+  │        └─ dependencies of typing-extensions displayed above
+  ├─ python-multipart 0.0.20 [required: >=0.0.18]
+  │  └─ python 3.12.11 [required: >=3.9]
+  │     └─ dependencies of python displayed above
+  ├─ email_validator 2.2.0 [required: >=2.0.0]
+  │  └─ email-validator 2.2.0 [required: >=2.2.0,<2.2.1.0a0]
+  │     ├─ python 3.12.11 [required: >=3.9]
+  │     │  └─ dependencies of python displayed above
+  │     ├─ idna 3.10 [required: >=2.0.0]
+  │     │  └─ dependencies of idna displayed above
+  │     └─ dnspython 2.7.0 [required: >=2.0.0]
+  │        ├─ sniffio 1.3.1 [required: any]
+  │        │  └─ dependencies of sniffio displayed above
+  │        └─ python 3.12.11 [required: >=3.9,<4.0.0]
+  │           └─ dependencies of python displayed above
+  ├─ fastapi-cli 0.0.7 [required: >=0.0.5]
+  │  ├─ python 3.12.11 [required: >=3.9]
+  │  │  └─ dependencies of python displayed above
+  │  ├─ typer 0.16.0 [required: >=0.12.3]
+  │  │  ├─ python 3.12.11 [required: >=3.9]
+  │  │  │  └─ dependencies of python displayed above
+  │  │  └─ typer-slim-standard 0.16.0 [required: ==0.16.0, hf964461_0]
+  │  │     ├─ rich 14.0.0 [required: any]
+  │  │     │  ├─ python 3.12.11 [required: >=3.9]
+  │  │     │  │  └─ dependencies of python displayed above
+  │  │     │  ├─ typing_extensions 4.14.0 [required: >=4.0.0,<5.0.0]
+  │  │     │  │  └─ dependencies of typing_extensions displayed above
+  │  │     │  ├─ pygments 2.19.2 [required: >=2.13.0,<3.0.0]
+  │  │     │  │  └─ python 3.12.11 [required: >=3.9]
+  │  │     │  │     └─ dependencies of python displayed above
+  │  │     │  └─ markdown-it-py 3.0.0 [required: >=2.2.0]
+  │  │     │     ├─ python 3.12.11 [required: >=3.9]
+  │  │     │     │  └─ dependencies of python displayed above
+  │  │     │     └─ mdurl 0.1.2 [required: >=0.1,<1]
+  │  │     │        └─ python 3.12.11 [required: >=3.9]
+  │  │     │           └─ dependencies of python displayed above
+  │  │     ├─ shellingham 1.5.4 [required: any]
+  │  │     │  └─ python 3.12.11 [required: >=3.9]
+  │  │     │     └─ dependencies of python displayed above
+  │  │     └─ typer-slim 0.16.0 [required: ==0.16.0, pyhe01879c_0]
+  │  │        ├─ python 3.12.11 [required: >=3.9]
+  │  │        │  └─ dependencies of python displayed above
+  │  │        ├─ click 8.2.1 [required: >=8.0.0]
+  │  │        │  ├─ __unix [required: any]
+  │  │        │  └─ python 3.12.11 [required: >=3.10]
+  │  │        │     └─ dependencies of python displayed above
+  │  │        └─ typing_extensions 4.14.0 [required: >=3.7.4.3]
+  │  │           └─ dependencies of typing_extensions displayed above
+  │  ├─ uvicorn-standard 0.35.0 [required: >=0.15.0]
+  │  │  ├─ __unix [required: any]
+  │  │  ├─ pyyaml 6.0.2 [required: >=5.1]
+  │  │  │  ├─ __osx [required: >=11.0]
+  │  │  │  ├─ python_abi 3.12 [required: 3.12.*, *_cp312]
+  │  │  │  ├─ python 3.12.11 [required: >=3.12,<3.13.0a0, *_cpython]
+  │  │  │  │  └─ dependencies of python displayed above
+  │  │  │  └─ yaml 0.2.5 [required: >=0.2.5,<0.3.0a0]
+  │  │  ├─ websockets 15.0.1 [required: >=10.4]
+  │  │  │  ├─ __osx [required: >=11.0]
+  │  │  │  ├─ python_abi 3.12 [required: 3.12.*, *_cp312]
+  │  │  │  └─ python 3.12.11 [required: >=3.12,<3.13.0a0, *_cpython]
+  │  │  │     └─ dependencies of python displayed above
+  │  │  ├─ python-dotenv 1.1.1 [required: >=0.13]
+  │  │  │  └─ python 3.12.11 [required: >=3.9]
+  │  │  │     └─ dependencies of python displayed above
+  │  │  ├─ watchfiles 1.1.0 [required: >=0.13]
+  │  │  │  ├─ __osx [required: >=11.0]
+  │  │  │  ├─ python_abi 3.12 [required: 3.12.*, *_cp312]
+  │  │  │  ├─ python 3.12.11 [required: >=3.12,<3.13.0a0, *_cpython]
+  │  │  │  │  └─ dependencies of python displayed above
+  │  │  │  └─ anyio 4.9.0 [required: >=3.0.0]
+  │  │  │     └─ dependencies of anyio displayed above
+  │  │  ├─ httptools 0.6.4 [required: >=0.6.3]
+  │  │  │  ├─ __osx [required: >=11.0]
+  │  │  │  ├─ python_abi 3.12 [required: 3.12.*, *_cp312]
+  │  │  │  └─ python 3.12.11 [required: >=3.12,<3.13.0a0, *_cpython]
+  │  │  │     └─ dependencies of python displayed above
+  │  │  ├─ uvloop 0.21.0 [required: >=0.14.0,!=0.15.0,!=0.15.1]
+  │  │  │  ├─ __osx [required: >=11.0]
+  │  │  │  ├─ python_abi 3.12 [required: 3.12.*, *_cp312]
+  │  │  │  ├─ python 3.12.11 [required: >=3.12,<3.13.0a0, *_cpython]
+  │  │  │  │  └─ dependencies of python displayed above
+  │  │  │  └─ libuv 1.51.0 [required: >=1.49.2,<2.0a0]
+  │  │  │     └─ __osx [required: >=11.0]
+  │  │  └─ uvicorn 0.35.0 [required: 0.35.0, pyh31011fe_0]
+  │  │     ├─ __unix [required: any]
+  │  │     ├─ python 3.12.11 [required: >=3.9]
+  │  │     │  └─ dependencies of python displayed above
+  │  │     ├─ click 8.2.1 [required: >=7.0]
+  │  │     │  └─ dependencies of click displayed above
+  │  │     ├─ typing_extensions 4.14.0 [required: >=4.0]
+  │  │     │  └─ dependencies of typing_extensions displayed above
+  │  │     └─ h11 0.16.0 [required: >=0.8]
+  │  │        └─ dependencies of h11 displayed above
+  │  └─ rich-toolkit 0.11.3 [required: >=0.11.1]
+  │     ├─ python 3.12.11 [required: >=3.9]
+  │     │  └─ dependencies of python displayed above
+  │     ├─ typing_extensions 4.14.0 [required: >=4.12.2]
+  │     │  └─ dependencies of typing_extensions displayed above
+  │     ├─ click 8.2.1 [required: >=8.1.7]
+  │     │  └─ dependencies of click displayed above
+  │     └─ rich 14.0.0 [required: >=13.7.1]
+  │        └─ dependencies of rich displayed above
+  ├─ uvicorn-standard 0.35.0 [required: >=0.12.0]
+  │  └─ dependencies of uvicorn-standard displayed above
+  └─ starlette 0.46.2 [required: >=0.40.0,<0.47.0]
+     ├─ python 3.12.11 [required: >=3.9]
+     │  └─ dependencies of python displayed above
+     ├─ typing_extensions 4.14.0 [required: >=3.10.0]
+     │  └─ dependencies of typing_extensions displayed above
+     └─ anyio 4.9.0 [required: >=3.6.2,<5]
+        └─ dependencies of anyio displayed above
+psutil==7.0.0
+  ├─ __osx [required: >=11.0]
+  ├─ python_abi 3.12 [required: 3.12.*, *_cp312]
+  └─ python 3.12.11 [required: >=3.12,<3.13.0a0, *_cpython]
+     └─ dependencies of python displayed above
+toml==0.10.2
+  └─ python 3.12.11 [required: >=3.9]
+     └─ dependencies of python displayed above
+setfit==1.0.3
+  ├─ datasets 3.6.0 [required: >=2.3.0]
+  │  ├─ pandas 2.3.0 [required: any]
+  │  │  ├─ __osx [required: >=11.0]
+  │  │  ├─ libcxx 20.1.7 [required: >=18]
+  │  │  │  └─ __osx [required: >=11.0]
+  │  │  ├─ python_abi 3.12 [required: 3.12.*, *_cp312]
+  │  │  ├─ python 3.12.11 [required: >=3.12,<3.13.0a0, *_cpython]
+  │  │  │  └─ dependencies of python displayed above
+  │  │  ├─ numpy 2.3.1 [required: >=1.22.4]
+  │  │  │  ├─ __osx [required: >=11.0]
+  │  │  │  ├─ libcxx 20.1.7 [required: >=18]
+  │  │  │  │  └─ dependencies of libcxx displayed above
+  │  │  │  ├─ python_abi 3.12 [required: 3.12.*, *_cp312]
+  │  │  │  ├─ python 3.12.11 [required: >=3.12,<3.13.0a0, *_cpython]
+  │  │  │  │  └─ dependencies of python displayed above
+  │  │  │  ├─ libblas 3.9.0 [required: >=3.9.0,<4.0a0]
+  │  │  │  │  └─ libopenblas 0.3.30 [required: >=0.3.30,<1.0a0]
+  │  │  │  │     ├─ __osx [required: >=11.0]
+  │  │  │  │     ├─ llvm-openmp 20.1.7 [required: >=18.1.8]
+  │  │  │  │     │  └─ __osx [required: >=11.0]
+  │  │  │  │     ├─ libgfortran5 14.2.0 [required: >=13.3.0]
+  │  │  │  │     │  └─ llvm-openmp 20.1.7 [required: >=8.0.0]
+  │  │  │  │     │     └─ dependencies of llvm-openmp displayed above
+  │  │  │  │     └─ libgfortran 5.0.0 [required: 5.*]
+  │  │  │  │        └─ libgfortran5 14.2.0 [required: 14.2.0, h6c33f7e_103]
+  │  │  │  │           └─ dependencies of libgfortran5 displayed above
+  │  │  │  ├─ liblapack 3.9.0 [required: >=3.9.0,<4.0a0]
+  │  │  │  │  └─ libblas 3.9.0 [required: 3.9.0, 32_h10e41b3_openblas]
+  │  │  │  │     └─ dependencies of libblas displayed above
+  │  │  │  └─ libcblas 3.9.0 [required: >=3.9.0,<4.0a0]
+  │  │  │     └─ libblas 3.9.0 [required: 3.9.0, 32_h10e41b3_openblas]
+  │  │  │        └─ dependencies of libblas displayed above
+  │  │  ├─ pytz 2025.2 [required: >=2020.1]
+  │  │  │  └─ python 3.12.11 [required: >=3.9]
+  │  │  │     └─ dependencies of python displayed above
+  │  │  ├─ python-dateutil 2.9.0.post0 [required: >=2.8.2]
+  │  │  │  ├─ python 3.12.11 [required: >=3.9]
+  │  │  │  │  └─ dependencies of python displayed above
+  │  │  │  └─ six 1.17.0 [required: >=1.5]
+  │  │  │     └─ python 3.12.11 [required: >=3.9]
+  │  │  │        └─ dependencies of python displayed above
+  │  │  └─ python-tzdata 2025.2 [required: >=2022.7]
+  │  │     └─ python 3.12.11 [required: >=3.9]
+  │  │        └─ dependencies of python displayed above
+  │  ├─ packaging 25.0 [required: any]
+  │  │  └─ python 3.12.11 [required: >=3.8]
+  │  │     └─ dependencies of python displayed above
+  │  ├─ aiohttp 3.12.13 [required: any]
+  │  │  ├─ __osx [required: >=11.0]
+  │  │  ├─ python_abi 3.12 [required: 3.12.*, *_cp312]
+  │  │  ├─ python 3.12.11 [required: >=3.12,<3.13.0a0, *_cpython]
+  │  │  │  └─ dependencies of python displayed above
+  │  │  ├─ attrs 25.3.0 [required: >=17.3.0]
+  │  │  │  └─ python 3.12.11 [required: >=3.9]
+  │  │  │     └─ dependencies of python displayed above
+  │  │  ├─ multidict 6.6.3 [required: >=4.5,<7.0]
+  │  │  │  ├─ __osx [required: >=11.0]
+  │  │  │  ├─ python_abi 3.12 [required: 3.12.*, *_cp312]
+  │  │  │  └─ python 3.12.11 [required: >=3.12,<3.13.0a0, *_cpython]
+  │  │  │     └─ dependencies of python displayed above
+  │  │  ├─ aiosignal 1.4.0 [required: >=1.1.2]
+  │  │  │  ├─ python 3.12.11 [required: >=3.9]
+  │  │  │  │  └─ dependencies of python displayed above
+  │  │  │  ├─ typing_extensions 4.14.0 [required: >=4.2]
+  │  │  │  │  └─ dependencies of typing_extensions displayed above
+  │  │  │  └─ frozenlist 1.6.0 [required: >=1.1.0]
+  │  │  │     ├─ __osx [required: >=11.0]
+  │  │  │     ├─ libcxx 20.1.7 [required: >=18]
+  │  │  │     │  └─ dependencies of libcxx displayed above
+  │  │  │     ├─ python_abi 3.12 [required: 3.12.*, *_cp312]
+  │  │  │     └─ python 3.12.11 [required: >=3.12,<3.13.0a0, *_cpython]
+  │  │  │        └─ dependencies of python displayed above
+  │  │  ├─ frozenlist 1.6.0 [required: >=1.1.1]
+  │  │  │  └─ dependencies of frozenlist displayed above
+  │  │  ├─ propcache 0.3.1 [required: >=0.2.0]
+  │  │  │  ├─ __osx [required: >=11.0]
+  │  │  │  ├─ python_abi 3.12 [required: 3.12.*, *_cp312]
+  │  │  │  └─ python 3.12.11 [required: >=3.12,<3.13.0a0, *_cpython]
+  │  │  │     └─ dependencies of python displayed above
+  │  │  ├─ yarl 1.20.1 [required: >=1.17.0,<2.0]
+  │  │  │  ├─ __osx [required: >=11.0]
+  │  │  │  ├─ python_abi 3.12 [required: 3.12.*, *_cp312]
+  │  │  │  ├─ python 3.12.11 [required: >=3.12,<3.13.0a0, *_cpython]
+  │  │  │  │  └─ dependencies of python displayed above
+  │  │  │  ├─ idna 3.10 [required: >=2.0]
+  │  │  │  │  └─ dependencies of idna displayed above
+  │  │  │  ├─ multidict 6.6.3 [required: >=4.0]
+  │  │  │  │  └─ dependencies of multidict displayed above
+  │  │  │  └─ propcache 0.3.1 [required: >=0.2.1]
+  │  │  │     └─ dependencies of propcache displayed above
+  │  │  └─ aiohappyeyeballs 2.6.1 [required: >=2.5.0]
+  │  │     └─ python 3.12.11 [required: >=3.9]
+  │  │        └─ dependencies of python displayed above
+  │  ├─ filelock 3.18.0 [required: any]
+  │  │  └─ python 3.12.11 [required: >=3.9]
+  │  │     └─ dependencies of python displayed above
+  │  ├─ python-xxhash 3.5.0 [required: any]
+  │  │  ├─ __osx [required: >=11.0]
+  │  │  ├─ python_abi 3.12 [required: 3.12.*, *_cp312]
+  │  │  ├─ python 3.12.11 [required: >=3.12,<3.13.0a0, *_cpython]
+  │  │  │  └─ dependencies of python displayed above
+  │  │  └─ xxhash 0.8.3 [required: >=0.8.3,<0.8.4.0a0]
+  │  │     └─ __osx [required: >=11.0]
+  │  ├─ python 3.12.11 [required: >=3.9]
+  │  │  └─ dependencies of python displayed above
+  │  ├─ pyyaml 6.0.2 [required: >=5.1]
+  │  │  └─ dependencies of pyyaml displayed above
+  │  ├─ numpy 2.3.1 [required: >=1.17]
+  │  │  └─ dependencies of numpy displayed above
+  │  ├─ requests 2.32.4 [required: >=2.32.2]
+  │  │  ├─ python 3.12.11 [required: >=3.9]
+  │  │  │  └─ dependencies of python displayed above
+  │  │  ├─ idna 3.10 [required: >=2.5,<4]
+  │  │  │  └─ dependencies of idna displayed above
+  │  │  ├─ certifi 2025.6.15 [required: >=2017.4.17]
+  │  │  │  └─ dependencies of certifi displayed above
+  │  │  ├─ charset-normalizer 3.4.2 [required: >=2,<4]
+  │  │  │  └─ python 3.12.11 [required: >=3.9]
+  │  │  │     └─ dependencies of python displayed above
+  │  │  └─ urllib3 2.5.0 [required: >=1.21.1,<3]
+  │  │     ├─ python 3.12.11 [required: >=3.9]
+  │  │     │  └─ dependencies of python displayed above
+  │  │     ├─ brotli-python 1.1.0 [required: >=1.0.9]
+  │  │     │  ├─ __osx [required: >=11.0]
+  │  │     │  ├─ libcxx 20.1.7 [required: >=18]
+  │  │     │  │  └─ dependencies of libcxx displayed above
+  │  │     │  ├─ python_abi 3.12 [required: 3.12.*, *_cp312]
+  │  │     │  └─ python 3.12.11 [required: >=3.12,<3.13.0a0, *_cpython]
+  │  │     │     └─ dependencies of python displayed above
+  │  │     ├─ pysocks 1.7.1 [required: >=1.5.6,<2.0,!=1.5.7]
+  │  │     │  ├─ __unix [required: any]
+  │  │     │  └─ python 3.12.11 [required: >=3.9]
+  │  │     │     └─ dependencies of python displayed above
+  │  │     ├─ h2 4.2.0 [required: >=4,<5]
+  │  │     │  └─ dependencies of h2 displayed above
+  │  │     └─ zstandard 0.23.0 [required: >=0.18.0]
+  │  │        ├─ __osx [required: >=11.0]
+  │  │        ├─ python_abi 3.12 [required: 3.12.*, *_cp312]
+  │  │        ├─ python 3.12.11 [required: >=3.12,<3.13.0a0, *_cpython]
+  │  │        │  └─ dependencies of python displayed above
+  │  │        └─ cffi 1.17.1 [required: >=1.11]
+  │  │           ├─ pycparser 2.22 [required: any]
+  │  │           │  └─ python 3.12.11 [required: >=3.9]
+  │  │           │     └─ dependencies of python displayed above
+  │  │           ├─ __osx [required: >=11.0]
+  │  │           ├─ python_abi 3.12 [required: 3.12.*, *_cp312]
+  │  │           ├─ python 3.12.11 [required: >=3.12,<3.13.0a0, *_cpython]
+  │  │           │  └─ dependencies of python displayed above
+  │  │           └─ libffi 3.4.6 [required: >=3.4,<4.0a0]
+  │  │              └─ dependencies of libffi displayed above
+  │  ├─ pyarrow 20.0.0 [required: >=15.0.0]
+  │  │  ├─ python_abi 3.12 [required: 3.12.*, *_cp312]
+  │  │  ├─ python 3.12.11 [required: >=3.12,<3.13.0a0]
+  │  │  │  └─ dependencies of python displayed above
+  │  │  ├─ libarrow-acero 20.0.0 [required: 20.0.0.*]
+  │  │  │  ├─ __osx [required: >=11.0]
+  │  │  │  ├─ libcxx 20.1.7 [required: >=18]
+  │  │  │  │  └─ dependencies of libcxx displayed above
+  │  │  │  └─ libarrow 20.0.0 [required: 20.0.0, hd5f8272_8_cpu]
+  │  │  │     ├─ re2 2025.06.26 [required: any]
+  │  │  │     │  └─ libre2-11 2025.06.26 [required: 2025.06.26, hd41c47c_0]
+  │  │  │     │     ├─ __osx [required: >=11.0]
+  │  │  │     │     ├─ libcxx 20.1.7 [required: >=18]
+  │  │  │     │     │  └─ dependencies of libcxx displayed above
+  │  │  │     │     └─ libabseil 20250127.1 [required: >=20250127.1,<20250128.0a0]
+  │  │  │     │        ├─ __osx [required: >=11.0]
+  │  │  │     │        └─ libcxx 20.1.7 [required: >=18]
+  │  │  │     │           └─ dependencies of libcxx displayed above
+  │  │  │     ├─ __osx [required: >=11.0]
+  │  │  │     ├─ libcxx 20.1.7 [required: >=18]
+  │  │  │     │  └─ dependencies of libcxx displayed above
+  │  │  │     ├─ libzlib 1.3.1 [required: >=1.3.1,<2.0a0]
+  │  │  │     │  └─ dependencies of libzlib displayed above
+  │  │  │     ├─ bzip2 1.0.8 [required: >=1.0.8,<2.0a0]
+  │  │  │     │  └─ dependencies of bzip2 displayed above
+  │  │  │     ├─ libabseil 20250127.1 [required: >=20250127.1,<20250128.0a0]
+  │  │  │     │  └─ dependencies of libabseil displayed above
+  │  │  │     ├─ glog 0.7.1 [required: >=0.7.1,<0.8.0a0]
+  │  │  │     │  ├─ __osx [required: >=11.0]
+  │  │  │     │  ├─ libcxx 20.1.7 [required: >=16]
+  │  │  │     │  │  └─ dependencies of libcxx displayed above
+  │  │  │     │  └─ gflags 2.2.2 [required: >=2.2.2,<2.3.0a0]
+  │  │  │     │     ├─ __osx [required: >=11.0]
+  │  │  │     │     └─ libcxx 20.1.7 [required: >=17]
+  │  │  │     │        └─ dependencies of libcxx displayed above
+  │  │  │     ├─ lz4-c 1.10.0 [required: >=1.10.0,<1.11.0a0]
+  │  │  │     │  ├─ __osx [required: >=11.0]
+  │  │  │     │  └─ libcxx 20.1.7 [required: >=18]
+  │  │  │     │     └─ dependencies of libcxx displayed above
+  │  │  │     ├─ libre2-11 2025.06.26 [required: >=2024.7.2]
+  │  │  │     │  └─ dependencies of libre2-11 displayed above
+  │  │  │     ├─ libbrotlienc 1.1.0 [required: >=1.1.0,<1.2.0a0]
+  │  │  │     │  ├─ __osx [required: >=11.0]
+  │  │  │     │  └─ libbrotlicommon 1.1.0 [required: 1.1.0, h5505292_3]
+  │  │  │     │     └─ __osx [required: >=11.0]
+  │  │  │     ├─ libprotobuf 5.29.3 [required: >=5.29.3,<5.29.4.0a0]
+  │  │  │     │  ├─ __osx [required: >=11.0]
+  │  │  │     │  ├─ libcxx 20.1.7 [required: >=18]
+  │  │  │     │  │  └─ dependencies of libcxx displayed above
+  │  │  │     │  ├─ libzlib 1.3.1 [required: >=1.3.1,<2.0a0]
+  │  │  │     │  │  └─ dependencies of libzlib displayed above
+  │  │  │     │  └─ libabseil 20250127.1 [required: >=20250127.1,<20250128.0a0]
+  │  │  │     │     └─ dependencies of libabseil displayed above
+  │  │  │     ├─ libbrotlidec 1.1.0 [required: >=1.1.0,<1.2.0a0]
+  │  │  │     │  ├─ __osx [required: >=11.0]
+  │  │  │     │  └─ libbrotlicommon 1.1.0 [required: 1.1.0, h5505292_3]
+  │  │  │     │     └─ dependencies of libbrotlicommon displayed above
+  │  │  │     ├─ zstd 1.5.7 [required: >=1.5.7,<1.6.0a0]
+  │  │  │     │  ├─ __osx [required: >=11.0]
+  │  │  │     │  └─ libzlib 1.3.1 [required: >=1.3.1,<2.0a0]
+  │  │  │     │     └─ dependencies of libzlib displayed above
+  │  │  │     ├─ snappy 1.2.1 [required: >=1.2.1,<1.3.0a0]
+  │  │  │     │  ├─ __osx [required: >=11.0]
+  │  │  │     │  └─ libcxx 20.1.7 [required: >=18]
+  │  │  │     │     └─ dependencies of libcxx displayed above
+  │  │  │     ├─ azure-storage-blobs-cpp 12.13.0 [required: >=12.13.0,<12.13.1.0a0]
+  │  │  │     │  ├─ __osx [required: >=11.0]
+  │  │  │     │  ├─ libcxx 20.1.7 [required: >=17]
+  │  │  │     │  │  └─ dependencies of libcxx displayed above
+  │  │  │     │  ├─ azure-core-cpp 1.14.0 [required: >=1.14.0,<1.14.1.0a0]
+  │  │  │     │  │  ├─ __osx [required: >=11.0]
+  │  │  │     │  │  ├─ libcxx 20.1.7 [required: >=17]
+  │  │  │     │  │  │  └─ dependencies of libcxx displayed above
+  │  │  │     │  │  ├─ openssl 3.5.1 [required: >=3.3.2,<4.0a0]
+  │  │  │     │  │  │  └─ dependencies of openssl displayed above
+  │  │  │     │  │  └─ libcurl 8.14.1 [required: >=8.10.1,<9.0a0]
+  │  │  │     │  │     ├─ __osx [required: >=11.0]
+  │  │  │     │  │     ├─ libzlib 1.3.1 [required: >=1.3.1,<2.0a0]
+  │  │  │     │  │     │  └─ dependencies of libzlib displayed above
+  │  │  │     │  │     ├─ openssl 3.5.1 [required: >=3.5.0,<4.0a0]
+  │  │  │     │  │     │  └─ dependencies of openssl displayed above
+  │  │  │     │  │     ├─ zstd 1.5.7 [required: >=1.5.7,<1.6.0a0]
+  │  │  │     │  │     │  └─ dependencies of zstd displayed above
+  │  │  │     │  │     ├─ krb5 1.21.3 [required: >=1.21.3,<1.22.0a0]
+  │  │  │     │  │     │  ├─ __osx [required: >=11.0]
+  │  │  │     │  │     │  ├─ libcxx 20.1.7 [required: >=16]
+  │  │  │     │  │     │  │  └─ dependencies of libcxx displayed above
+  │  │  │     │  │     │  ├─ openssl 3.5.1 [required: >=3.3.1,<4.0a0]
+  │  │  │     │  │     │  │  └─ dependencies of openssl displayed above
+  │  │  │     │  │     │  └─ libedit 3.1.20250104 [required: >=3.1.20191231,<4.0a0]
+  │  │  │     │  │     │     ├─ ncurses 6.5 [required: >=6.5,<7.0a0]
+  │  │  │     │  │     │     │  └─ dependencies of ncurses displayed above
+  │  │  │     │  │     │     └─ __osx [required: >=11.0]
+  │  │  │     │  │     ├─ libssh2 1.11.1 [required: >=1.11.1,<2.0a0]
+  │  │  │     │  │     │  ├─ libzlib 1.3.1 [required: >=1.3.1,<2.0a0]
+  │  │  │     │  │     │  │  └─ dependencies of libzlib displayed above
+  │  │  │     │  │     │  └─ openssl 3.5.1 [required: >=3.5.0,<4.0a0]
+  │  │  │     │  │     │     └─ dependencies of openssl displayed above
+  │  │  │     │  │     └─ libnghttp2 1.64.0 [required: >=1.64.0,<2.0a0]
+  │  │  │     │  │        ├─ __osx [required: >=11.0]
+  │  │  │     │  │        ├─ libcxx 20.1.7 [required: >=17]
+  │  │  │     │  │        │  └─ dependencies of libcxx displayed above
+  │  │  │     │  │        ├─ libzlib 1.3.1 [required: >=1.3.1,<2.0a0]
+  │  │  │     │  │        │  └─ dependencies of libzlib displayed above
+  │  │  │     │  │        ├─ openssl 3.5.1 [required: >=3.3.2,<4.0a0]
+  │  │  │     │  │        │  └─ dependencies of openssl displayed above
+  │  │  │     │  │        ├─ libev 4.33 [required: >=4.33,<5.0a0]
+  │  │  │     │  │        └─ c-ares 1.34.5 [required: >=1.34.2,<2.0a0]
+  │  │  │     │  │           └─ __osx [required: >=11.0]
+  │  │  │     │  └─ azure-storage-common-cpp 12.8.0 [required: >=12.8.0,<12.8.1.0a0]
+  │  │  │     │     ├─ __osx [required: >=11.0]
+  │  │  │     │     ├─ libcxx 20.1.7 [required: >=17]
+  │  │  │     │     │  └─ dependencies of libcxx displayed above
+  │  │  │     │     ├─ libxml2 2.13.8 [required: >=2.12.7,<2.14.0a0]
+  │  │  │     │     │  ├─ __osx [required: >=11.0]
+  │  │  │     │     │  ├─ libzlib 1.3.1 [required: >=1.3.1,<2.0a0]
+  │  │  │     │     │  │  └─ dependencies of libzlib displayed above
+  │  │  │     │     │  ├─ icu 75.1 [required: >=75.1,<76.0a0]
+  │  │  │     │     │  │  └─ __osx [required: >=11.0]
+  │  │  │     │     │  ├─ liblzma 5.8.1 [required: >=5.8.1,<6.0a0]
+  │  │  │     │     │  │  └─ dependencies of liblzma displayed above
+  │  │  │     │     │  └─ libiconv 1.18 [required: >=1.18,<2.0a0]
+  │  │  │     │     │     └─ __osx [required: >=11.0]
+  │  │  │     │     ├─ openssl 3.5.1 [required: >=3.3.2,<4.0a0]
+  │  │  │     │     │  └─ dependencies of openssl displayed above
+  │  │  │     │     └─ azure-core-cpp 1.14.0 [required: >=1.14.0,<1.14.1.0a0]
+  │  │  │     │        └─ dependencies of azure-core-cpp displayed above
+  │  │  │     ├─ azure-core-cpp 1.14.0 [required: >=1.14.0,<1.14.1.0a0]
+  │  │  │     │  └─ dependencies of azure-core-cpp displayed above
+  │  │  │     ├─ azure-identity-cpp 1.10.0 [required: >=1.10.0,<1.10.1.0a0]
+  │  │  │     │  ├─ __osx [required: >=11.0]
+  │  │  │     │  ├─ libcxx 20.1.7 [required: >=17]
+  │  │  │     │  │  └─ dependencies of libcxx displayed above
+  │  │  │     │  ├─ openssl 3.5.1 [required: >=3.3.2,<4.0a0]
+  │  │  │     │  │  └─ dependencies of openssl displayed above
+  │  │  │     │  └─ azure-core-cpp 1.14.0 [required: >=1.14.0,<1.14.1.0a0]
+  │  │  │     │     └─ dependencies of azure-core-cpp displayed above
+  │  │  │     ├─ aws-sdk-cpp 1.11.510 [required: >=1.11.510,<1.11.511.0a0]
+  │  │  │     │  ├─ __osx [required: >=11.0]
+  │  │  │     │  ├─ libcxx 20.1.7 [required: >=18]
+  │  │  │     │  │  └─ dependencies of libcxx displayed above
+  │  │  │     │  ├─ libzlib 1.3.1 [required: >=1.3.1,<2.0a0]
+  │  │  │     │  │  └─ dependencies of libzlib displayed above
+  │  │  │     │  ├─ aws-c-common 0.12.3 [required: >=0.12.3,<0.12.4.0a0]
+  │  │  │     │  │  └─ __osx [required: >=11.0]
+  │  │  │     │  ├─ libcurl 8.14.1 [required: >=8.14.1,<9.0a0]
+  │  │  │     │  │  └─ dependencies of libcurl displayed above
+  │  │  │     │  ├─ aws-crt-cpp 0.32.10 [required: >=0.32.10,<0.32.11.0a0]
+  │  │  │     │  │  ├─ __osx [required: >=11.0]
+  │  │  │     │  │  ├─ libcxx 20.1.7 [required: >=18]
+  │  │  │     │  │  │  └─ dependencies of libcxx displayed above
+  │  │  │     │  │  ├─ aws-c-auth 0.9.0 [required: >=0.9.0,<0.9.1.0a0]
+  │  │  │     │  │  │  ├─ __osx [required: >=11.0]
+  │  │  │     │  │  │  ├─ aws-c-common 0.12.3 [required: >=0.12.3,<0.12.4.0a0]
+  │  │  │     │  │  │  │  └─ dependencies of aws-c-common displayed above
+  │  │  │     │  │  │  ├─ aws-c-cal 0.9.2 [required: >=0.9.2,<0.9.3.0a0]
+  │  │  │     │  │  │  │  ├─ __osx [required: >=11.0]
+  │  │  │     │  │  │  │  └─ aws-c-common 0.12.3 [required: >=0.12.3,<0.12.4.0a0]
+  │  │  │     │  │  │  │     └─ dependencies of aws-c-common displayed above
+  │  │  │     │  │  │  ├─ aws-c-http 0.10.2 [required: >=0.10.2,<0.10.3.0a0]
+  │  │  │     │  │  │  │  ├─ __osx [required: >=11.0]
+  │  │  │     │  │  │  │  ├─ aws-c-common 0.12.3 [required: >=0.12.3,<0.12.4.0a0]
+  │  │  │     │  │  │  │  │  └─ dependencies of aws-c-common displayed above
+  │  │  │     │  │  │  │  ├─ aws-c-cal 0.9.2 [required: >=0.9.2,<0.9.3.0a0]
+  │  │  │     │  │  │  │  │  └─ dependencies of aws-c-cal displayed above
+  │  │  │     │  │  │  │  ├─ aws-c-io 0.20.1 [required: >=0.20.1,<0.20.2.0a0]
+  │  │  │     │  │  │  │  │  ├─ __osx [required: >=11.0]
+  │  │  │     │  │  │  │  │  ├─ aws-c-common 0.12.3 [required: >=0.12.3,<0.12.4.0a0]
+  │  │  │     │  │  │  │  │  │  └─ dependencies of aws-c-common displayed above
+  │  │  │     │  │  │  │  │  └─ aws-c-cal 0.9.2 [required: >=0.9.2,<0.9.3.0a0]
+  │  │  │     │  │  │  │  │     └─ dependencies of aws-c-cal displayed above
+  │  │  │     │  │  │  │  └─ aws-c-compression 0.3.1 [required: >=0.3.1,<0.3.2.0a0]
+  │  │  │     │  │  │  │     ├─ __osx [required: >=11.0]
+  │  │  │     │  │  │  │     └─ aws-c-common 0.12.3 [required: >=0.12.3,<0.12.4.0a0]
+  │  │  │     │  │  │  │        └─ dependencies of aws-c-common displayed above
+  │  │  │     │  │  │  ├─ aws-c-io 0.20.1 [required: >=0.20.1,<0.20.2.0a0]
+  │  │  │     │  │  │  │  └─ dependencies of aws-c-io displayed above
+  │  │  │     │  │  │  └─ aws-c-sdkutils 0.2.4 [required: >=0.2.4,<0.2.5.0a0]
+  │  │  │     │  │  │     ├─ __osx [required: >=11.0]
+  │  │  │     │  │  │     └─ aws-c-common 0.12.3 [required: >=0.12.3,<0.12.4.0a0]
+  │  │  │     │  │  │        └─ dependencies of aws-c-common displayed above
+  │  │  │     │  │  ├─ aws-c-common 0.12.3 [required: >=0.12.3,<0.12.4.0a0]
+  │  │  │     │  │  │  └─ dependencies of aws-c-common displayed above
+  │  │  │     │  │  ├─ aws-c-cal 0.9.2 [required: >=0.9.2,<0.9.3.0a0]
+  │  │  │     │  │  │  └─ dependencies of aws-c-cal displayed above
+  │  │  │     │  │  ├─ aws-c-mqtt 0.13.1 [required: >=0.13.1,<0.13.2.0a0]
+  │  │  │     │  │  │  ├─ __osx [required: >=11.0]
+  │  │  │     │  │  │  ├─ aws-c-common 0.12.3 [required: >=0.12.3,<0.12.4.0a0]
+  │  │  │     │  │  │  │  └─ dependencies of aws-c-common displayed above
+  │  │  │     │  │  │  ├─ aws-c-http 0.10.2 [required: >=0.10.2,<0.10.3.0a0]
+  │  │  │     │  │  │  │  └─ dependencies of aws-c-http displayed above
+  │  │  │     │  │  │  └─ aws-c-io 0.20.1 [required: >=0.20.1,<0.20.2.0a0]
+  │  │  │     │  │  │     └─ dependencies of aws-c-io displayed above
+  │  │  │     │  │  ├─ aws-c-http 0.10.2 [required: >=0.10.2,<0.10.3.0a0]
+  │  │  │     │  │  │  └─ dependencies of aws-c-http displayed above
+  │  │  │     │  │  ├─ aws-c-io 0.20.1 [required: >=0.20.1,<0.20.2.0a0]
+  │  │  │     │  │  │  └─ dependencies of aws-c-io displayed above
+  │  │  │     │  │  ├─ aws-c-sdkutils 0.2.4 [required: >=0.2.4,<0.2.5.0a0]
+  │  │  │     │  │  │  └─ dependencies of aws-c-sdkutils displayed above
+  │  │  │     │  │  ├─ aws-c-s3 0.8.3 [required: >=0.8.3,<0.8.4.0a0]
+  │  │  │     │  │  │  ├─ __osx [required: >=11.0]
+  │  │  │     │  │  │  ├─ aws-c-auth 0.9.0 [required: >=0.9.0,<0.9.1.0a0]
+  │  │  │     │  │  │  │  └─ dependencies of aws-c-auth displayed above
+  │  │  │     │  │  │  ├─ aws-c-common 0.12.3 [required: >=0.12.3,<0.12.4.0a0]
+  │  │  │     │  │  │  │  └─ dependencies of aws-c-common displayed above
+  │  │  │     │  │  │  ├─ aws-checksums 0.2.7 [required: >=0.2.7,<0.2.8.0a0]
+  │  │  │     │  │  │  │  ├─ __osx [required: >=11.0]
+  │  │  │     │  │  │  │  └─ aws-c-common 0.12.3 [required: >=0.12.3,<0.12.4.0a0]
+  │  │  │     │  │  │  │     └─ dependencies of aws-c-common displayed above
+  │  │  │     │  │  │  ├─ aws-c-cal 0.9.2 [required: >=0.9.2,<0.9.3.0a0]
+  │  │  │     │  │  │  │  └─ dependencies of aws-c-cal displayed above
+  │  │  │     │  │  │  ├─ aws-c-http 0.10.2 [required: >=0.10.2,<0.10.3.0a0]
+  │  │  │     │  │  │  │  └─ dependencies of aws-c-http displayed above
+  │  │  │     │  │  │  └─ aws-c-io 0.20.1 [required: >=0.20.1,<0.20.2.0a0]
+  │  │  │     │  │  │     └─ dependencies of aws-c-io displayed above
+  │  │  │     │  │  └─ aws-c-event-stream 0.5.5 [required: >=0.5.5,<0.5.6.0a0]
+  │  │  │     │  │     ├─ __osx [required: >=11.0]
+  │  │  │     │  │     ├─ libcxx 20.1.7 [required: >=18]
+  │  │  │     │  │     │  └─ dependencies of libcxx displayed above
+  │  │  │     │  │     ├─ aws-c-common 0.12.3 [required: >=0.12.3,<0.12.4.0a0]
+  │  │  │     │  │     │  └─ dependencies of aws-c-common displayed above
+  │  │  │     │  │     ├─ aws-checksums 0.2.7 [required: >=0.2.7,<0.2.8.0a0]
+  │  │  │     │  │     │  └─ dependencies of aws-checksums displayed above
+  │  │  │     │  │     └─ aws-c-io 0.20.1 [required: >=0.20.1,<0.20.2.0a0]
+  │  │  │     │  │        └─ dependencies of aws-c-io displayed above
+  │  │  │     │  └─ aws-c-event-stream 0.5.5 [required: >=0.5.5,<0.5.6.0a0]
+  │  │  │     │     └─ dependencies of aws-c-event-stream displayed above
+  │  │  │     ├─ azure-storage-files-datalake-cpp 12.12.0 [required: >=12.12.0,<12.12.1.0a0]
+  │  │  │     │  ├─ __osx [required: >=11.0]
+  │  │  │     │  ├─ libcxx 20.1.7 [required: >=17]
+  │  │  │     │  │  └─ dependencies of libcxx displayed above
+  │  │  │     │  ├─ azure-storage-blobs-cpp 12.13.0 [required: >=12.13.0,<12.13.1.0a0]
+  │  │  │     │  │  └─ dependencies of azure-storage-blobs-cpp displayed above
+  │  │  │     │  ├─ azure-core-cpp 1.14.0 [required: >=1.14.0,<1.14.1.0a0]
+  │  │  │     │  │  └─ dependencies of azure-core-cpp displayed above
+  │  │  │     │  └─ azure-storage-common-cpp 12.8.0 [required: >=12.8.0,<12.8.1.0a0]
+  │  │  │     │     └─ dependencies of azure-storage-common-cpp displayed above
+  │  │  │     ├─ libutf8proc 2.10.0 [required: >=2.10.0,<2.11.0a0]
+  │  │  │     │  └─ __osx [required: >=11.0]
+  │  │  │     ├─ libgoogle-cloud 2.36.0 [required: >=2.36.0,<2.37.0a0]
+  │  │  │     │  ├─ __osx [required: >=11.0]
+  │  │  │     │  ├─ libcxx 20.1.7 [required: >=18]
+  │  │  │     │  │  └─ dependencies of libcxx displayed above
+  │  │  │     │  ├─ libabseil 20250127.1 [required: >=20250127.0,<20250128.0a0]
+  │  │  │     │  │  └─ dependencies of libabseil displayed above
+  │  │  │     │  ├─ libprotobuf 5.29.3 [required: >=5.29.3,<5.29.4.0a0]
+  │  │  │     │  │  └─ dependencies of libprotobuf displayed above
+  │  │  │     │  ├─ openssl 3.5.1 [required: >=3.4.1,<4.0a0]
+  │  │  │     │  │  └─ dependencies of openssl displayed above
+  │  │  │     │  ├─ libcurl 8.14.1 [required: >=8.12.1,<9.0a0]
+  │  │  │     │  │  └─ dependencies of libcurl displayed above
+  │  │  │     │  └─ libgrpc 1.71.0 [required: >=1.71.0,<1.72.0a0]
+  │  │  │     │     ├─ re2 2025.06.26 [required: any]
+  │  │  │     │     │  └─ dependencies of re2 displayed above
+  │  │  │     │     ├─ __osx [required: >=11.0]
+  │  │  │     │     ├─ libcxx 20.1.7 [required: >=18]
+  │  │  │     │     │  └─ dependencies of libcxx displayed above
+  │  │  │     │     ├─ libzlib 1.3.1 [required: >=1.3.1,<2.0a0]
+  │  │  │     │     │  └─ dependencies of libzlib displayed above
+  │  │  │     │     ├─ libabseil 20250127.1 [required: >=20250127.1,<20250128.0a0]
+  │  │  │     │     │  └─ dependencies of libabseil displayed above
+  │  │  │     │     ├─ openssl 3.5.1 [required: >=3.5.0,<4.0a0]
+  │  │  │     │     │  └─ dependencies of openssl displayed above
+  │  │  │     │     ├─ libre2-11 2025.06.26 [required: >=2024.7.2]
+  │  │  │     │     │  └─ dependencies of libre2-11 displayed above
+  │  │  │     │     ├─ libprotobuf 5.29.3 [required: >=5.29.3,<5.29.4.0a0]
+  │  │  │     │     │  └─ dependencies of libprotobuf displayed above
+  │  │  │     │     └─ c-ares 1.34.5 [required: >=1.34.5,<2.0a0]
+  │  │  │     │        └─ dependencies of c-ares displayed above
+  │  │  │     ├─ libgoogle-cloud-storage 2.36.0 [required: >=2.36.0,<2.37.0a0]
+  │  │  │     │  ├─ openssl 3.5.1 [required: any]
+  │  │  │     │  │  └─ dependencies of openssl displayed above
+  │  │  │     │  ├─ libcurl 8.14.1 [required: any]
+  │  │  │     │  │  └─ dependencies of libcurl displayed above
+  │  │  │     │  ├─ libabseil 20250127.1 [required: any]
+  │  │  │     │  │  └─ dependencies of libabseil displayed above
+  │  │  │     │  ├─ __osx [required: >=11.0]
+  │  │  │     │  ├─ libcxx 20.1.7 [required: >=18]
+  │  │  │     │  │  └─ dependencies of libcxx displayed above
+  │  │  │     │  ├─ libzlib 1.3.1 [required: >=1.3.1,<2.0a0]
+  │  │  │     │  │  └─ dependencies of libzlib displayed above
+  │  │  │     │  ├─ libcrc32c 1.1.2 [required: >=1.1.2,<1.2.0a0]
+  │  │  │     │  │  └─ libcxx 20.1.7 [required: >=11.1.0]
+  │  │  │     │  │     └─ dependencies of libcxx displayed above
+  │  │  │     │  └─ libgoogle-cloud 2.36.0 [required: 2.36.0, h9484b08_1]
+  │  │  │     │     └─ dependencies of libgoogle-cloud displayed above
+  │  │  │     ├─ orc 2.1.2 [required: >=2.1.2,<2.1.3.0a0]
+  │  │  │     │  ├─ tzdata 2025b [required: any]
+  │  │  │     │  ├─ __osx [required: >=11.0]
+  │  │  │     │  ├─ libcxx 20.1.7 [required: >=18]
+  │  │  │     │  │  └─ dependencies of libcxx displayed above
+  │  │  │     │  ├─ libzlib 1.3.1 [required: >=1.3.1,<2.0a0]
+  │  │  │     │  │  └─ dependencies of libzlib displayed above
+  │  │  │     │  ├─ lz4-c 1.10.0 [required: >=1.10.0,<1.11.0a0]
+  │  │  │     │  │  └─ dependencies of lz4-c displayed above
+  │  │  │     │  ├─ libprotobuf 5.29.3 [required: >=5.29.3,<5.29.4.0a0]
+  │  │  │     │  │  └─ dependencies of libprotobuf displayed above
+  │  │  │     │  ├─ zstd 1.5.7 [required: >=1.5.7,<1.6.0a0]
+  │  │  │     │  │  └─ dependencies of zstd displayed above
+  │  │  │     │  └─ snappy 1.2.1 [required: >=1.2.1,<1.3.0a0]
+  │  │  │     │     └─ dependencies of snappy displayed above
+  │  │  │     ├─ aws-crt-cpp 0.32.10 [required: >=0.32.10,<0.32.11.0a0]
+  │  │  │     │  └─ dependencies of aws-crt-cpp displayed above
+  │  │  │     └─ libopentelemetry-cpp 1.21.0 [required: >=1.21.0,<1.22.0a0]
+  │  │  │        ├─ nlohmann_json 3.12.0 [required: any]
+  │  │  │        ├─ libzlib 1.3.1 [required: >=1.3.1,<2.0a0]
+  │  │  │        │  └─ dependencies of libzlib displayed above
+  │  │  │        ├─ libabseil 20250127.1 [required: >=20250127.1,<20250128.0a0]
+  │  │  │        │  └─ dependencies of libabseil displayed above
+  │  │  │        ├─ libprotobuf 5.29.3 [required: >=5.29.3,<5.29.4.0a0]
+  │  │  │        │  └─ dependencies of libprotobuf displayed above
+  │  │  │        ├─ prometheus-cpp 1.3.0 [required: >=1.3.0,<1.4.0a0]
+  │  │  │        │  ├─ zlib 1.3.1 [required: any]
+  │  │  │        │  │  ├─ __osx [required: >=11.0]
+  │  │  │        │  │  └─ libzlib 1.3.1 [required: 1.3.1, h8359307_2]
+  │  │  │        │  │     └─ dependencies of libzlib displayed above
+  │  │  │        │  ├─ __osx [required: >=11.0]
+  │  │  │        │  ├─ libcxx 20.1.7 [required: >=18]
+  │  │  │        │  │  └─ dependencies of libcxx displayed above
+  │  │  │        │  ├─ libzlib 1.3.1 [required: >=1.3.1,<2.0a0]
+  │  │  │        │  │  └─ dependencies of libzlib displayed above
+  │  │  │        │  └─ libcurl 8.14.1 [required: >=8.10.1,<9.0a0]
+  │  │  │        │     └─ dependencies of libcurl displayed above
+  │  │  │        ├─ libgrpc 1.71.0 [required: >=1.71.0,<1.72.0a0]
+  │  │  │        │  └─ dependencies of libgrpc displayed above
+  │  │  │        ├─ libcurl 8.14.1 [required: >=8.14.0,<9.0a0]
+  │  │  │        │  └─ dependencies of libcurl displayed above
+  │  │  │        └─ libopentelemetry-cpp-headers 1.21.0 [required: 1.21.0, hce30654_0]
+  │  │  ├─ libarrow-dataset 20.0.0 [required: 20.0.0.*]
+  │  │  │  ├─ __osx [required: >=11.0]
+  │  │  │  ├─ libcxx 20.1.7 [required: >=18]
+  │  │  │  │  └─ dependencies of libcxx displayed above
+  │  │  │  ├─ libarrow 20.0.0 [required: 20.0.0, hd5f8272_8_cpu]
+  │  │  │  │  └─ dependencies of libarrow displayed above
+  │  │  │  ├─ libarrow-acero 20.0.0 [required: 20.0.0, hf07054f_8_cpu]
+  │  │  │  │  └─ dependencies of libarrow-acero displayed above
+  │  │  │  └─ libparquet 20.0.0 [required: 20.0.0, h636d7b7_8_cpu]
+  │  │  │     ├─ __osx [required: >=11.0]
+  │  │  │     ├─ libcxx 20.1.7 [required: >=18]
+  │  │  │     │  └─ dependencies of libcxx displayed above
+  │  │  │     ├─ openssl 3.5.1 [required: >=3.5.0,<4.0a0]
+  │  │  │     │  └─ dependencies of openssl displayed above
+  │  │  │     ├─ libthrift 0.21.0 [required: >=0.21.0,<0.21.1.0a0]
+  │  │  │     │  ├─ __osx [required: >=11.0]
+  │  │  │     │  ├─ libcxx 20.1.7 [required: >=17]
+  │  │  │     │  │  └─ dependencies of libcxx displayed above
+  │  │  │     │  ├─ libzlib 1.3.1 [required: >=1.3.1,<2.0a0]
+  │  │  │     │  │  └─ dependencies of libzlib displayed above
+  │  │  │     │  ├─ libevent 2.1.12 [required: >=2.1.12,<2.1.13.0a0]
+  │  │  │     │  │  └─ openssl 3.5.1 [required: >=3.1.1,<4.0a0]
+  │  │  │     │  │     └─ dependencies of openssl displayed above
+  │  │  │     │  └─ openssl 3.5.1 [required: >=3.3.2,<4.0a0]
+  │  │  │     │     └─ dependencies of openssl displayed above
+  │  │  │     └─ libarrow 20.0.0 [required: 20.0.0, hd5f8272_8_cpu]
+  │  │  │        └─ dependencies of libarrow displayed above
+  │  │  ├─ libarrow-substrait 20.0.0 [required: 20.0.0.*]
+  │  │  │  ├─ __osx [required: >=11.0]
+  │  │  │  ├─ libcxx 20.1.7 [required: >=18]
+  │  │  │  │  └─ dependencies of libcxx displayed above
+  │  │  │  ├─ libabseil 20250127.1 [required: >=20250127.1,<20250128.0a0]
+  │  │  │  │  └─ dependencies of libabseil displayed above
+  │  │  │  ├─ libprotobuf 5.29.3 [required: >=5.29.3,<5.29.4.0a0]
+  │  │  │  │  └─ dependencies of libprotobuf displayed above
+  │  │  │  ├─ libarrow 20.0.0 [required: 20.0.0, hd5f8272_8_cpu]
+  │  │  │  │  └─ dependencies of libarrow displayed above
+  │  │  │  ├─ libarrow-acero 20.0.0 [required: 20.0.0, hf07054f_8_cpu]
+  │  │  │  │  └─ dependencies of libarrow-acero displayed above
+  │  │  │  └─ libarrow-dataset 20.0.0 [required: 20.0.0, hf07054f_8_cpu]
+  │  │  │     └─ dependencies of libarrow-dataset displayed above
+  │  │  ├─ libparquet 20.0.0 [required: 20.0.0.*]
+  │  │  │  └─ dependencies of libparquet displayed above
+  │  │  └─ pyarrow-core 20.0.0 [required: 20.0.0, *_0_*]
+  │  │     ├─ __osx [required: >=11.0]
+  │  │     ├─ libcxx 20.1.7 [required: >=18]
+  │  │     │  └─ dependencies of libcxx displayed above
+  │  │     ├─ python_abi 3.12 [required: 3.12.*, *_cp312]
+  │  │     ├─ python 3.12.11 [required: >=3.12,<3.13.0a0, *_cpython]
+  │  │     │  └─ dependencies of python displayed above
+  │  │     ├─ libzlib 1.3.1 [required: >=1.3.1,<2.0a0]
+  │  │     │  └─ dependencies of libzlib displayed above
+  │  │     └─ libarrow 20.0.0 [required: 20.0.0.*, *cpu]
+  │  │        └─ dependencies of libarrow displayed above
+  │  ├─ dill 0.3.8 [required: >=0.3.0,<0.3.9]
+  │  │  └─ python 3.12.11 [required: >=3.7]
+  │  │     └─ dependencies of python displayed above
+  │  ├─ tqdm 4.67.1 [required: >=4.66.3]
+  │  │  ├─ colorama 0.4.6 [required: any]
+  │  │  │  └─ python 3.12.11 [required: >=3.9]
+  │  │  │     └─ dependencies of python displayed above
+  │  │  └─ python 3.12.11 [required: >=3.9]
+  │  │     └─ dependencies of python displayed above
+  │  ├─ multiprocess 0.70.16 [required: <0.70.17]
+  │  │  ├─ __osx [required: >=11.0]
+  │  │  ├─ python_abi 3.12 [required: 3.12.*, *_cp312]
+  │  │  ├─ python 3.12.11 [required: >=3.12,<3.13.0a0, *_cpython]
+  │  │  │  └─ dependencies of python displayed above
+  │  │  └─ dill 0.3.8 [required: >=0.3.8]
+  │  │     └─ dependencies of dill displayed above
+  │  ├─ huggingface_hub [required: >=0.24.0]
+  │  └─ fsspec 2025.3.0 [required: >=2023.1.0,<=2025.3.0]
+  │     └─ python 3.12.11 [required: >=3.9]
+  │        └─ dependencies of python displayed above
+  ├─ evaluate 0.4.4 [required: >=0.3.0]
+  │  ├─ python 3.12.11 [required: >=3.9]
+  │  │  └─ dependencies of python displayed above
+  │  ├─ pandas 2.3.0 [required: any]
+  │  │  └─ dependencies of pandas displayed above
+  │  ├─ packaging 25.0 [required: any]
+  │  │  └─ dependencies of packaging displayed above
+  │  ├─ dill 0.3.8 [required: any]
+  │  │  └─ dependencies of dill displayed above
+  │  ├─ transformers 4.24.0 [required: any]
+  │  │  ├─ dataclasses 0.8 [required: any]
+  │  │  │  └─ python 3.12.11 [required: >=3.7]
+  │  │  │     └─ dependencies of python displayed above
+  │  │  ├─ datasets 3.6.0 [required: any]
+  │  │  │  └─ dependencies of datasets displayed above
+  │  │  ├─ filelock 3.18.0 [required: any]
+  │  │  │  └─ dependencies of filelock displayed above
+  │  │  ├─ huggingface_hub [required: any]
+  │  │  ├─ importlib_metadata 8.7.0 [required: any]
+  │  │  │  └─ importlib-metadata 8.7.0 [required: ==8.7.0, pyhe01879c_1]
+  │  │  │     ├─ python 3.12.11 [required: >=3.9]
+  │  │  │     │  └─ dependencies of python displayed above
+  │  │  │     └─ zipp 3.23.0 [required: >=3.20]
+  │  │  │        └─ python 3.12.11 [required: >=3.9]
+  │  │  │           └─ dependencies of python displayed above
+  │  │  ├─ numpy 2.3.1 [required: any]
+  │  │  │  └─ dependencies of numpy displayed above
+  │  │  ├─ packaging 25.0 [required: any]
+  │  │  │  └─ dependencies of packaging displayed above
+  │  │  ├─ python 3.12.11 [required: >=3.7]
+  │  │  │  └─ dependencies of python displayed above
+  │  │  ├─ pytorch 2.7.1 [required: any]
+  │  │  │  ├─ setuptools 80.9.0 [required: any]
+  │  │  │  │  └─ dependencies of setuptools displayed above
+  │  │  │  ├─ jinja2 3.1.6 [required: any]
+  │  │  │  │  └─ dependencies of jinja2 displayed above
+  │  │  │  ├─ pybind11 2.13.6 [required: any]
+  │  │  │  │  ├─ python 3.12.11 [required: >=3.9]
+  │  │  │  │  │  └─ dependencies of python displayed above
+  │  │  │  │  └─ pybind11-global 2.13.6 [required: 2.13.6, *_3]
+  │  │  │  │     ├─ __unix [required: any]
+  │  │  │  │     └─ python 3.12.11 [required: >=3.9]
+  │  │  │  │        └─ dependencies of python displayed above
+  │  │  │  ├─ filelock 3.18.0 [required: any]
+  │  │  │  │  └─ dependencies of filelock displayed above
+  │  │  │  ├─ networkx 3.5 [required: any]
+  │  │  │  │  └─ python 3.12.11 [required: >=3.11]
+  │  │  │  │     └─ dependencies of python displayed above
+  │  │  │  ├─ fsspec 2025.3.0 [required: any]
+  │  │  │  │  └─ dependencies of fsspec displayed above
+  │  │  │  ├─ nomkl 1.0 [required: any]
+  │  │  │  ├─ __osx [required: >=11.0]
+  │  │  │  ├─ libcxx 20.1.7 [required: >=18]
+  │  │  │  │  └─ dependencies of libcxx displayed above
+  │  │  │  ├─ python_abi 3.12 [required: 3.12.*, *_cp312]
+  │  │  │  ├─ python 3.12.11 [required: >=3.12,<3.13.0a0, *_cpython]
+  │  │  │  │  └─ dependencies of python displayed above
+  │  │  │  ├─ liblapack 3.9.0 [required: >=3.9.0,<4.0a0]
+  │  │  │  │  └─ dependencies of liblapack displayed above
+  │  │  │  ├─ libzlib 1.3.1 [required: >=1.3.1,<2.0a0]
+  │  │  │  │  └─ dependencies of libzlib displayed above
+  │  │  │  ├─ libcblas 3.9.0 [required: >=3.9.0,<4.0a0]
+  │  │  │  │  └─ dependencies of libcblas displayed above
+  │  │  │  ├─ libabseil 20250127.1 [required: >=20250127.1,<20250128.0a0]
+  │  │  │  │  └─ dependencies of libabseil displayed above
+  │  │  │  ├─ llvm-openmp 20.1.7 [required: >=18.1.8]
+  │  │  │  │  └─ dependencies of llvm-openmp displayed above
+  │  │  │  ├─ libprotobuf 5.29.3 [required: >=5.29.3,<5.29.4.0a0]
+  │  │  │  │  └─ dependencies of libprotobuf displayed above
+  │  │  │  ├─ numpy 2.3.1 [required: >=1.23,<3]
+  │  │  │  │  └─ dependencies of numpy displayed above
+  │  │  │  ├─ sleef 3.8 [required: >=3.8,<4.0a0]
+  │  │  │  │  ├─ __osx [required: >=11.0]
+  │  │  │  │  ├─ libcxx 20.1.7 [required: >=18]
+  │  │  │  │  │  └─ dependencies of libcxx displayed above
+  │  │  │  │  └─ llvm-openmp 20.1.7 [required: >=18.1.8]
+  │  │  │  │     └─ dependencies of llvm-openmp displayed above
+  │  │  │  ├─ typing_extensions 4.14.0 [required: >=4.10.0]
+  │  │  │  │  └─ dependencies of typing_extensions displayed above
+  │  │  │  ├─ optree 0.16.0 [required: >=0.13.0]
+  │  │  │  │  ├─ __osx [required: >=11.0]
+  │  │  │  │  ├─ libcxx 20.1.7 [required: >=18]
+  │  │  │  │  │  └─ dependencies of libcxx displayed above
+  │  │  │  │  ├─ python_abi 3.12 [required: 3.12.*, *_cp312]
+  │  │  │  │  ├─ python 3.12.11 [required: >=3.12,<3.13.0a0, *_cpython]
+  │  │  │  │  │  └─ dependencies of python displayed above
+  │  │  │  │  └─ typing-extensions 4.14.0 [required: >=4.6]
+  │  │  │  │     └─ dependencies of typing-extensions displayed above
+  │  │  │  ├─ libuv 1.51.0 [required: >=1.51.0,<2.0a0]
+  │  │  │  │  └─ dependencies of libuv displayed above
+  │  │  │  ├─ sympy 1.14.0 [required: >=1.13.3]
+  │  │  │  │  ├─ __unix [required: any]
+  │  │  │  │  ├─ cpython 3.12.11 [required: any]
+  │  │  │  │  │  ├─ python 3.12.11 [required: >=3.12,<3.13.0a0]
+  │  │  │  │  │  │  └─ dependencies of python displayed above
+  │  │  │  │  │  └─ python_abi 3.12 [required: *, *_cp312]
+  │  │  │  │  ├─ python 3.12.11 [required: >=3.9]
+  │  │  │  │  │  └─ dependencies of python displayed above
+  │  │  │  │  ├─ mpmath 1.3.0 [required: >=0.19]
+  │  │  │  │  │  └─ python 3.12.11 [required: >=3.9]
+  │  │  │  │  │     └─ dependencies of python displayed above
+  │  │  │  │  └─ gmpy2 2.2.1 [required: >=2.0.8]
+  │  │  │  │     ├─ __osx [required: >=11.0]
+  │  │  │  │     ├─ python_abi 3.12 [required: 3.12.*, *_cp312]
+  │  │  │  │     ├─ python 3.12.11 [required: >=3.12,<3.13.0a0, *_cpython]
+  │  │  │  │     │  └─ dependencies of python displayed above
+  │  │  │  │     ├─ gmp 6.3.0 [required: >=6.3.0,<7.0a0]
+  │  │  │  │     │  ├─ __osx [required: >=11.0]
+  │  │  │  │     │  └─ libcxx 20.1.7 [required: >=16]
+  │  │  │  │     │     └─ dependencies of libcxx displayed above
+  │  │  │  │     ├─ mpfr 4.2.1 [required: >=4.2.1,<5.0a0]
+  │  │  │  │     │  ├─ __osx [required: >=11.0]
+  │  │  │  │     │  └─ gmp 6.3.0 [required: >=6.3.0,<7.0a0]
+  │  │  │  │     │     └─ dependencies of gmp displayed above
+  │  │  │  │     └─ mpc 1.3.1 [required: >=1.3.1,<2.0a0]
+  │  │  │  │        ├─ __osx [required: >=11.0]
+  │  │  │  │        ├─ gmp 6.3.0 [required: >=6.3.0,<7.0a0]
+  │  │  │  │        │  └─ dependencies of gmp displayed above
+  │  │  │  │        └─ mpfr 4.2.1 [required: >=4.2.1,<5.0a0]
+  │  │  │  │           └─ dependencies of mpfr displayed above
+  │  │  │  └─ libtorch 2.7.1 [required: 2.7.1.*, *_1]
+  │  │  │     ├─ __osx [required: >=11.0]
+  │  │  │     ├─ libcxx 20.1.7 [required: >=18]
+  │  │  │     │  └─ dependencies of libcxx displayed above
+  │  │  │     ├─ python_abi 3.12 [required: 3.12.*, *_cp312]
+  │  │  │     ├─ python 3.12.11 [required: >=3.12,<3.13.0a0, *_cpython]
+  │  │  │     │  └─ dependencies of python displayed above
+  │  │  │     ├─ libblas 3.9.0 [required: >=3.9.0,<4.0a0]
+  │  │  │     │  └─ dependencies of libblas displayed above
+  │  │  │     ├─ liblapack 3.9.0 [required: >=3.9.0,<4.0a0]
+  │  │  │     │  └─ dependencies of liblapack displayed above
+  │  │  │     ├─ libzlib 1.3.1 [required: >=1.3.1,<2.0a0]
+  │  │  │     │  └─ dependencies of libzlib displayed above
+  │  │  │     ├─ libcblas 3.9.0 [required: >=3.9.0,<4.0a0]
+  │  │  │     │  └─ dependencies of libcblas displayed above
+  │  │  │     ├─ libabseil 20250127.1 [required: >=20250127.1,<20250128.0a0]
+  │  │  │     │  └─ dependencies of libabseil displayed above
+  │  │  │     ├─ llvm-openmp 20.1.7 [required: >=18.1.8]
+  │  │  │     │  └─ dependencies of llvm-openmp displayed above
+  │  │  │     ├─ libprotobuf 5.29.3 [required: >=5.29.3,<5.29.4.0a0]
+  │  │  │     │  └─ dependencies of libprotobuf displayed above
+  │  │  │     ├─ numpy 2.3.1 [required: >=1.23,<3]
+  │  │  │     │  └─ dependencies of numpy displayed above
+  │  │  │     ├─ sleef 3.8 [required: >=3.8,<4.0a0]
+  │  │  │     │  └─ dependencies of sleef displayed above
+  │  │  │     └─ libuv 1.51.0 [required: >=1.51.0,<2.0a0]
+  │  │  │        └─ dependencies of libuv displayed above
+  │  │  ├─ pyyaml 6.0.2 [required: any]
+  │  │  │  └─ dependencies of pyyaml displayed above
+  │  │  ├─ regex 2024.11.6 [required: !=2019.12.17]
+  │  │  │  ├─ __osx [required: >=11.0]
+  │  │  │  ├─ python_abi 3.12 [required: 3.12.*, *_cp312]
+  │  │  │  └─ python 3.12.11 [required: >=3.12,<3.13.0a0, *_cpython]
+  │  │  │     └─ dependencies of python displayed above
+  │  │  ├─ requests 2.32.4 [required: any]
+  │  │  │  └─ dependencies of requests displayed above
+  │  │  ├─ sacremoses 0.0.53 [required: any]
+  │  │  │  ├─ click 8.2.1 [required: any]
+  │  │  │  │  └─ dependencies of click displayed above
+  │  │  │  ├─ joblib 1.5.1 [required: any]
+  │  │  │  │  ├─ setuptools 80.9.0 [required: any]
+  │  │  │  │  │  └─ dependencies of setuptools displayed above
+  │  │  │  │  └─ python 3.12.11 [required: >=3.9]
+  │  │  │  │     └─ dependencies of python displayed above
+  │  │  │  ├─ python 3.12.11 [required: >=3.6]
+  │  │  │  │  └─ dependencies of python displayed above
+  │  │  │  ├─ regex 2024.11.6 [required: any]
+  │  │  │  │  └─ dependencies of regex displayed above
+  │  │  │  ├─ six 1.17.0 [required: any]
+  │  │  │  │  └─ dependencies of six displayed above
+  │  │  │  └─ tqdm 4.67.1 [required: any]
+  │  │  │     └─ dependencies of tqdm displayed above
+  │  │  ├─ tokenizers 0.13.3 [required: >=0.11.1,!=0.11.3,<0.14.0a0]
+  │  │  │  ├─ python 3.12.11 [required: >=3.12,<3.13.0a0]
+  │  │  │  │  └─ dependencies of python displayed above
+  │  │  │  └─ libcxx 20.1.7 [required: >=14.0.6]
+  │  │  │     └─ dependencies of libcxx displayed above
+  │  │  └─ tqdm 4.67.1 [required: >=4.27]
+  │  │     └─ dependencies of tqdm displayed above
+  │  ├─ python-xxhash 3.5.0 [required: any]
+  │  │  └─ dependencies of python-xxhash displayed above
+  │  ├─ multiprocess 0.70.16 [required: any]
+  │  │  └─ dependencies of multiprocess displayed above
+  │  ├─ cookiecutter 2.6.0 [required: any]
+  │  │  ├─ rich 14.0.0 [required: any]
+  │  │  │  └─ dependencies of rich displayed above
+  │  │  ├─ arrow 1.3.0 [required: any]
+  │  │  │  ├─ python 3.12.11 [required: >=3.9]
+  │  │  │  │  └─ dependencies of python displayed above
+  │  │  │  ├─ python-dateutil 2.9.0.post0 [required: >=2.7.0]
+  │  │  │  │  └─ dependencies of python-dateutil displayed above
+  │  │  │  └─ types-python-dateutil 2.9.0.20250516 [required: >=2.8.10]
+  │  │  │     └─ python 3.12.11 [required: >=3.9]
+  │  │  │        └─ dependencies of python displayed above
+  │  │  ├─ python 3.12.11 [required: >=3.9]
+  │  │  │  └─ dependencies of python displayed above
+  │  │  ├─ pyyaml 6.0.2 [required: >=5.3.1]
+  │  │  │  └─ dependencies of pyyaml displayed above
+  │  │  ├─ requests 2.32.4 [required: >=2.23.0]
+  │  │  │  └─ dependencies of requests displayed above
+  │  │  ├─ binaryornot 0.4.4 [required: >=0.4.4]
+  │  │  │  ├─ chardet 5.2.0 [required: any]
+  │  │  │  │  └─ python 3.12.11 [required: >=3.9]
+  │  │  │  │     └─ dependencies of python displayed above
+  │  │  │  └─ python 3.12.11 [required: >=3.9]
+  │  │  │     └─ dependencies of python displayed above
+  │  │  ├─ python-slugify 8.0.4 [required: >=4.0.0]
+  │  │  │  ├─ python 3.12.11 [required: >=3.9]
+  │  │  │  │  └─ dependencies of python displayed above
+  │  │  │  └─ text-unidecode 1.3 [required: >=1.3]
+  │  │  │     └─ python 3.12.11 [required: >=3.9]
+  │  │  │        └─ dependencies of python displayed above
+  │  │  ├─ jinja2 3.1.6 [required: >=2.7,<4.0.0]
+  │  │  │  └─ dependencies of jinja2 displayed above
+  │  │  └─ click 8.2.1 [required: >=7.0,<9.0.0]
+  │  │     └─ dependencies of click displayed above
+  │  ├─ numpy 2.3.1 [required: >=1.17]
+  │  │  └─ dependencies of numpy displayed above
+  │  ├─ requests 2.32.4 [required: >=2.19.0]
+  │  │  └─ dependencies of requests displayed above
+  │  ├─ scipy 1.16.0 [required: >=1.7.1]
+  │  │  ├─ __osx [required: >=11.0]
+  │  │  ├─ libcxx 20.1.7 [required: >=18]
+  │  │  │  └─ dependencies of libcxx displayed above
+  │  │  ├─ python_abi 3.12 [required: 3.12.*, *_cp312]
+  │  │  ├─ python 3.12.11 [required: >=3.12,<3.13.0a0, *_cpython]
+  │  │  │  └─ dependencies of python displayed above
+  │  │  ├─ libblas 3.9.0 [required: >=3.9.0,<4.0a0]
+  │  │  │  └─ dependencies of libblas displayed above
+  │  │  ├─ liblapack 3.9.0 [required: >=3.9.0,<4.0a0]
+  │  │  │  └─ dependencies of liblapack displayed above
+  │  │  ├─ libcblas 3.9.0 [required: >=3.9.0,<4.0a0]
+  │  │  │  └─ dependencies of libcblas displayed above
+  │  │  ├─ libgfortran5 14.2.0 [required: >=14.2.0]
+  │  │  │  └─ dependencies of libgfortran5 displayed above
+  │  │  ├─ libgfortran 5.0.0 [required: 5.*]
+  │  │  │  └─ dependencies of libgfortran displayed above
+  │  │  └─ numpy 2.3.1 [required: >=1.25.2]
+  │  │     └─ dependencies of numpy displayed above
+  │  ├─ tqdm 4.67.1 [required: >=4.62.1]
+  │  │  └─ dependencies of tqdm displayed above
+  │  ├─ datasets 3.6.0 [required: >=2.0.0]
+  │  │  └─ dependencies of datasets displayed above
+  │  ├─ huggingface_hub [required: >=0.7.0]
+  │  ├─ fsspec 2025.3.0 [required: >=2021.5.0]
+  │  │  └─ dependencies of fsspec displayed above
+  │  └─ gradio [required: >=3.0.0]
+  ├─ python 3.12.11 [required: >=3.6]
+  │  └─ dependencies of python displayed above
+  └─ sentence-transformers 3.0.1 [required: >=2.2.1]
+     ├─ huggingface_hub [required: >=0.8.1]
+     ├─ nltk 3.9.1 [required: any]
+     │  ├─ tqdm 4.67.1 [required: any]
+     │  │  └─ dependencies of tqdm displayed above
+     │  ├─ click 8.2.1 [required: any]
+     │  │  └─ dependencies of click displayed above
+     │  ├─ joblib 1.5.1 [required: any]
+     │  │  └─ dependencies of joblib displayed above
+     │  ├─ python 3.12.11 [required: >=3.9]
+     │  │  └─ dependencies of python displayed above
+     │  └─ regex 2024.11.6 [required: >=2021.8.3]
+     │     └─ dependencies of regex displayed above
+     ├─ numpy 2.3.1 [required: any]
+     │  └─ dependencies of numpy displayed above
+     ├─ python 3.12.11 [required: >=3.6]
+     │  └─ dependencies of python displayed above
+     ├─ pytorch 2.7.1 [required: >=1.6.0]
+     │  └─ dependencies of pytorch displayed above
+     ├─ scikit-learn 1.7.0 [required: any]
+     │  ├─ __osx [required: >=11.0]
+     │  ├─ libcxx 20.1.7 [required: >=18]
+     │  │  └─ dependencies of libcxx displayed above
+     │  ├─ python_abi 3.12 [required: 3.12.*, *_cp312]
+     │  ├─ python 3.12.11 [required: >=3.12,<3.13.0a0, *_cpython]
+     │  │  └─ dependencies of python displayed above
+     │  ├─ numpy 2.3.1 [required: >=1.22.0]
+     │  │  └─ dependencies of numpy displayed above
+     │  ├─ llvm-openmp 20.1.7 [required: >=18.1.8]
+     │  │  └─ dependencies of llvm-openmp displayed above
+     │  ├─ scipy 1.16.0 [required: >=1.8.0]
+     │  │  └─ dependencies of scipy displayed above
+     │  ├─ threadpoolctl 3.6.0 [required: >=3.1.0]
+     │  │  └─ python 3.12.11 [required: >=3.9]
+     │  │     └─ dependencies of python displayed above
+     │  └─ joblib 1.5.1 [required: >=1.2.0]
+     │     └─ dependencies of joblib displayed above
+     ├─ scipy 1.16.0 [required: any]
+     │  └─ dependencies of scipy displayed above
+     ├─ sentencepiece 0.2.0 [required: any]
+     │  ├─ python_abi 3.12 [required: 3.12.*, *_cp312]
+     │  ├─ libsentencepiece 0.2.0 [required: 0.2.0, h98efcbe_11]
+     │  │  ├─ __osx [required: >=11.0]
+     │  │  ├─ libcxx 20.1.7 [required: >=18]
+     │  │  │  └─ dependencies of libcxx displayed above
+     │  │  ├─ libabseil 20250127.1 [required: >=20250127.0,<20250128.0a0]
+     │  │  │  └─ dependencies of libabseil displayed above
+     │  │  └─ libprotobuf 5.29.3 [required: >=5.29.3,<5.29.4.0a0]
+     │  │     └─ dependencies of libprotobuf displayed above
+     │  ├─ sentencepiece-spm 0.2.0 [required: 0.2.0, h98efcbe_11]
+     │  │  ├─ __osx [required: >=11.0]
+     │  │  ├─ libcxx 20.1.7 [required: >=18]
+     │  │  │  └─ dependencies of libcxx displayed above
+     │  │  ├─ libabseil 20250127.1 [required: >=20250127.0,<20250128.0a0]
+     │  │  │  └─ dependencies of libabseil displayed above
+     │  │  ├─ libprotobuf 5.29.3 [required: >=5.29.3,<5.29.4.0a0]
+     │  │  │  └─ dependencies of libprotobuf displayed above
+     │  │  └─ libsentencepiece 0.2.0 [required: 0.2.0, h98efcbe_11]
+     │  │     └─ dependencies of libsentencepiece displayed above
+     │  └─ sentencepiece-python 0.2.0 [required: 0.2.0, py312h5ad5c83_11]
+     │     ├─ __osx [required: >=11.0]
+     │     ├─ libcxx 20.1.7 [required: >=18]
+     │     │  └─ dependencies of libcxx displayed above
+     │     ├─ python_abi 3.12 [required: 3.12.*, *_cp312]
+     │     ├─ python 3.12.11 [required: >=3.12,<3.13.0a0, *_cpython]
+     │     │  └─ dependencies of python displayed above
+     │     ├─ libprotobuf 5.29.3 [required: >=5.29.3,<5.29.4.0a0]
+     │     │  └─ dependencies of libprotobuf displayed above
+     │     └─ libsentencepiece 0.2.0 [required: 0.2.0, h98efcbe_11]
+     │        └─ dependencies of libsentencepiece displayed above
+     ├─ tokenizers 0.13.3 [required: >=0.10.3]
+     │  └─ dependencies of tokenizers displayed above
+     ├─ torchvision 0.22.0 [required: any]
+     │  ├─ python 3.12.11 [required: 3.12.*, *_cpython]
+     │  │  └─ dependencies of python displayed above
+     │  ├─ torchvision-extra-decoders 0.0.2 [required: any]
+     │  │  ├─ python 3.12.11 [required: 3.12.*, *_cpython]
+     │  │  │  └─ dependencies of python displayed above
+     │  │  ├─ __osx [required: >=11.0]
+     │  │  ├─ libcxx 20.1.7 [required: >=18]
+     │  │  │  └─ dependencies of libcxx displayed above
+     │  │  ├─ python_abi 3.12 [required: 3.12.*, *_cp312]
+     │  │  ├─ libtorch 2.7.1 [required: >=2.7.0,<2.8.0a0]
+     │  │  │  └─ dependencies of libtorch displayed above
+     │  │  ├─ pytorch 2.7.1 [required: >=2.7.0,<2.8.0a0]
+     │  │  │  └─ dependencies of pytorch displayed above
+     │  │  ├─ libheif 1.19.7 [required: >=1.19.7,<1.20.0a0]
+     │  │  │  ├─ __osx [required: >=11.0]
+     │  │  │  ├─ libcxx 20.1.7 [required: >=18]
+     │  │  │  │  └─ dependencies of libcxx displayed above
+     │  │  │  ├─ dav1d 1.2.1 [required: >=1.2.1,<1.2.2.0a0]
+     │  │  │  ├─ x265 3.5 [required: >=3.5,<3.6.0a0]
+     │  │  │  │  └─ libcxx 20.1.7 [required: >=12.0.1]
+     │  │  │  │     └─ dependencies of libcxx displayed above
+     │  │  │  ├─ aom 3.9.1 [required: >=3.9.1,<3.10.0a0]
+     │  │  │  │  ├─ __osx [required: >=11.0]
+     │  │  │  │  └─ libcxx 20.1.7 [required: >=16]
+     │  │  │  │     └─ dependencies of libcxx displayed above
+     │  │  │  ├─ libavif16 1.3.0 [required: >=1.2.0,<2.0a0]
+     │  │  │  │  ├─ __osx [required: >=11.0]
+     │  │  │  │  ├─ dav1d 1.2.1 [required: >=1.2.1,<1.2.2.0a0]
+     │  │  │  │  ├─ aom 3.9.1 [required: >=3.9.1,<3.10.0a0]
+     │  │  │  │  │  └─ dependencies of aom displayed above
+     │  │  │  │  ├─ svt-av1 3.0.2 [required: >=3.0.2,<3.0.3.0a0]
+     │  │  │  │  │  ├─ __osx [required: >=11.0]
+     │  │  │  │  │  └─ libcxx 20.1.7 [required: >=18]
+     │  │  │  │  │     └─ dependencies of libcxx displayed above
+     │  │  │  │  └─ rav1e 0.7.1 [required: >=0.7.1,<0.8.0a0]
+     │  │  │  │     └─ __osx [required: >=11.0]
+     │  │  │  └─ libde265 1.0.15 [required: >=1.0.15,<1.0.16.0a0]
+     │  │  │     └─ libcxx 20.1.7 [required: >=15]
+     │  │  │        └─ dependencies of libcxx displayed above
+     │  │  └─ libavif16 1.3.0 [required: >=1.3.0,<2.0a0]
+     │  │     └─ dependencies of libavif16 displayed above
+     │  ├─ __osx [required: >=11.0]
+     │  ├─ libcxx 20.1.7 [required: >=18]
+     │  │  └─ dependencies of libcxx displayed above
+     │  ├─ python_abi 3.12 [required: 3.12.*, *_cp312]
+     │  ├─ pytorch 2.7.1 [required: >=2.7.0,<2.8.0a0]
+     │  │  └─ dependencies of pytorch displayed above
+     │  ├─ giflib 5.2.2 [required: >=5.2.2,<5.3.0a0]
+     │  ├─ libpng 1.6.50 [required: >=1.6.47,<1.7.0a0]
+     │  │  ├─ __osx [required: >=11.0]
+     │  │  └─ libzlib 1.3.1 [required: >=1.3.1,<2.0a0]
+     │  │     └─ dependencies of libzlib displayed above
+     │  ├─ libwebp-base 1.5.0 [required: >=1.5.0,<2.0a0]
+     │  │  └─ __osx [required: >=11.0]
+     │  ├─ libjpeg-turbo 3.1.0 [required: >=3.1.0,<4.0a0]
+     │  │  └─ __osx [required: >=11.0]
+     │  ├─ pillow 11.3.0 [required: >=5.3.0,!=8.3.0,!=8.3.1]
+     │  │  ├─ __osx [required: >=11.0]
+     │  │  ├─ python_abi 3.12 [required: 3.12.*, *_cp312]
+     │  │  ├─ python 3.12.11 [required: >=3.12,<3.13.0a0, *_cpython]
+     │  │  │  └─ dependencies of python displayed above
+     │  │  ├─ libzlib 1.3.1 [required: >=1.3.1,<2.0a0]
+     │  │  │  └─ dependencies of libzlib displayed above
+     │  │  ├─ libtiff 4.7.0 [required: >=4.7.0,<4.8.0a0]
+     │  │  │  ├─ __osx [required: >=11.0]
+     │  │  │  ├─ libcxx 20.1.7 [required: >=18]
+     │  │  │  │  └─ dependencies of libcxx displayed above
+     │  │  │  ├─ libzlib 1.3.1 [required: >=1.3.1,<2.0a0]
+     │  │  │  │  └─ dependencies of libzlib displayed above
+     │  │  │  ├─ zstd 1.5.7 [required: >=1.5.7,<1.6.0a0]
+     │  │  │  │  └─ dependencies of zstd displayed above
+     │  │  │  ├─ lerc 4.0.0 [required: >=4.0.0,<5.0a0]
+     │  │  │  │  ├─ __osx [required: >=11.0]
+     │  │  │  │  └─ libcxx 20.1.7 [required: >=18]
+     │  │  │  │     └─ dependencies of libcxx displayed above
+     │  │  │  ├─ liblzma 5.8.1 [required: >=5.8.1,<6.0a0]
+     │  │  │  │  └─ dependencies of liblzma displayed above
+     │  │  │  ├─ libwebp-base 1.5.0 [required: >=1.5.0,<2.0a0]
+     │  │  │  │  └─ dependencies of libwebp-base displayed above
+     │  │  │  ├─ libjpeg-turbo 3.1.0 [required: >=3.1.0,<4.0a0]
+     │  │  │  │  └─ dependencies of libjpeg-turbo displayed above
+     │  │  │  └─ libdeflate 1.24 [required: >=1.24,<1.25.0a0]
+     │  │  │     └─ __osx [required: >=11.0]
+     │  │  ├─ tk 8.6.13 [required: >=8.6.13,<8.7.0a0]
+     │  │  │  └─ dependencies of tk displayed above
+     │  │  ├─ libwebp-base 1.5.0 [required: >=1.5.0,<2.0a0]
+     │  │  │  └─ dependencies of libwebp-base displayed above
+     │  │  ├─ libjpeg-turbo 3.1.0 [required: >=3.1.0,<4.0a0]
+     │  │  │  └─ dependencies of libjpeg-turbo displayed above
+     │  │  ├─ libfreetype6 2.13.3 [required: >=2.13.3]
+     │  │  │  ├─ __osx [required: >=11.0]
+     │  │  │  ├─ libzlib 1.3.1 [required: >=1.3.1,<2.0a0]
+     │  │  │  │  └─ dependencies of libzlib displayed above
+     │  │  │  └─ libpng 1.6.50 [required: >=1.6.47,<1.7.0a0]
+     │  │  │     └─ dependencies of libpng displayed above
+     │  │  ├─ libfreetype 2.13.3 [required: >=2.13.3]
+     │  │  │  └─ libfreetype6 2.13.3 [required: >=2.13.3]
+     │  │  │     └─ dependencies of libfreetype6 displayed above
+     │  │  ├─ openjpeg 2.5.3 [required: >=2.5.3,<3.0a0]
+     │  │  │  ├─ __osx [required: >=11.0]
+     │  │  │  ├─ libcxx 20.1.7 [required: >=18]
+     │  │  │  │  └─ dependencies of libcxx displayed above
+     │  │  │  ├─ libzlib 1.3.1 [required: >=1.3.1,<2.0a0]
+     │  │  │  │  └─ dependencies of libzlib displayed above
+     │  │  │  ├─ libtiff 4.7.0 [required: >=4.7.0,<4.8.0a0]
+     │  │  │  │  └─ dependencies of libtiff displayed above
+     │  │  │  └─ libpng 1.6.50 [required: >=1.6.44,<1.7.0a0]
+     │  │  │     └─ dependencies of libpng displayed above
+     │  │  ├─ libxcb 1.17.0 [required: >=1.17.0,<2.0a0]
+     │  │  │  ├─ xorg-libxdmcp 1.1.5 [required: any]
+     │  │  │  │  └─ __osx [required: >=11.0]
+     │  │  │  ├─ pthread-stubs 0.4 [required: any]
+     │  │  │  │  └─ __osx [required: >=11.0]
+     │  │  │  ├─ __osx [required: >=11.0]
+     │  │  │  └─ xorg-libxau 1.0.12 [required: >=1.0.11,<2.0a0]
+     │  │  │     └─ __osx [required: >=11.0]
+     │  │  └─ lcms2 2.17 [required: >=2.17,<3.0a0]
+     │  │     ├─ __osx [required: >=11.0]
+     │  │     ├─ libjpeg-turbo 3.1.0 [required: >=3.0.0,<4.0a0]
+     │  │     │  └─ dependencies of libjpeg-turbo displayed above
+     │  │     └─ libtiff 4.7.0 [required: >=4.7.0,<4.8.0a0]
+     │  │        └─ dependencies of libtiff displayed above
+     │  ├─ numpy 2.3.1 [required: >=1.23.5]
+     │  │  └─ dependencies of numpy displayed above
+     │  └─ libtorch 2.7.1 [required: >=2.7.0,<2.8.0a0]
+     │     └─ dependencies of libtorch displayed above
+     ├─ tqdm 4.67.1 [required: any]
+     │  └─ dependencies of tqdm displayed above
+     └─ transformers 4.24.0 [required: >=4.6.0,<5.0.0]
+        └─ dependencies of transformers displayed above
+pyee==13.0.0
+  ├─ typing_extensions 4.14.0 [required: any]
+  │  └─ dependencies of typing_extensions displayed above
+  └─ python 3.12.11 [required: >=3.9]
+     └─ dependencies of python displayed above
+unidecode==1.3.8
+  └─ python 3.12.11 [required: >=3.9]
+     └─ dependencies of python displayed above
+langdetect==1.0.9
+  ├─ six 1.17.0 [required: any]
+  │  └─ dependencies of six displayed above
+  └─ python 3.12.11 [required: >=3.9]
+     └─ dependencies of python displayed above
+weasel==0.4.1
+  ├─ python 3.12.11 [required: >=3.9]
+  │  └─ dependencies of python displayed above
+  ├─ packaging 25.0 [required: >=20.0]
+  │  └─ dependencies of packaging displayed above
+  ├─ pydantic 2.11.7 [required: >=1.7.4,!=1.8,!=1.8.1,<3.0.0]
+  │  └─ dependencies of pydantic displayed above
+  ├─ typer 0.16.0 [required: >=0.3.0,<1.0.0]
+  │  └─ dependencies of typer displayed above
+  ├─ requests 2.32.4 [required: >=2.13.0,<3.0.0]
+  │  └─ dependencies of requests displayed above
+  ├─ srsly 2.5.1 [required: >=2.4.3,<3.0.0]
+  │  ├─ __osx [required: >=11.0]
+  │  ├─ libcxx 20.1.7 [required: >=18]
+  │  │  └─ dependencies of libcxx displayed above
+  │  ├─ python_abi 3.12 [required: 3.12.*, *_cp312]
+  │  ├─ python 3.12.11 [required: >=3.12,<3.13.0a0, *_cpython]
+  │  │  └─ dependencies of python displayed above
+  │  ├─ catalogue 2.0.10 [required: >=2.0.1,<2.1.0]
+  │  │  ├─ python_abi 3.12 [required: 3.12.*, *_cp312]
+  │  │  └─ python 3.12.11 [required: >=3.12,<3.13.0a0, *_cpython]
+  │  │     └─ dependencies of python displayed above
+  │  ├─ cloudpickle 3.1.1 [required: >=2.2.0]
+  │  │  └─ python 3.12.11 [required: >=3.9]
+  │  │     └─ dependencies of python displayed above
+  │  └─ ujson 5.10.0 [required: >=1.35]
+  │     ├─ __osx [required: >=11.0]
+  │     ├─ python_abi 3.12 [required: 3.12.*, *_cp312]
+  │     ├─ python 3.12.11 [required: >=3.12,<3.13.0a0, *_cpython]
+  │     │  └─ dependencies of python displayed above
+  │     └─ libcxx 20.1.7 [required: >=17]
+  │        └─ dependencies of libcxx displayed above
+  ├─ wasabi 1.1.3 [required: >=0.9.1,<1.2.0]
+  │  └─ python 3.12.11 [required: >=3.9]
+  │     └─ dependencies of python displayed above
+  ├─ confection 0.1.5 [required: >=0.0.4,<0.2.0]
+  │  ├─ python 3.12.11 [required: >=3.9]
+  │  │  └─ dependencies of python displayed above
+  │  ├─ pydantic 2.11.7 [required: >=1.7.4,!=1.8,!=1.8.1,<3.0.0]
+  │  │  └─ dependencies of pydantic displayed above
+  │  ├─ srsly 2.5.1 [required: >=2.4.0,<3.0.0]
+  │  │  └─ dependencies of srsly displayed above
+  │  └─ typing_extensions 4.14.0 [required: >=3.7.4.1,<5.0.0]
+  │     └─ dependencies of typing_extensions displayed above
+  ├─ cloudpathlib 0.21.1 [required: >=0.7.0,<1.0.0]
+  │  ├─ typing_extensions 4.14.0 [required: any]
+  │  │  └─ dependencies of typing_extensions displayed above
+  │  └─ python 3.12.11 [required: >=3.9]
+  │     └─ dependencies of python displayed above
+  └─ smart-open 7.3.0 [required: >=5.2.1,<8.0.0]
+     └─ smart_open [required: ==7.3.0, pyhe01879c_0]
+preshed==3.0.9
+  ├─ __osx [required: >=11.0]
+  ├─ python_abi 3.12 [required: 3.12.*, *_cp312]
+  ├─ python 3.12.11 [required: >=3.12,<3.13.0a0, *_cpython]
+  │  └─ dependencies of python displayed above
+  ├─ libcxx 20.1.7 [required: >=17]
+  │  └─ dependencies of libcxx displayed above
+  ├─ cymem 2.0.11 [required: >=2.0.2,<2.1.0]
+  │  ├─ __osx [required: >=11.0]
+  │  ├─ libcxx 20.1.7 [required: >=18]
+  │  │  └─ dependencies of libcxx displayed above
+  │  ├─ python_abi 3.12 [required: 3.12.*, *_cp312]
+  │  └─ python 3.12.11 [required: >=3.12,<3.13.0a0, *_cpython]
+  │     └─ dependencies of python displayed above
+  └─ murmurhash 1.0.10 [required: >=0.28.0,<1.1.0]
+     ├─ __osx [required: >=11.0]
+     ├─ python_abi 3.12 [required: 3.12.*, *_cp312]
+     ├─ python 3.12.11 [required: >=3.12,<3.13.0a0, *_cpython]
+     │  └─ dependencies of python displayed above
+     └─ libcxx 20.1.7 [required: >=17]
+        └─ dependencies of libcxx displayed above
+seaborn==0.13.2
+  ├─ statsmodels 0.14.4 [required: >=0.12]
+  │  ├─ python 3.12.11 [required: >=3.12,<3.13.0a0]
+  │  │  └─ dependencies of python displayed above
+  │  ├─ numpy 2.3.1 [required: >=1.22.3,<3]
+  │  │  └─ dependencies of numpy displayed above
+  │  ├─ packaging 25.0 [required: >=21.3]
+  │  │  └─ dependencies of packaging displayed above
+  │  ├─ patsy 1.0.1 [required: >=0.5.6]
+  │  │  ├─ python 3.12.11 [required: >=3.9]
+  │  │  │  └─ dependencies of python displayed above
+  │  │  └─ numpy 2.3.1 [required: >=1.4.0]
+  │  │     └─ dependencies of numpy displayed above
+  │  ├─ pandas 2.3.0 [required: >=1.4,!=2.1.0]
+  │  │  └─ dependencies of pandas displayed above
+  │  └─ scipy 1.16.0 [required: >=1.8,!=1.9.2]
+  │     └─ dependencies of scipy displayed above
+  └─ seaborn-base 0.13.2 [required: 0.13.2, pyhd8ed1ab_3]
+     ├─ python 3.12.11 [required: >=3.9]
+     │  └─ dependencies of python displayed above
+     ├─ pandas 2.3.0 [required: >=1.2]
+     │  └─ dependencies of pandas displayed above
+     ├─ scipy 1.16.0 [required: >=1.7]
+     │  └─ dependencies of scipy displayed above
+     ├─ numpy 2.3.1 [required: >=1.20,!=1.24.0]
+     │  └─ dependencies of numpy displayed above
+     └─ matplotlib-base 3.10.3 [required: >=3.4,!=3.6.1]
+        ├─ freetype 2.13.3 [required: any]
+        │  ├─ libfreetype 2.13.3 [required: 2.13.3, hce30654_1]
+        │  │  └─ dependencies of libfreetype displayed above
+        │  └─ libfreetype6 2.13.3 [required: 2.13.3, h1d14073_1]
+        │     └─ dependencies of libfreetype6 displayed above
+        ├─ __osx [required: >=11.0]
+        ├─ libcxx 20.1.7 [required: >=18]
+        │  └─ dependencies of libcxx displayed above
+        ├─ python_abi 3.12 [required: 3.12.*, *_cp312]
+        ├─ python 3.12.11 [required: >=3.12,<3.13.0a0, *_cpython]
+        │  └─ dependencies of python displayed above
+        ├─ numpy 2.3.1 [required: >=1.23]
+        │  └─ dependencies of numpy displayed above
+        ├─ qhull 2020.2 [required: >=2020.2,<2020.3.0a0]
+        │  ├─ __osx [required: >=11.0]
+        │  └─ libcxx 20.1.7 [required: >=16]
+        │     └─ dependencies of libcxx displayed above
+        ├─ packaging 25.0 [required: >=20.0]
+        │  └─ dependencies of packaging displayed above
+        ├─ libfreetype6 2.13.3 [required: >=2.13.3]
+        │  └─ dependencies of libfreetype6 displayed above
+        ├─ libfreetype 2.13.3 [required: >=2.13.3]
+        │  └─ dependencies of libfreetype displayed above
+        ├─ cycler 0.12.1 [required: >=0.10]
+        │  └─ python 3.12.11 [required: >=3.9]
+        │     └─ dependencies of python displayed above
+        ├─ fonttools 4.58.5 [required: >=4.22.0]
+        │  ├─ brotli 1.1.0 [required: any]
+        │  │  ├─ __osx [required: >=11.0]
+        │  │  ├─ libbrotlidec 1.1.0 [required: 1.1.0, h5505292_3]
+        │  │  │  └─ dependencies of libbrotlidec displayed above
+        │  │  ├─ libbrotlienc 1.1.0 [required: 1.1.0, h5505292_3]
+        │  │  │  └─ dependencies of libbrotlienc displayed above
+        │  │  └─ brotli-bin 1.1.0 [required: 1.1.0, h5505292_3]
+        │  │     ├─ __osx [required: >=11.0]
+        │  │     ├─ libbrotlidec 1.1.0 [required: 1.1.0, h5505292_3]
+        │  │     │  └─ dependencies of libbrotlidec displayed above
+        │  │     └─ libbrotlienc 1.1.0 [required: 1.1.0, h5505292_3]
+        │  │        └─ dependencies of libbrotlienc displayed above
+        │  ├─ munkres 1.1.4 [required: any]
+        │  │  └─ python 3.12.11 [required: >=3.9]
+        │  │     └─ dependencies of python displayed above
+        │  ├─ __osx [required: >=11.0]
+        │  ├─ python_abi 3.12 [required: 3.12.*, *_cp312]
+        │  ├─ python 3.12.11 [required: >=3.12,<3.13.0a0, *_cpython]
+        │  │  └─ dependencies of python displayed above
+        │  └─ unicodedata2 16.0.0 [required: >=15.1.0]
+        │     ├─ __osx [required: >=11.0]
+        │     ├─ python_abi 3.12 [required: 3.12.*, *_cp312]
+        │     └─ python 3.12.11 [required: >=3.12,<3.13.0a0, *_cpython]
+        │        └─ dependencies of python displayed above
+        ├─ python-dateutil 2.9.0.post0 [required: >=2.7]
+        │  └─ dependencies of python-dateutil displayed above
+        ├─ contourpy 1.3.2 [required: >=1.0.1]
+        │  ├─ __osx [required: >=11.0]
+        │  ├─ libcxx 20.1.7 [required: >=18]
+        │  │  └─ dependencies of libcxx displayed above
+        │  ├─ python_abi 3.12 [required: 3.12.*, *_cp312]
+        │  ├─ python 3.12.11 [required: >=3.12,<3.13.0a0, *_cpython]
+        │  │  └─ dependencies of python displayed above
+        │  └─ numpy 2.3.1 [required: >=1.23]
+        │     └─ dependencies of numpy displayed above
+        ├─ pyparsing 3.2.3 [required: >=2.3.1]
+        │  └─ python 3.12.11 [required: >=3.9]
+        │     └─ dependencies of python displayed above
+        ├─ kiwisolver 1.4.8 [required: >=1.3.1]
+        │  ├─ __osx [required: >=11.0]
+        │  ├─ libcxx 20.1.7 [required: >=18]
+        │  │  └─ dependencies of libcxx displayed above
+        │  ├─ python_abi 3.12 [required: 3.12.*, *_cp312]
+        │  └─ python 3.12.11 [required: >=3.12,<3.13.0a0, *_cpython]
+        │     └─ dependencies of python displayed above
+        └─ pillow 11.3.0 [required: >=8]
+           └─ dependencies of pillow displayed above
+hf-xet==1.1.5
+  ├─ python 3.12.11 [required: any]
+  │  └─ dependencies of python displayed above
+  ├─ __osx [required: >=11.0]
+  ├─ openssl 3.5.1 [required: >=3.5.0,<4.0a0]
+  │  └─ dependencies of openssl displayed above
+  ├─ _python_abi3_support 1.0 [required: 1.*]
+  │  ├─ cpython 3.12.11 [required: any]
+  │  │  └─ dependencies of cpython displayed above
+  │  └─ python-gil 3.12.11 [required: any]
+  │     ├─ python_abi 3.12 [required: *, *_cp312]
+  │     └─ cpython 3.12.11 [required: 3.12.11.*]
+  │        └─ dependencies of cpython displayed above
+  └─ cpython 3.12.11 [required: >=3.9]
+     └─ dependencies of cpython displayed above
+conda-tree==1.1.1
+  ├─ colorama 0.4.6 [required: any]
+  │  └─ dependencies of colorama displayed above
+  ├─ conda 24.11.3 [required: any]
+  │  ├─ archspec 0.2.5 [required: >=0.2.3]
+  │  │  └─ python 3.12.11 [required: >=3.9]
+  │  │     └─ dependencies of python displayed above
+  │  ├─ boltons 25.0.0 [required: >=23.0.0]
+  │  │  └─ python 3.12.11 [required: >=3.9]
+  │  │     └─ dependencies of python displayed above
+  │  ├─ charset-normalizer 3.4.2 [required: any]
+  │  │  └─ dependencies of charset-normalizer displayed above
+  │  ├─ conda-libmamba-solver 24.9.0 [required: >=23.11.0]
+  │  │  ├─ boltons 25.0.0 [required: >=23.0.0]
+  │  │  │  └─ dependencies of boltons displayed above
+  │  │  ├─ conda 24.11.3 [required: >=23.7.4]
+  │  │  │  └─ dependencies of conda displayed above
+  │  │  ├─ libmambapy 1.5.12 [required: >=1.5.6,<2.0a0]
+  │  │  │  ├─ __osx [required: >=11.0]
+  │  │  │  ├─ fmt 11.1.4 [required: >=11.1.4,<11.2.0a0]
+  │  │  │  │  ├─ __osx [required: >=11.0]
+  │  │  │  │  └─ libcxx 20.1.7 [required: >=18]
+  │  │  │  │     └─ dependencies of libcxx displayed above
+  │  │  │  ├─ libcxx 20.1.7 [required: >=18]
+  │  │  │  │  └─ dependencies of libcxx displayed above
+  │  │  │  ├─ libmamba 1.5.12 [required: 1.5.12, h5bc218b_2]
+  │  │  │  │  ├─ __osx [required: >=11.0]
+  │  │  │  │  ├─ fmt 11.1.4 [required: >=11.1.4,<11.2.0a0]
+  │  │  │  │  │  └─ dependencies of fmt displayed above
+  │  │  │  │  ├─ libarchive 3.8.1 [required: >=3.8.1,<3.9.0a0]
+  │  │  │  │  │  ├─ __osx [required: >=11.0]
+  │  │  │  │  │  ├─ bzip2 1.0.8 [required: >=1.0.8,<2.0a0]
+  │  │  │  │  │  │  └─ dependencies of bzip2 displayed above
+  │  │  │  │  │  ├─ libiconv 1.18 [required: >=1.18,<2.0a0]
+  │  │  │  │  │  │  └─ dependencies of libiconv displayed above
+  │  │  │  │  │  ├─ liblzma 5.8.1 [required: >=5.8.1,<6.0a0]
+  │  │  │  │  │  │  └─ dependencies of liblzma displayed above
+  │  │  │  │  │  ├─ libxml2 2.13.8 [required: >=2.13.8,<2.14.0a0]
+  │  │  │  │  │  │  └─ dependencies of libxml2 displayed above
+  │  │  │  │  │  ├─ libzlib 1.3.1 [required: >=1.3.1,<2.0a0]
+  │  │  │  │  │  │  └─ dependencies of libzlib displayed above
+  │  │  │  │  │  ├─ lz4-c 1.10.0 [required: >=1.10.0,<1.11.0a0]
+  │  │  │  │  │  │  └─ dependencies of lz4-c displayed above
+  │  │  │  │  │  ├─ lzo 2.10 [required: >=2.10,<3.0a0]
+  │  │  │  │  │  ├─ openssl 3.5.1 [required: >=3.5.0,<4.0a0]
+  │  │  │  │  │  │  └─ dependencies of openssl displayed above
+  │  │  │  │  │  └─ zstd 1.5.7 [required: >=1.5.7,<1.6.0a0]
+  │  │  │  │  │     └─ dependencies of zstd displayed above
+  │  │  │  │  ├─ libcurl 8.14.1 [required: >=8.14.1,<9.0a0]
+  │  │  │  │  │  └─ dependencies of libcurl displayed above
+  │  │  │  │  ├─ libcxx 20.1.7 [required: >=18]
+  │  │  │  │  │  └─ dependencies of libcxx displayed above
+  │  │  │  │  ├─ libsolv 0.7.33 [required: >=0.7.33,<0.8.0a0]
+  │  │  │  │  │  ├─ __osx [required: >=11.0]
+  │  │  │  │  │  ├─ libcxx 20.1.7 [required: >=18]
+  │  │  │  │  │  │  └─ dependencies of libcxx displayed above
+  │  │  │  │  │  └─ libzlib 1.3.1 [required: >=1.3.1,<2.0a0]
+  │  │  │  │  │     └─ dependencies of libzlib displayed above
+  │  │  │  │  ├─ openssl 3.5.1 [required: >=3.5.0,<4.0a0]
+  │  │  │  │  │  └─ dependencies of openssl displayed above
+  │  │  │  │  ├─ reproc 14.2.5.post0 [required: >=14.2,<15.0a0]
+  │  │  │  │  │  └─ __osx [required: >=11.0]
+  │  │  │  │  ├─ reproc-cpp 14.2.5.post0 [required: >=14.2,<15.0a0]
+  │  │  │  │  │  ├─ __osx [required: >=11.0]
+  │  │  │  │  │  ├─ libcxx 20.1.7 [required: >=18]
+  │  │  │  │  │  │  └─ dependencies of libcxx displayed above
+  │  │  │  │  │  └─ reproc 14.2.5.post0 [required: 14.2.5.post0, h5505292_0]
+  │  │  │  │  │     └─ dependencies of reproc displayed above
+  │  │  │  │  ├─ yaml-cpp 0.8.0 [required: >=0.8.0,<0.9.0a0]
+  │  │  │  │  │  ├─ libcxx 20.1.7 [required: >=18]
+  │  │  │  │  │  │  └─ dependencies of libcxx displayed above
+  │  │  │  │  │  └─ __osx [required: >=11.0]
+  │  │  │  │  └─ zstd 1.5.7 [required: >=1.5.7,<1.6.0a0]
+  │  │  │  │     └─ dependencies of zstd displayed above
+  │  │  │  ├─ openssl 3.5.1 [required: >=3.5.0,<4.0a0]
+  │  │  │  │  └─ dependencies of openssl displayed above
+  │  │  │  ├─ pybind11-abi 4 [required: 4]
+  │  │  │  ├─ python 3.12.11 [required: >=3.12,<3.13.0a0, *_cpython]
+  │  │  │  │  └─ dependencies of python displayed above
+  │  │  │  ├─ python_abi 3.12 [required: 3.12.*, *_cp312]
+  │  │  │  └─ yaml-cpp 0.8.0 [required: >=0.8.0,<0.9.0a0]
+  │  │  │     └─ dependencies of yaml-cpp displayed above
+  │  │  └─ python 3.12.11 [required: >=3.8]
+  │  │     └─ dependencies of python displayed above
+  │  ├─ conda-package-handling 2.4.0 [required: >=2.2.0]
+  │  │  ├─ conda-package-streaming 0.12.0 [required: >=0.9.0]
+  │  │  │  ├─ python 3.12.11 [required: >=3.9]
+  │  │  │  │  └─ dependencies of python displayed above
+  │  │  │  └─ zstandard 0.23.0 [required: >=0.15]
+  │  │  │     └─ dependencies of zstandard displayed above
+  │  │  ├─ python 3.12.11 [required: >=3.9]
+  │  │  │  └─ dependencies of python displayed above
+  │  │  ├─ requests 2.32.4 [required: any]
+  │  │  │  └─ dependencies of requests displayed above
+  │  │  └─ zstandard 0.23.0 [required: >=0.15]
+  │  │     └─ dependencies of zstandard displayed above
+  │  ├─ distro 1.9.0 [required: >=1.5.0]
+  │  │  └─ python 3.12.11 [required: >=3.9]
+  │  │     └─ dependencies of python displayed above
+  │  ├─ frozendict 2.4.6 [required: >=2.4.2]
+  │  │  ├─ __osx [required: >=11.0]
+  │  │  ├─ python 3.12.11 [required: >=3.12,<3.13.0a0, *_cpython]
+  │  │  │  └─ dependencies of python displayed above
+  │  │  └─ python_abi 3.12 [required: 3.12.*, *_cp312]
+  │  ├─ jsonpatch 1.33 [required: >=1.32]
+  │  │  ├─ jsonpointer 3.0.0 [required: >=1.9]
+  │  │  │  ├─ python 3.12.11 [required: >=3.12,<3.13.0a0, *_cpython]
+  │  │  │  │  └─ dependencies of python displayed above
+  │  │  │  └─ python_abi 3.12 [required: 3.12.*, *_cp312]
+  │  │  └─ python 3.12.11 [required: >=3.9]
+  │  │     └─ dependencies of python displayed above
+  │  ├─ menuinst 2.3.0 [required: >=2]
+  │  │  ├─ python 3.12.11 [required: >=3.12,<3.13.0a0, *_cpython]
+  │  │  │  └─ dependencies of python displayed above
+  │  │  └─ python_abi 3.12 [required: 3.12.*, *_cp312]
+  │  ├─ packaging 25.0 [required: >=23.0]
+  │  │  └─ dependencies of packaging displayed above
+  │  ├─ platformdirs 4.3.8 [required: >=3.10.0]
+  │  │  └─ python 3.12.11 [required: >=3.9]
+  │  │     └─ dependencies of python displayed above
+  │  ├─ pluggy 1.6.0 [required: >=1.0.0]
+  │  │  └─ python 3.12.11 [required: >=3.9]
+  │  │     └─ dependencies of python displayed above
+  │  ├─ pycosat 0.6.6 [required: >=0.6.3]
+  │  │  ├─ __osx [required: >=11.0]
+  │  │  ├─ python 3.12.11 [required: >=3.12,<3.13.0a0, *_cpython]
+  │  │  │  └─ dependencies of python displayed above
+  │  │  └─ python_abi 3.12 [required: 3.12.*, *_cp312]
+  │  ├─ python 3.12.11 [required: >=3.12,<3.13.0a0, *_cpython]
+  │  │  └─ dependencies of python displayed above
+  │  ├─ python_abi 3.12 [required: 3.12.*, *_cp312]
+  │  ├─ requests 2.32.4 [required: >=2.28.0,<3]
+  │  │  └─ dependencies of requests displayed above
+  │  ├─ ruamel.yaml 0.18.14 [required: >=0.11.14,<0.19]
+  │  │  ├─ __osx [required: >=11.0]
+  │  │  ├─ python 3.12.11 [required: >=3.12,<3.13.0a0, *_cpython]
+  │  │  │  └─ dependencies of python displayed above
+  │  │  ├─ python_abi 3.12 [required: 3.12.*, *_cp312]
+  │  │  └─ ruamel.yaml.clib 0.2.8 [required: >=0.1.2]
+  │  │     ├─ __osx [required: >=11.0]
+  │  │     ├─ python 3.12.11 [required: >=3.12,<3.13.0a0, *_cpython]
+  │  │     │  └─ dependencies of python displayed above
+  │  │     └─ python_abi 3.12 [required: 3.12.*, *_cp312]
+  │  ├─ setuptools 80.9.0 [required: >=60.0.0]
+  │  │  └─ dependencies of setuptools displayed above
+  │  ├─ tqdm 4.67.1 [required: >=4]
+  │  │  └─ dependencies of tqdm displayed above
+  │  ├─ truststore 0.10.1 [required: >=0.8.0]
+  │  │  └─ python 3.12.11 [required: any]
+  │  │     └─ dependencies of python displayed above
+  │  └─ zstandard 0.23.0 [required: >=0.19.0]
+  │     └─ dependencies of zstandard displayed above
+  ├─ networkx 3.5 [required: any]
+  │  └─ dependencies of networkx displayed above
+  └─ python 3.12.11 [required: >=3.9]
+     └─ dependencies of python displayed above
+requests-cache==1.2.1
+  ├─ python 3.12.11 [required: >=3.9]
+  │  └─ dependencies of python displayed above
+  ├─ pyyaml 6.0.2 [required: >=6.0.1]
+  │  └─ dependencies of pyyaml displayed above
+  ├─ requests 2.32.4 [required: >=2.22]
+  │  └─ dependencies of requests displayed above
+  ├─ url-normalize 2.2.1 [required: >=1.4]
+  │  ├─ six 1.17.0 [required: any]
+  │  │  └─ dependencies of six displayed above
+  │  ├─ idna 3.10 [required: any]
+  │  │  └─ dependencies of idna displayed above
+  │  └─ python 3.12.11 [required: >=3.9]
+  │     └─ dependencies of python displayed above
+  ├─ attrs 25.3.0 [required: >=21.2]
+  │  └─ dependencies of attrs displayed above
+  ├─ itsdangerous 2.2.0 [required: >=2.0]
+  │  └─ python 3.12.11 [required: >=3.9]
+  │     └─ dependencies of python displayed above
+  ├─ platformdirs 4.3.8 [required: >=2.5]
+  │  └─ dependencies of platformdirs displayed above
+  ├─ urllib3 2.5.0 [required: >=1.25.5]
+  │  └─ dependencies of urllib3 displayed above
+  ├─ cattrs 25.1.1 [required: >=22.2]
+  │  ├─ python 3.12.11 [required: >=3.9]
+  │  │  └─ dependencies of python displayed above
+  │  ├─ typing_extensions 4.14.0 [required: >=4.12.2]
+  │  │  └─ dependencies of typing_extensions displayed above
+  │  ├─ attrs 25.3.0 [required: >=24.3.0]
+  │  │  └─ dependencies of attrs displayed above
+  │  └─ exceptiongroup 1.3.0 [required: >=1.1.1]
+  │     └─ dependencies of exceptiongroup displayed above
+  └─ ujson 5.10.0 [required: >=5.4]
+     └─ dependencies of ujson displayed above
+matplotlib==3.10.3
+  ├─ python_abi 3.12 [required: 3.12.*, *_cp312]
+  ├─ python 3.12.11 [required: >=3.12,<3.13.0a0]
+  │  └─ dependencies of python displayed above
+  ├─ tornado 6.5.1 [required: >=5]
+  │  ├─ __osx [required: >=11.0]
+  │  ├─ python_abi 3.12 [required: 3.12.*, *_cp312]
+  │  └─ python 3.12.11 [required: >=3.12,<3.13.0a0, *_cpython]
+  │     └─ dependencies of python displayed above
+  └─ matplotlib-base 3.10.3 [required: >=3.10.3,<3.10.4.0a0]
+     └─ dependencies of matplotlib-base displayed above
+psycopg2==2.9.10
+  ├─ __osx [required: >=11.0]
+  ├─ python_abi 3.12 [required: 3.12.*, *_cp312]
+  ├─ python 3.12.11 [required: >=3.12,<3.13.0a0, *_cpython]
+  │  └─ dependencies of python displayed above
+  ├─ openssl 3.5.1 [required: >=3.5.0,<4.0a0]
+  │  └─ dependencies of openssl displayed above
+  └─ libpq 17.5 [required: >=17.5,<18.0a0]
+     ├─ __osx [required: >=11.0]
+     ├─ openssl 3.5.1 [required: >=3.5.0,<4.0a0]
+     │  └─ dependencies of openssl displayed above
+     ├─ icu 75.1 [required: >=75.1,<76.0a0]
+     │  └─ dependencies of icu displayed above
+     ├─ krb5 1.21.3 [required: >=1.21.3,<1.22.0a0]
+     │  └─ dependencies of krb5 displayed above
+     └─ openldap 2.6.10 [required: >=2.6.9,<2.7.0a0]
+        ├─ __osx [required: >=11.0]
+        ├─ libcxx 20.1.7 [required: >=18]
+        │  └─ dependencies of libcxx displayed above
+        ├─ openssl 3.5.1 [required: >=3.5.0,<4.0a0]
+        │  └─ dependencies of openssl displayed above
+        ├─ cyrus-sasl 2.1.28 [required: >=2.1.27,<3.0a0]
+        │  ├─ __osx [required: >=11.0]
+        │  ├─ libcxx 20.1.7 [required: >=18]
+        │  │  └─ dependencies of libcxx displayed above
+        │  ├─ openssl 3.5.1 [required: >=3.5.0,<4.0a0]
+        │  │  └─ dependencies of openssl displayed above
+        │  ├─ krb5 1.21.3 [required: >=1.21.3,<1.22.0a0]
+        │  │  └─ dependencies of krb5 displayed above
+        │  └─ libntlm 1.8 [required: >=1.8,<2.0a0]
+        │     └─ __osx [required: >=11.0]
+        └─ krb5 1.21.3 [required: >=1.21.3,<1.22.0a0]
+           └─ dependencies of krb5 displayed above
+beautifulsoup4==4.13.4
+  ├─ typing-extensions 4.14.0 [required: any]
+  │  └─ dependencies of typing-extensions displayed above
+  ├─ python 3.12.11 [required: >=3.9]
+  │  └─ dependencies of python displayed above
+  └─ soupsieve 2.7 [required: >=1.2]
+     └─ python 3.12.11 [required: >=3.9]
+        └─ dependencies of python displayed above
+wrapt==1.17.2
+  ├─ __osx [required: >=11.0]
+  ├─ python_abi 3.12 [required: 3.12.*, *_cp312]
+  └─ python 3.12.11 [required: >=3.12,<3.13.0a0, *_cpython]
+     └─ dependencies of python displayed above
+anytree==2.13.0
+  ├─ six 1.17.0 [required: any]
+  │  └─ dependencies of six displayed above
+  └─ python 3.12.11 [required: >=3.9,<4.0]
+     └─ dependencies of python displayed above
+markdown==3.8.2
+  ├─ python 3.12.11 [required: >=3.9]
+  │  └─ dependencies of python displayed above
+  └─ importlib-metadata 8.7.0 [required: >=4.4]
+     └─ dependencies of importlib-metadata displayed above
+lxml==6.0.0
+  ├─ __osx [required: >=11.0]
+  ├─ python_abi 3.12 [required: 3.12.*, *_cp312]
+  ├─ python 3.12.11 [required: >=3.12,<3.13.0a0, *_cpython]
+  │  └─ dependencies of python displayed above
+  ├─ libzlib 1.3.1 [required: >=1.3.1,<2.0a0]
+  │  └─ dependencies of libzlib displayed above
+  ├─ libxslt 1.1.39 [required: >=1.1.39,<2.0a0]
+  │  └─ libxml2 2.13.8 [required: >=2.12.1,<2.14.0a0]
+  │     └─ dependencies of libxml2 displayed above
+  └─ libxml2 2.13.8 [required: >=2.13.8,<2.14.0a0]
+     └─ dependencies of libxml2 displayed above
+pipdeptree==2.26.1
+  ├─ packaging 25.0 [required: >=24.1]
+  │  └─ dependencies of packaging displayed above
+  ├─ pip 25.1.1 [required: >=24.2]
+  │  └─ dependencies of pip displayed above
+  └─ python 3.12.11 [required: >=3.9]
+     └─ dependencies of python displayed above
+
+For the sake of clarity, some redundancies have been hidden.
+Please use the '--full' option to display them anyway.
+
+If you are tired of seeing 'conda' and 'python' everywhere,
+you can use the '--small' option to hide their dependencies completely.

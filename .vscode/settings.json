@@ -4,5 +4,8 @@
     "python.sortImports.args": ["-l", "120"],
     "files.eol": "\n",
     "files.insertFinalNewline": true,
-    "editor.formatOnSaveMode": "modifications"
+    "editor.formatOnSaveMode": "modifications",
+    "python-envs.defaultEnvManager": "ms-python.python:conda",
+    "python-envs.defaultPackageManager": "ms-python.python:conda",
+    "python-envs.pythonProjects": []
 }

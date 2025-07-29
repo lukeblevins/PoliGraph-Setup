@@ -10,31 +10,31 @@ import urllib.parse as urlparse
 import pymupdf4llm
 
 from pathlib import Path
-from playwright.async_api import (
+from playwright.sync_api import (
     TimeoutError as PlaywrightTimeoutError,
-    async_playwright,
+    sync_playwright,
 )
 
 REQUESTS_TIMEOUT = 10
 
 
-async def create_pdf(url, args):
+def create_pdf(url, args):
     if url is None:
         logging.error("URL failed pre-tests. Exiting...")
         sys.exit(-1)
 
-    async with async_playwright() as p:
-        browser = await p.chromium.launch(channel="msedge", headless=True)
-        context = await browser.new_context(bypass_csp=True)
+    with sync_playwright() as p:
+        browser = p.chromium.launch(channel="msedge", headless=True)
+        context = browser.new_context(bypass_csp=True)
 
-        async def error_cleanup(msg):
+        def error_cleanup(msg):
             logging.error(msg)
-            await context.close()
-            await browser.close()
+            context.close()
+            browser.close()
             sys.exit(-1)
 
-        page = await context.new_page()
-        await page.set_viewport_size({"width": 1080, "height": 1920})
+        page = context.new_page()
+        page.set_viewport_size({"width": 1080, "height": 1920})
         logging.info("Navigating to %r", url)
 
         # Record HTTP status and navigated URLs so we can check errors later
@@ -46,26 +46,26 @@ async def create_pdf(url, args):
             lambda f: f.parent_frame is None and navigated_urls.append(f.url),
         )
 
-        await page.emulate_media(media="print")
-        await page.goto(url)
+        page.emulate_media(media="print")
+        page.goto(url)
 
         try:
-            await page.wait_for_load_state("networkidle")
+            page.wait_for_load_state("networkidle")
         except PlaywrightTimeoutError:
             logging.warning("Cannot reach networkidle but will continue")
 
         # Check HTTP errors
         for url in navigated_urls:
             if (status_code := url_status.get(url, 0)) >= 400:
-                await error_cleanup(f"Got HTTP error {status_code}")
+                error_cleanup(f"Got HTTP error {status_code}")
 
         output_dir = Path(args.output)
         temp_pdf_path = output_dir / "output.pdf"
-        await page.pdf(path=temp_pdf_path, tagged=True)
+        page.pdf(path=temp_pdf_path, tagged=True)
 
         logging.info("Saved to %s", temp_pdf_path)
-        await context.close()
-        await browser.close()
+        context.close()
+        browser.close()
         return temp_pdf_path
 
 
@@ -92,7 +92,7 @@ def download_pdf(url, args):
     return temp_pdf_path
 
 
-async def url_arg_handler(url, args):
+def url_arg_handler(url, args):
     parsed_url = urlparse.urlparse(url)
     logging.info("Parsed URL: %s", parsed_url)
     # check if URL or local file:
@@ -124,7 +124,7 @@ async def url_arg_handler(url, args):
             return downloaded
         else:
             logging.info("Interpreting %r as a website URL", url)
-            exported = await create_pdf(url, args)
+            exported = create_pdf(url, args)
             if exported is None:
                 logging.error("Failed to create PDF from website %r", url)
                 return None
@@ -132,9 +132,9 @@ async def url_arg_handler(url, args):
             return exported
 
 
-async def main(url, output):
+def main(url, output):
     args = argparse.Namespace(url=url, output=output)
-    pdf_path = await url_arg_handler(args.url, args)
+    pdf_path = url_arg_handler(args.url, args)
 
     # Convert the PDF to Markdown and then to HTML
     md_text = pymupdf4llm.to_markdown(pdf_path)
@@ -151,6 +151,4 @@ if __name__ == "__main__":
         print("usage: pdf_parser.py <url_or_path> <output_dir>")
         sys.exit(1)
 
-    import asyncio
-
-    asyncio.run(main(sys.argv[1], sys.argv[2]))
+    main(sys.argv[1], sys.argv[2])
