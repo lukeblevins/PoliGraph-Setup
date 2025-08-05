@@ -10,6 +10,7 @@ dependencies:
   - spacy-model-en_core_web_md=3.8.0
   - regex=2024.11.6
   - psycopg2=2.9.10
+  - lxml=6.0.0
   - pip
   - pip:
       - gradio==5.38.0
@@ -26,3 +27,4 @@ dependencies:
       - anytree==2.13.0
       - Unidecode==1.3.6
       - httpx==0.24.1
+      - spacy-transformers==1.3.9

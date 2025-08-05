@@ -16,7 +16,27 @@ logger = logger.getLogger(__name__)
 
 def get_company_df():
     csv_path = "./poligrapher/gradio_app/policy_list.csv"
-    return pd.read_csv(csv_path)
+    df = pd.read_csv(csv_path)
+
+    # Add a column for YML existence (success indicator)
+    def yml_exists(row):
+        company_name = str(row.get("Company Name", "")).replace(" ", "_")
+        yml_path = f"./output/{company_name}/graph-original.full.yml"
+        return os.path.exists(yml_path)
+
+    df["YML Exists"] = df.apply(lambda row: yml_exists(row), axis=1)
+
+    # For display: show checkmark or red X
+    def yml_status(val):
+        return "✅" if val else "⚠️"
+
+    df["Status"] = df["YML Exists"].apply(yml_status)
+    # Move Status to the leftmost column
+    cols = df.columns.tolist()
+    if "Status" in cols:
+        cols.insert(0, cols.pop(cols.index("Status")))
+        df = df[cols]
+    return df
 
 def get_analysis_results():
     try:
@@ -178,8 +198,19 @@ with gr.Blocks() as block1:
 
 with gr.Blocks() as block2:
     gr.Markdown("#### Company Privacy Policy List")
-    score_btn = gr.Button("Score All")
-    company_df = gr.Dataframe(value=get_company_df(), label="Companies", interactive=False)
+    company_df_data = get_company_df()
+    # Count successes and errors from Status column
+    num_success = (company_df_data["Status"] == "✅").sum()
+    num_error = (company_df_data["Status"] != "✅").sum()
+    gr.Markdown(
+        f"**Status Summary:** {num_success} successful, {num_error} with incomplete YML generation."
+    )
+    score_btn = gr.Button("Score All", interactive=False)
+    # Show only relevant columns, including Status
+    display_cols = [col for col in company_df_data.columns if col not in ["YML Exists"]]
+    company_df = gr.Dataframe(
+        value=company_df_data[display_cols], label="Companies", interactive=False
+    )
     company_info = gr.Markdown("", visible=True)
     png_image = gr.Image(label="Knowledge Graph", visible=True)
     scoring_output = gr.Textbox(label="Scoring Results", interactive=False)
