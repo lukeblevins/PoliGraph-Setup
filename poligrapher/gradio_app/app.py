@@ -61,7 +61,7 @@ def get_analysis_results():
 def get_png_for_company(selected_row):
     if selected_row is None or not isinstance(selected_row, list) or len(selected_row) == 0:
         return None
-    idx = selected_row[0]
+    idx = selected_row[1]
     df = get_analysis_results()
     if idx >= len(df):
         return None
@@ -205,37 +205,40 @@ with gr.Blocks() as block2:
     gr.Markdown(
         f"**Status Summary:** {num_success} successful, {num_error} with incomplete YML generation."
     )
-    score_btn = gr.Button("Score All", interactive=False)
+    # Enable the button for demonstration and add a progress bar
+    score_btn = gr.Button("Score All", interactive=True)
     # Show only relevant columns, including Status
     display_cols = [col for col in company_df_data.columns if col not in ["YML Exists"]]
-    company_df = gr.Dataframe(
-        value=company_df_data[display_cols], label="Companies", interactive=False
-    )
-    company_info = gr.Markdown("", visible=True)
-    png_image = gr.Image(label="Knowledge Graph", visible=True)
+
+    with gr.Row():
+        company_df = gr.Dataframe(
+            value=company_df_data[display_cols], label="Companies", interactive=False
+        )
+    with gr.Row():
+        company_info = gr.Markdown("", visible=True)
+    with gr.Row():
+        png_image = gr.Image(label="Knowledge Graph", visible=True)
     scoring_output = gr.Textbox(label="Scoring Results", interactive=False)
 
     def on_company_select(df: pd.DataFrame, selection: gr.SelectData):
-        print("selected:", selection, type(selection))
         if selection is None:
             return "", None
         row_value = selection.row_value
-        # row_value: [Company Name, Company Website URL, Domain Name, Privacy Policy URL, Notes, Score]
-        company_name = row_value[0] if len(row_value) > 0 else ""
-        company_url = row_value[1] if len(row_value) > 1 else ""
-        info_md = f"**<h1>{company_name}</h1>**<br>**<p>Website:</p>** {company_url}"
-        png_path = f"./output/{company_name}/knowledge_graph.png"
-        png_path = png_path.replace(" ", "_")
+        company_name = row_value[1] if len(row_value) > 0 else ""
+        company_url = row_value[2] if len(row_value) > 1 else ""
+        info_md = f"<h1>{company_name}</h1><br><b>Website:</b> {company_url}"
+        png_path = f"./output/{company_name.replace(' ', '_')}/knowledge_graph.png"
         if os.path.exists(png_path):
             return info_md, png_path
         return info_md, None
 
-    def score_all():
+    def score_all(progress=gr.Progress(track_tqdm=True)):
         results = get_analysis_results()
-        for result in results:
+        n = len(results)
+        output_lines = []
+        for i, result in enumerate(results):
             company_name = result["Company Name"]
             privacy_url = result["Privacy Policy URL"]
-
             try:
                 score_info = analyze_url(privacy_url)
                 result.score = score_info.get("total_score", None)
@@ -243,10 +246,14 @@ with gr.Blocks() as block2:
                 logger.error("Error scoring policy for %s: %s", company_name, e)
                 result.has_score = False
                 result.score = None
-        return "\n".join(results)
+            output_lines.append(f"{company_name}: {result.score}")
+            progress((i + 1) / n)
+        return "\n".join(output_lines)
 
-    company_df.select(fn=on_company_select, inputs=company_df, outputs=[company_info, png_image])
-    score_btn.click(score_all, inputs=[], outputs=scoring_output)
+    company_df.select(
+        fn=on_company_select, inputs=[company_df], outputs=[company_info, png_image]
+    )
+    score_btn.click(score_all, inputs=[], outputs=scoring_output, show_progress=True)
 
 if __name__ == "__main__":
     app = gr.TabbedInterface([block1,block2], tab_names=["Demo", "Saved Results"])
