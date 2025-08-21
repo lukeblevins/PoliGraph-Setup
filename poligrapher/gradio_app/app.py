@@ -24,18 +24,24 @@ def get_company_df():
         yml_path = f"./output/{company_name}/graph-original.full.yml"
         return os.path.exists(yml_path)
 
-    df["YML Exists"] = df.apply(lambda row: yml_exists(row), axis=1)
+    df["Status"] = df.apply(yml_exists, axis=1)
 
-    # For display: show checkmark or red X
-    def yml_status(val):
-        return "✅" if val else "⚠️"
-
-    df["Status"] = df["YML Exists"].apply(yml_status)
     # Move Status to the leftmost column
     cols = df.columns.tolist()
     if "Status" in cols:
         cols.insert(0, cols.pop(cols.index("Status")))
         df = df[cols]
+    # Persist Status values back to the CSV without adding helper columns
+    try:
+        if "Company Name" in df.columns and "Status" in df.columns:
+            orig_df = pd.read_csv(csv_path)
+            if "Company Name" in orig_df.columns:
+                status_map = df.set_index("Company Name")["Status"].to_dict()
+                orig_df["Status"] = orig_df.get("Company Name").map(status_map)
+                # Write the updated CSV (preserve original column order plus Status if new)
+                orig_df.to_csv(csv_path, index=False)
+    except Exception as e:
+        logger.error("Failed to persist Status to CSV: %s", e)
     return df
 
 def get_analysis_results():
@@ -84,7 +90,7 @@ def visualize_graph(output_folder):
     if not os.path.exists(yml_file):
         return "YML file not found for visualization."
     try:
-        with open(yml_file, "r") as file:
+        with open(yml_file, "r", encoding="utf-8") as file:
             data = yaml.safe_load(file)
         G = nx.DiGraph()
         for node in data.get("nodes", []):
@@ -200,8 +206,9 @@ with gr.Blocks() as block2:
     gr.Markdown("#### Company Privacy Policy List")
     company_df_data = get_company_df()
     # Count successes and errors from Status column
-    num_success = (company_df_data["Status"] == "✅").sum()
-    num_error = (company_df_data["Status"] != "✅").sum()
+    # Ensure boolean counts (Status is maintained as bool and persisted to CSV as bool)
+    num_success = int(company_df_data["Status"].astype(bool).sum())
+    num_error = int(len(company_df_data) - num_success)
     gr.Markdown(
         f"**Status Summary:** {num_success} successful, {num_error} with incomplete YML generation."
     )
@@ -210,9 +217,20 @@ with gr.Blocks() as block2:
     # Show only relevant columns, including Status
     display_cols = [col for col in company_df_data.columns if col not in ["YML Exists"]]
 
+    # Prepare a display copy where Status is shown as an emoji, but keep the underlying CSV boolean-only
+    def _status_to_emoji(v):
+        try:
+            return "✅" if bool(v) else "⚠️"
+        except Exception:
+            return "⚠️"
+
+    display_df = company_df_data.copy()
+    if "Status" in display_df.columns:
+        display_df["Status"] = display_df["Status"].apply(_status_to_emoji)
+
     with gr.Row():
         company_df = gr.Dataframe(
-            value=company_df_data[display_cols], label="Companies", interactive=False
+            value=display_df[display_cols], label="Companies", interactive=False
         )
     with gr.Row():
         company_info = gr.Markdown("", visible=True)
@@ -220,7 +238,7 @@ with gr.Blocks() as block2:
         png_image = gr.Image(label="Knowledge Graph", visible=True)
     scoring_output = gr.Textbox(label="Scoring Results", interactive=False)
 
-    def on_company_select(df: pd.DataFrame, selection: gr.SelectData):
+    def on_company_select(_df: pd.DataFrame, selection: gr.SelectData):
         if selection is None:
             return "", None
         row_value = selection.row_value
