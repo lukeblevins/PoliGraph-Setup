@@ -9,49 +9,50 @@ class PrivacyScorer:
             self.rules = self.load_default_rules()
         else:
             self.rules = scoring_rules
-        
+
         # Load detailed scoring criteria
         self.criteria = self.load_scoring_criteria()
-            
+
     def load_default_rules(self) -> Dict:
         """Load default scoring rules from config file"""
-        rules_path = Path("privacy/config/scoring_rules.toml")
+        rules_path = Path("poligrapher/analysis/config/scoring_rules.toml")
         if not rules_path.exists():
             raise FileNotFoundError(f"Scoring rules not found at: {rules_path}")
         return toml.load(rules_path)
-    
+
     def load_scoring_criteria(self) -> Dict:
         """Load detailed scoring criteria"""
-        criteria_path = Path("privacy_scorer/criteria/scoring_criteria.toml")
+        criteria_path = Path("poligrapher/analysis/criteria/scoring_criteria.toml")
         if not criteria_path.exists():
             raise FileNotFoundError(f"Scoring criteria not found at: {criteria_path}")
         return toml.load(criteria_path)
-            
+
     def score_policy(self, policy_text: str) -> Dict[str, Any]:
         """Score the entire privacy policy"""
         if not policy_text:
             return self._create_error_result("Empty policy text")
-        
+
         try:
             total_score = 0.0
             category_scores = {}
-            
+
             # Score each category
             for category in self.criteria['categories'].keys():
                 result = self._score_category(category, policy_text)
                 category_scores[category] = result
                 total_score += result['weighted_score']
-            
+
             grade = self._calculate_grade(total_score)
-            
+
             return {
                 "total_score": round(total_score, 1),
+                "success": True,
                 "grade": grade,
                 "category_scores": category_scores,
                 "feedback": [score["feedback"] for score in category_scores.values()],
-                "summary": self._generate_summary(total_score, grade)
+                "summary": self._generate_summary(total_score, grade),
             }
-        
+
         except Exception as e:
             return self._create_error_result(f"Error scoring policy: {str(e)}")
 
@@ -70,7 +71,7 @@ class PrivacyScorer:
             parts = text.split(':', 1)
             if len(parts) < 2:
                 return None  # Return None if we can't parse properly
-            
+
             key = parts[0].strip()
             value = parts[1].strip()
             return (key, value)
@@ -81,33 +82,33 @@ class PrivacyScorer:
         """Score a specific category of the privacy policy"""
         raw_score = 0.0
         feedback = []
-        
+
         try:
             # Get the criteria for this category
             category_criteria = self.criteria['categories'].get(category, [])
-            
+
             if not category_criteria:
                 return {
                     "raw_score": 0.0,
                     "weighted_score": 0.0,
                     "feedback": [f"No criteria defined for category: {category}"]
                 }
-            
+
             for criterion in category_criteria:
                 criterion_data = self.criteria['criteria'].get(criterion, {})
                 if not criterion_data:
                     continue
-                
+
                 # Get phrases
                 required_phrases = criterion_data.get('required_phrases', [])
                 matching_phrases = criterion_data.get('matching_phrases', [])
-                
+
                 # Check phrases
                 required_found, found_required = self._check_phrases(policy_text, required_phrases)
                 matching_found, found_matching = self._check_phrases(policy_text, matching_phrases)
-                
+
                 points = float(criterion_data.get('points', 0))
-                
+
                 if required_found:
                     if matching_found:
                         raw_score += points
@@ -128,7 +129,7 @@ class PrivacyScorer:
                 "weighted_score": round(weighted_score, 2),
                 "feedback": feedback
             }
-        
+
         except Exception as e:
             return {
                 "raw_score": 0.0,
@@ -152,11 +153,11 @@ class PrivacyScorer:
     def _generate_detailed_feedback(self, category_scores: Dict[str, Any]) -> List[str]:
         """Generate detailed feedback based on category scores and findings"""
         detailed_feedback = []
-        
+
         for category, scores in category_scores.items():
             score = scores['raw_score']
             category_name = category.replace('_', ' ').title()
-            
+
             if score < 50:
                 detailed_feedback.append(
                     f"Critical: {category_name} needs significant improvement. "
@@ -193,14 +194,16 @@ class PrivacyScorer:
         """Create an error result dictionary"""
         return {
             "total_score": 0.0,
+            "success": False,
             "grade": "F",
             "category_scores": {
                 category: {
                     "raw_score": 0.0,
                     "weighted_score": 0.0,
-                    "feedback": [error_message]
-                } for category in self.criteria['categories'].keys()
+                    "feedback": [error_message],
+                }
+                for category in self.criteria["categories"].keys()
             },
             "feedback": [error_message],
-            "summary": "Unable to evaluate privacy policy"
+            "summary": "Unable to evaluate privacy policy",
         }

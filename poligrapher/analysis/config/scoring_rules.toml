@@ -1,0 +1,39 @@
+[scoring]
+transparency_weight = 40
+user_control_weight = 20
+security_weight = 20
+data_sharing_weight = 20
+
+[thresholds]
+grade_a = 90
+grade_b = 75
+grade_c = 50
+grade_d = 25
+grade_f = 0
+
+[keywords]
+user_control = [
+    "opt-out",
+    "opt-in", 
+    "privacy settings",
+    "preferences",
+    "user choice"
+]
+
+security = [
+    "security",
+    "encryption",
+    "data protection",
+    "safeguards",
+    "access control"
+]
+
+purpose = [
+    "we use",
+    "we collect",
+    "purpose of",
+    "used for",
+    "collected for",
+    "we process",
+    "data is used"
+]
