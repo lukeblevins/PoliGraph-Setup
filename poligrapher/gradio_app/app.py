@@ -2,6 +2,7 @@ import glob
 import os
 import gradio as gr
 import logging as logger
+import pandas as pd
 
 from poligrapher.gradio_app import functions
 from poligrapher.gradio_app.functions import visualize_graph
@@ -12,59 +13,21 @@ from poligrapher.gradio_app.policy_analysis import (
     PolicyDocumentInfo,
     PolicyDocumentProvider,
 )
-from poligrapher.scripts import build_graph, html_crawler, init_document, pdf_parser, run_annotators
-import pandas as pd
+from poligrapher.scripts import build_graph, html_crawler, pdf_parser, run_annotators
 
-
-# Setup logging
-logger.basicConfig(level=logger.INFO, format="[%(asctime)s] %(message)s")
 logger = logger.getLogger(__name__)
 
 # Global in‑memory provider registry
 providers: list[PolicyDocumentProvider] = []
-#
-#     # Add a column for YML existence (success indicator)
-#     def yml_exists(row):
-#         company_name = str(row.get("Company Name", "")).replace(" ", "_")
-#         yml_path = f"./output/{company_name}/graph-original.full.yml"
-#         return os.path.exists(yml_path)
-#     df["Status"] = df.apply(yml_exists, axis=1)
-#
-#     # Move Status to the leftmost column
-#     cols = df.columns.tolist()
-#     if "Status" in cols:
-#         cols.insert(0, cols.pop(cols.index("Status")))
-#         df = df[cols]
-#     # Persist Status values back to the CSV without adding helper columns
-#     try:
-#         if "Company Name" in df.columns and "Status" in df.columns:
-#             orig_df = pd.read_csv(csv_path)
-#             if "Company Name" in orig_df.columns:
-#                 status_map = df.set_index("Company Name")["Status"].to_dict()
-#                 orig_df["Status"] = orig_df.get("Company Name").map(status_map)
-#                 # Write the updated CSV (preserve original column order plus Status if new)
-#                 orig_df.to_csv(csv_path, index=False)
-#     except Exception as e:
-#         logger.error("Failed to persist Status to CSV: %s", e)
-#     return df
+## (Legacy CSV Status augmentation code omitted for clarity)
 
 # def get_analysis_results():
 #     try:
 #         df = get_company_df()
 #         results = []
-#         for _, row in df.iterrows():
-#             results.append(PolicyAnalysisResult(
-#                 company_name=str(row.get("Company Name", "")),
-#                 privacy_policy_url=str(row.get("Privacy Policy URL", "")),
-#                 score=row.get("Score", None),
-#                 kind="auto",  # Default, can be set from another column if present
-#                 has_name=bool(row.get("Company Name", "")),
-#                 has_score=row.get("Score", None) is not None
-#             ))
 #         return results
 #     except Exception as e:
 #         logger.error("Error loading companies from CSV: %s", e)
-#         # Return a list with a single PolicyAnalysisResult containing the error
 #         return [PolicyAnalysisResult(company_name="error", privacy_policy_url="", score=None, kind="auto", has_name=False, has_score=False)]
 
 # TODO: Modify to use PolicyAnalysisResult.get_graph_image_path()
@@ -113,10 +76,8 @@ def add_result_to_provider(
 ):
     provider.add_result(PolicyAnalysisResult(document=document, score=score, kind=kind))
 
-
 def generate_graph_from_html(html_path, output_folder):
     html_crawler.main(html_path, output_folder)
-    init_document.main(workdirs=[output_folder])
     run_annotators.main(workdirs=[output_folder])
     build_graph.main(workdirs=[output_folder])
     build_graph.main(pretty=True, workdirs=[output_folder])
@@ -454,34 +415,48 @@ with gr.Blocks() as block2:
     with gr.Row():
         company_info = gr.Markdown("", visible=True)
     with gr.Row():
-        png_image = gr.Image(label="Knowledge Graph", visible=True)
+        with gr.Column(scale=1):
+            png_image = gr.Image(label="Knowledge Graph", visible=True)
+        with gr.Column(scale=1):
+            # Policies (documents) sidebar next to image
+            selected_provider = gr.State("")
+            with gr.Accordion("Provider Policies", open=False) as policies_accordion:
+                with gr.Row():
+                    policies_df = gr.Dataframe(
+                        value=_build_policies_df(), label="Policies", interactive=False
+                    )
+                with gr.Row():
+                    refresh_policies = gr.Button("Refresh Policies")
+                    add_policy_btn = gr.Button("Add Policy", variant="secondary")
+            # Add Policy Modal (initially hidden)
+            with gr.Group(
+                visible=False, elem_id="add-policy-modal"
+            ) as add_policy_modal:
+                with gr.Column(elem_classes="modal-card"):
+                    gr.Markdown("### Add Policy to Provider")
+                    new_policy_url = gr.Textbox(
+                        label="Policy URL", placeholder="https://...", visible=True
+                    )
+                    # Custom source selector: webpage vs remote PDF (URL) vs local PDF (upload)
+                    new_policy_source = gr.Dropdown(
+                        choices=[
+                            "webpage",  # URL of a webpage
+                            "pdf_remote",  # URL pointing directly to a PDF
+                            "pdf_local",  # Locally uploaded PDF file
+                        ],
+                        label="Source Type",
+                        value="webpage",
+                    )
+                    new_policy_file = gr.File(
+                        label="Upload File (PDF/HTML)",
+                        file_types=[".pdf", ".html", ".htm"],
+                        visible=False,
+                    )
+                    new_policy_date = gr.Textbox(label="Capture Date (YYYY-MM-DD)")
+                    with gr.Row():
+                        save_new_policy = gr.Button("Save", variant="primary")
+                        cancel_new_policy = gr.Button("Cancel")
     scoring_output = gr.Textbox(label="Scoring Results", interactive=False)
-
-    # Now add policies accordion (documents for selected provider)
-    selected_provider = gr.State("")
-    with gr.Accordion("Provider Policies", open=False) as policies_accordion:
-        with gr.Row():
-            policies_df = gr.Dataframe(
-                value=_build_policies_df(), label="Policies", interactive=False
-            )
-        with gr.Row():
-            refresh_policies = gr.Button("Refresh Policies")
-            add_policy_btn = gr.Button("Add Policy", variant="secondary")
-
-    # ----- Add Policy Modal -----
-    with gr.Group(visible=False, elem_id="add-policy-modal") as add_policy_modal:
-        with gr.Column(elem_classes="modal-card"):
-            gr.Markdown("### Add Policy to Provider")
-            new_policy_url = gr.Textbox(label="Policy URL", placeholder="https://...")
-            new_policy_source = gr.Dropdown(
-                choices=[s.value for s in DocumentCaptureSource],
-                label="Source Type",
-                value=DocumentCaptureSource.WEBPAGE.value,
-            )
-            new_policy_date = gr.Textbox(label="Capture Date (YYYY-MM-DD)")
-            with gr.Row():
-                save_new_policy = gr.Button("Save", variant="primary")
-                cancel_new_policy = gr.Button("Cancel")
 
     def _show_add_policy_modal(provider_name: str):
         if not provider_name:
@@ -490,41 +465,102 @@ with gr.Blocks() as block2:
         return gr.update(visible=True)
 
     def _cancel_add_policy():
-        return gr.update(visible=False), "", DocumentCaptureSource.WEBPAGE.value, ""
+        return (
+            gr.update(visible=False),
+            "",
+            "webpage",
+            "",
+            None,
+        )
 
-    def _save_new_policy(provider_name: str, url: str, source_val: str, date_str: str):
-        # Find provider
+    def _save_new_policy(
+        provider_name: str,
+        url: str,
+        source_val: str,
+        date_str: str,
+        uploaded_file,
+    ):
         prov = next((p for p in providers if p.name == provider_name), None)
-        if not prov or not url:
+        if prov is None:
+            # No provider selected; just close modal
             return (
-                _build_policies_df(provider_name),
+                _build_policies_df(""),
                 gr.update(visible=False),
                 "",
-                DocumentCaptureSource.WEBPAGE.value,
+                "webpage",
                 "",
+                None,
             )
-        # Map source
-        try:
-            src_enum = DocumentCaptureSource(source_val)
-        except Exception:
+
+        # Determine if local PDF expected
+        if source_val == "pdf_local" and uploaded_file is None:
+            # Keep modal open until a file is provided
+            return (
+                _build_policies_df(provider_name),
+                gr.update(visible=True),
+                url,
+                source_val,
+                date_str,
+                uploaded_file,
+            )
+
+        file_path = None
+        if uploaded_file is not None:
+            try:
+                src_path = getattr(uploaded_file, "name", None) or uploaded_file
+                filename = os.path.basename(src_path)
+                out_dir = f"./output/{provider_name.replace(' ', '_')}"
+                os.makedirs(out_dir, exist_ok=True)
+                dest_path = os.path.join(out_dir, filename)
+                import shutil
+
+                shutil.copy(src_path, dest_path)
+                file_path = dest_path
+                # If a file is uploaded, enforce local PDF selection
+                if filename.lower().endswith(".pdf"):
+                    source_val = "pdf_local"
+            except Exception as e:
+                logger.error("File upload failed: %s", e)
+
+        # Compute path_value based on source type
+        if source_val in ("webpage", "pdf_remote"):
+            path_value = url.strip() if url else ""
+        else:  # pdf_local
+            path_value = file_path or ""
+
+        if not path_value:
+            # Missing required path/URL
+            return (
+                _build_policies_df(provider_name),
+                gr.update(visible=True),
+                url,
+                source_val,
+                date_str,
+                uploaded_file,
+            )
+
+        # Map UI source choice to enum
+        if source_val == "webpage":
             src_enum = DocumentCaptureSource.WEBPAGE
-        # Basic date fallback
-        capture_date = date_str if date_str else ""
-        # Create document (no results yet)
+        else:  # both pdf_remote and pdf_local map to PDF enum
+            src_enum = DocumentCaptureSource.PDF
+
         doc = PolicyDocumentInfo(
-            path=url,
+            path=path_value,
             output_dir=f"./output/{prov.name.replace(' ', '_')}",
             source=src_enum,
-            capture_date=capture_date,
+            capture_date=date_str or "",
             has_results=False,
         )
         prov.add_document(doc)
+
         return (
             _build_policies_df(provider_name),
             gr.update(visible=False),
             "",
-            DocumentCaptureSource.WEBPAGE.value,
+            "webpage",
             "",
+            None,
         )
 
     add_policy_btn.click(
@@ -532,20 +568,66 @@ with gr.Blocks() as block2:
         inputs=[selected_provider],
         outputs=[add_policy_modal],
     )
+
+    # Toggle file upload and URL visibility based on custom source type
+    def _on_policy_source_change(source_val: str):
+        is_local_pdf = source_val == "pdf_local"
+        show_url = source_val in ("webpage", "pdf_remote")
+        file_update = gr.update(
+            visible=is_local_pdf, value=None if not is_local_pdf else None
+        )
+        url_update = gr.update(visible=show_url, value="" if not show_url else None)
+        return file_update, url_update
+
+    new_policy_source.change(
+        _on_policy_source_change,
+        inputs=[new_policy_source],
+        outputs=[new_policy_file, new_policy_url],
+    )
+
+    # Auto-adjust source dropdown when a file is uploaded
+    def _on_policy_file_change(uploaded_file, current_source):
+        if uploaded_file is None:
+            return current_source
+        fname = getattr(uploaded_file, "name", "") or ""
+        if fname.lower().endswith(".pdf"):
+            return "pdf_local"
+        if fname.lower().endswith((".html", ".htm")):
+            return "webpage"
+        return current_source
+
+    new_policy_file.change(
+        _on_policy_file_change,
+        inputs=[new_policy_file, new_policy_source],
+        outputs=[new_policy_source],
+    )
     cancel_new_policy.click(
         _cancel_add_policy,
         inputs=[],
-        outputs=[add_policy_modal, new_policy_url, new_policy_source, new_policy_date],
+        outputs=[
+            add_policy_modal,
+            new_policy_url,
+            new_policy_source,
+            new_policy_date,
+            new_policy_file,
+        ],
     )
     save_new_policy.click(
         _save_new_policy,
-        inputs=[selected_provider, new_policy_url, new_policy_source, new_policy_date],
+        inputs=[
+            selected_provider,
+            new_policy_url,
+            new_policy_source,
+            new_policy_date,
+            new_policy_file,
+        ],
         outputs=[
             policies_df,
             add_policy_modal,
             new_policy_url,
             new_policy_source,
             new_policy_date,
+            new_policy_file,
         ],
     )
 
