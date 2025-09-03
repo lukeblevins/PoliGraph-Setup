@@ -26,6 +26,7 @@ def create_pdf(url, args):
     with sync_playwright() as p:
         browser = p.chromium.launch(channel="msedge", headless=True)
         context = browser.new_context(bypass_csp=True)
+        context.set_default_timeout(REQUESTS_TIMEOUT * 1000)
 
         def error_cleanup(msg):
             logging.error(msg)
@@ -34,6 +35,7 @@ def create_pdf(url, args):
             sys.exit(-1)
 
         page = context.new_page()
+        page.set_default_timeout(REQUESTS_TIMEOUT * 1000)
         page.set_viewport_size({"width": 1080, "height": 1920})
         logging.info("Navigating to %r", url)
 
@@ -76,10 +78,10 @@ def download_pdf(url, args):
         response.raise_for_status()
     except requests.RequestException as e:
         logging.error("Error downloading PDF: %s", e)
-        return None
+        raise e
 
     filename = Path(urlparse.urlparse(url).path).name
-    if not filename.endswith([".pdf", ".PDF"]):
+    if not filename.endswith((".pdf", ".PDF")):
         filename = "downloaded.pdf"
 
     temp_pdf_path = Path(args.output).joinpath("output.pdf")

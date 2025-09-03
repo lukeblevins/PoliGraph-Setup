@@ -17,7 +17,7 @@
             "type": "debugpy",
             "request": "launch",
             "program": "${workspaceFolder}/poligrapher/gradio_app/app.py",
-            "console": "integratedTerminal",
+            "console": "internalConsole",
             "env": {
                 "GRADIO_DEBUG": "1",
                 "PYTHONPATH": "${workspaceFolder}"

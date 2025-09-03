@@ -1,21 +1,29 @@
 import ipaddress
 import json
-from math import e
 import os
 import urllib.parse
-
+import logging as logger
 import httpx
 from matplotlib import pyplot as plt
 import networkx as nx
+import test
 import yaml
 
-from poligrapher.gradio_app.policy_analysis import PolicyDocumentInfo
-from poligrapher.gradio_app.poligrapher_functions import (
-    run_poligrapher,
-    extract_policy_text,
+from poligrapher.gradio_app.policy_analysis import (
+    DocumentCaptureSource,
+    PolicyDocumentInfo,
 )
 from poligrapher.analysis.privacy_scorer import PrivacyScorer
-from bs4 import BeautifulSoup
+
+from poligrapher.scripts import (
+    build_graph,
+    html_crawler,
+    pdf_parser,
+    run_annotators,
+    init_document,
+)
+
+logger = logger.getLogger(__name__)
 
 
 def is_ip_address(s):
@@ -137,6 +145,51 @@ def score_policy(policy: PolicyDocumentInfo):
         policy.score = None
         policy.has_results = False
     return results
+
+
+def test_document_url(url: str) -> bool:
+    """Test if the document URL is reachable and returns a 200 status code."""
+    try:
+        response = httpx.head(url, follow_redirects=True, timeout=10.0)
+        if response.status_code == 405:  # Method not allowed
+            response = httpx.get(url, follow_redirects=True, timeout=10.0)
+        return response.status_code == 200
+    except Exception as e:
+        logger.error("Error accessing URL %s: %s", url, str(e))
+        return False
+
+
+def generate_graph_from_html(path, output_folder, capture_pdf: bool):
+    if (test_document_url(path) is False) and (not os.path.isfile(path)):
+        raise FileNotFoundError(f"Document is not accessible or does not exist: {path}")
+    if capture_pdf:
+        pdf_parser.main(path, output_folder)
+        html_path = os.path.join(output_folder, "output.html")
+        html_crawler.main(html_path, output_folder)
+    else:
+        # 1. Crawl / ingest HTML (produces accessibility_tree.json)
+        html_crawler.main(path, output_folder)
+    # 2. Initialize document (creates document.pickle expected by later stages)
+    init_document.main(workdirs=[output_folder])
+    # 3. Run annotators to populate token relationships
+    run_annotators.main(workdirs=[output_folder])
+    # 4. Build graph (regular + pretty)
+    build_graph.main(workdirs=[output_folder])
+    build_graph.main(pretty=True, workdirs=[output_folder])
+
+
+def generate_graph(policy: PolicyDocumentInfo):
+    """Run the full PoliGraph pipeline for a single policy."""
+    match policy.source:
+        case DocumentCaptureSource.WEBPAGE:
+            capture_pdf = False
+        case DocumentCaptureSource.PDF:
+            capture_pdf = True
+        case _:
+            raise ValueError(f"Unknown document source: {policy.source}")
+
+    generate_graph_from_html(policy.path, policy.output_dir, capture_pdf)
+    return True
 
 
 # def process_policy_url(policy: PolicyAnalysisResult):
@@ -286,7 +339,7 @@ def graphml_to_json(graphml_path):
 
     # Save JSON
     os.makedirs(os.path.dirname(graph_json_path), exist_ok=True)
-    with open(graph_json_path, "w") as f:
+    with open(graph_json_path, "w", encoding="utf-8") as f:
         json.dump(elements, f)
 
     # Return web path

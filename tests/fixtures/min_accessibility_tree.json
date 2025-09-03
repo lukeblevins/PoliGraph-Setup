@@ -1,0 +1,8 @@
+{
+  "role": "document",
+  "children": [
+    {"role": "heading", "level": 1, "name": "Privacy Policy"},
+    {"role": "paragraph", "name": "We collect email addresses."},
+    {"role": "paragraph", "name": "We use the data for analytics."}
+  ]
+}

@@ -17,7 +17,7 @@ class PurposeClassifier:
     def __init__(self, path: str):
         self.model = SetFitModel.from_pretrained(path)
 
-    def __call__(self, text: list[str]) -> list[list[str]]:
+    def __call__(self, text: list[str]):  # generator
         results = self.model(text)
 
         for i in range(len(text)):

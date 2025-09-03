@@ -27,6 +27,14 @@ class PolicyDocumentInfo:
         self.capture_date = capture_date
         self.has_results = has_results
 
+    def has_graph(self) -> bool:
+        yml_path = os.path.join(self.output_dir, "graph-original.yml")
+        return os.path.exists(self.output_dir) and os.path.exists(yml_path)
+
+    def has_image(self) -> bool:
+        png_path = os.path.join(self.output_dir, "knowledge_graph.png")
+        return os.path.exists(self.output_dir) and os.path.exists(png_path)
+
     def _extract_text_from_webpage(self, path: str) -> str:
         policy_text = ""
         for fname in os.listdir(path):
@@ -88,7 +96,8 @@ class PolicyDocumentProvider:
         self.documents = documents if documents is not None else []
         self.results = results if results is not None else []
         self.industry = industry
-    
+        self.output_dir = f"./output/{name.replace(' ', '_')}"
+
     def add_document(self, document: PolicyDocumentInfo):
         self.documents.append(document)
 

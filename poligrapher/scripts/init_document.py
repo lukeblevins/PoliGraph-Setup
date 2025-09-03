@@ -37,33 +37,32 @@ def main(workdirs, nlp_model_dir="", debug=False, gpu_memory_threshold=0.9):
                 fout.write(document.print_tree())
 
         if use_gpu:
-            device = torch.device(
-                "cuda"
-                if torch.cuda.is_available()
-                else (
-                    "mps"
-                    if getattr(torch, "has_mps", False)
-                    and torch.backends.mps.is_available()
-                    else "cpu"
-                )
-            )
+            # Updated to avoid deprecated torch.has_mps / getattr(..., 'has_mps') pattern
+            if torch.cuda.is_available():
+                device = torch.device("cuda")
+            elif hasattr(torch.backends, "mps") and torch.backends.mps.is_available():
+                device = torch.device("mps")
+            else:
+                device = torch.device("cpu")
+
             if device.type == "cuda":
                 current_device = torch.cuda.current_device()
-                gmem_total = torch.cuda.get_device_properties(
-                    current_device
-                ).total_memory
+                props = torch.cuda.get_device_properties(current_device)
+                gmem_total = props.total_memory
                 gmem_reserved = torch.cuda.memory_reserved(current_device)
-                if gmem_reserved / gmem_total > gpu_memory_threshold:
-                    logging.info("Empty GPU cache...")
+                if gmem_total > 0 and gmem_reserved / gmem_total > gpu_memory_threshold:
+                    logging.info(
+                        "Empty GPU CUDA cache (reserved %.2f%% > %.0f%% threshold)",
+                        100 * gmem_reserved / gmem_total,
+                        100 * gpu_memory_threshold,
+                    )
                     torch.cuda.empty_cache()
             elif device.type == "mps":
-                # PyTorch MPS backend does not expose memory stats, but we can still clear cache
-                logging.info("Empty GPU cache...")
-                if hasattr(torch.mps, "empty_cache"):
+                # MPS backend has limited memory introspection; optionally clear cache if available
+                if hasattr(torch, "mps") and hasattr(torch.mps, "empty_cache"):
+                    logging.info("Empty GPU MPS cache (proactive)")
                     torch.mps.empty_cache()
-            else:
-                # CPU: nothing to clear
-                pass
+            # CPU: nothing to clear
 
 
 if __name__ == "__main__":

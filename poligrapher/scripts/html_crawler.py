@@ -5,9 +5,10 @@ import argparse
 import base64
 import json
 import logging
+import os
+import time
 from pathlib import Path
 import re
-import sys
 import urllib.parse as urlparse
 
 import bs4
@@ -23,25 +24,31 @@ READABILITY_JS_COMMIT = "04fd32f72b448c12b02ba6c40928b67e510bac49"
 READABILITY_JS_URL = (
     f"https://raw.githubusercontent.com/mozilla/readability/{READABILITY_JS_COMMIT}"
 )
+_READABILITY_JS_CACHE: str | None = None
 REQUESTS_TIMEOUT = 10
 
 
 def get_readability_js():
+    """Fetch and cache the Readability.js sources.
+
+    The original code fetched the main script twice; this removes the duplication and
+    stores the concatenated JS in a module-level cache to avoid repeated network
+    requests when crawling many documents in one process.
+    """
+    global _READABILITY_JS_CACHE
+    if _READABILITY_JS_CACHE is not None:
+        return _READABILITY_JS_CACHE
+
     session = CachedSession("py_request_cache", backend="filesystem", use_temp=True)
-    js_code = []
+    parts: list[str] = []
 
-    res = session.get(f"{READABILITY_JS_URL}/Readability.js", timeout=REQUESTS_TIMEOUT)
-    res.raise_for_status()
-    js_code.append(res.text)
-    js_code.append(res.text)
+    for suffix in ("Readability.js", "Readability-readerable.js"):
+        res = session.get(f"{READABILITY_JS_URL}/{suffix}", timeout=REQUESTS_TIMEOUT)
+        res.raise_for_status()
+        parts.append(res.text)
 
-    res = session.get(
-        f"{READABILITY_JS_URL}/Readability-readerable.js", timeout=REQUESTS_TIMEOUT
-    )
-    res.raise_for_status()
-    js_code.append(res.text)
-
-    return "\n".join(js_code)
+    _READABILITY_JS_CACHE = "\n".join(parts)
+    return _READABILITY_JS_CACHE
 
 
 def url_arg_handler(url):
@@ -52,8 +59,7 @@ def url_arg_handler(url):
         parsed_path = Path(url).absolute()
 
         if not parsed_path.is_file():
-            logging.error("File %r not found", url)
-            return None
+            raise FileNotFoundError(f"File {url} not found")
 
         return parsed_path.as_uri()
 
@@ -81,12 +87,16 @@ def url_arg_handler(url):
     return url
 
 
-def main(url, output):
+def main(url, output, fast: bool = False):
     logging.basicConfig(
         format="%(asctime)s [%(levelname)s] %(message)s", level=logging.INFO
     )
+    # fast mode can be enabled via parameter or env var POLIGRAPH_FAST=1
+    fast = fast or os.environ.get("POLIGRAPH_FAST", "0") in {"1", "true", "True"}
 
-    args = argparse.Namespace(url=url, output=output, no_readability_js=False)
+    args = argparse.Namespace(
+        url=url, output=output, no_readability_js=False, fast=fast
+    )
     access_url = url_arg_handler(args.url)
 
     firefox_configs = {
@@ -106,18 +116,23 @@ def main(url, output):
     }
 
     with sync_playwright() as p:
+        t0 = time.monotonic()
         # Firefox generates simpler accessibility tree than chromium
         # Tested on Debian's firefox-esr 91.5.0esr-1~deb11u1
         browser = p.firefox.launch(firefox_user_prefs=firefox_configs, headless=True)
         context = browser.new_context(bypass_csp=True)
+        context.set_default_timeout(REQUESTS_TIMEOUT * 1000)
 
         def error_cleanup(msg):
             logging.error(msg)
-            context.close()
-            browser.close()
-            sys.exit(-1)
+            try:
+                context.close()
+                browser.close()
+            finally:
+                raise RuntimeError(f"html_crawler failure: {msg}")
 
         page = context.new_page()
+        page.set_default_timeout(REQUESTS_TIMEOUT * 1000)
         page.set_viewport_size({"width": 1080, "height": 1920})
         logging.info("Navigating to %r", access_url)
 
@@ -130,21 +145,39 @@ def main(url, output):
             lambda f: f.parent_frame is None and navigated_urls.append(f.url),
         )
 
-        page.goto(access_url)
+        # In fast mode use a shorter initial wait strategy (domcontentloaded) and only
+        # escalate to full networkidle if needed.
+        try:
+            page.goto(access_url)
+        except PlaywrightTimeoutError:
+            logging.warning("Initial navigation timeout")
 
         try:
-            page.wait_for_load_state("networkidle")
+            if args.fast:
+                page.wait_for_load_state("domcontentloaded")
+            else:
+                page.wait_for_load_state("networkidle")
         except PlaywrightTimeoutError:
-            logging.warning("Cannot reach networkidle but will continue")
+            logging.warning(
+                "Load state wait timed out (%s mode)", "fast" if args.fast else "normal"
+            )
 
         # Check HTTP errors
         for url in navigated_urls:
             if (status_code := url_status.get(url, 0)) >= 400:
                 error_cleanup(f"Got HTTP error {status_code}")
 
-        # Apply readability.js
+        # Early heuristic: if fast mode and initial text doesn't look like a policy,
+        # skip readability injection to save 3 network fetches.
         page.evaluate("window.stop()")
-        page.add_script_tag(content=get_readability_js())
+        initial_text = page.content()
+        looks_like_policy = (
+            re.search(r"(data|privacy)\s*(policy|notice)", initial_text, re.I)
+            is not None
+        )
+        if not args.fast or looks_like_policy:
+            if not args.no_readability_js:
+                page.add_script_tag(content=get_readability_js())
         readability_info = page.evaluate(
             r"""(no_readability_js) => {
             window.stop();
@@ -208,15 +241,25 @@ def main(url, output):
         with open(output_dir / "readability.json", "w", encoding="utf-8") as fout:
             json.dump(readability_info, fout)
 
-        logging.info("Saved to %s", output_dir)
+        logging.info(
+            "Saved to %s (elapsed %.2fs, fast=%s)",
+            output_dir,
+            time.monotonic() - t0,
+            args.fast,
+        )
         context.close()
         browser.close()
 
 
 if __name__ == "__main__":
-    # fallback to original CLI behavior
-    if len(sys.argv) != 3:
-        print("usage: html_crawler.py <url_or_path> <output_dir>")
-        sys.exit(1)
-
-    main(sys.argv[1], sys.argv[2])
+    # CLI with optional --fast flag
+    parser = argparse.ArgumentParser()
+    parser.add_argument("url")
+    parser.add_argument("output_dir")
+    parser.add_argument(
+        "--fast",
+        action="store_true",
+        help="Enable fast mode (reduced waits, heuristic readability skip)",
+    )
+    cli_args = parser.parse_args()
+    main(cli_args.url, cli_args.output_dir, fast=cli_args.fast)

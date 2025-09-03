@@ -1,7 +1,10 @@
-import glob
 import os
+
+os.environ.setdefault("TOKENIZERS_PARALLELISM", "false")
+import glob
 import gradio as gr
-import logging as logger
+import logging
+from numpy import add
 import pandas as pd
 
 from poligrapher.gradio_app import functions
@@ -15,8 +18,8 @@ from poligrapher.gradio_app.policy_analysis import (
 )
 from poligrapher.scripts import build_graph, html_crawler, pdf_parser, run_annotators
 
-logger = logger.getLogger(__name__)
-
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.INFO)
 # Global in‑memory provider registry
 providers: list[PolicyDocumentProvider] = []
 ## (Legacy CSV Status augmentation code omitted for clarity)
@@ -47,17 +50,24 @@ providers: list[PolicyDocumentProvider] = []
 
 def add_provider(name: str, industry: str):
     provider = PolicyDocumentProvider(name=name, industry=industry)
+    if any(p.name == name for p in providers):
+        return  # Provider already exists
+
+    # create provider folder
+    os.makedirs(provider.output_dir, exist_ok=True)
     providers.append(provider)
 
 
 def add_document_to_provider(
     provider: PolicyDocumentProvider,
     path: str,
-    output_dir: str,
     source: DocumentCaptureSource,
     capture_date: str,
     has_results: bool,
-):
+) -> PolicyDocumentInfo:
+    # output_dir // document capture date + source
+    output_dir = f"{provider.output_dir}/{capture_date}_{source.value}"
+
     document = PolicyDocumentInfo(
         path=path,
         output_dir=output_dir,
@@ -65,7 +75,29 @@ def add_document_to_provider(
         capture_date=capture_date,
         has_results=has_results,
     )
-    provider.add_document(document)
+
+    if document.has_graph() and document.has_image():
+        provider.add_document(document)
+        return document
+
+    if not document.has_graph():
+        os.makedirs(output_dir, exist_ok=True)
+        # Only generate a graph if we don't already have results and a graph file isn't present.
+        graph_png = os.path.join(output_dir, "knowledge_graph.png")
+        if (not has_results) and (not os.path.exists(graph_png)):
+            try:
+                functions.generate_graph(document)
+                logger.info("✅ Adding document %s to provider %s", path, provider.name)
+                provider.add_document(document)
+            except BaseException as e:
+                logger.error("❌ Graph generation failed for %s: %s", path, e)
+                document.has_results = False
+                return document
+
+    if not document.has_image():
+        functions.visualize_graph(document)
+
+    return document
 
 
 def add_result_to_provider(
@@ -75,32 +107,6 @@ def add_result_to_provider(
     kind: GraphKind,
 ):
     provider.add_result(PolicyAnalysisResult(document=document, score=score, kind=kind))
-
-def generate_graph_from_html(html_path, output_folder):
-    html_crawler.main(html_path, output_folder)
-    run_annotators.main(workdirs=[output_folder])
-    build_graph.main(workdirs=[output_folder])
-    build_graph.main(pretty=True, workdirs=[output_folder])
-
-
-def process_policy(policy_url: str, policy_kind: str, company_name: str):
-    output_folder = f"./output/{company_name.replace(' ', '_')}"
-    if not os.path.exists(output_folder):
-        os.makedirs(output_folder)
-    if policy_kind.lower() == "pdf":
-        pdf_parser.main(policy_url, output_folder)
-        html_path = os.path.join(output_folder, "output.html")
-        generate_graph_from_html(html_path, output_folder)
-    else:
-        generate_graph_from_html(policy_url, output_folder)
-    # Find the .graphml file to return as output
-    graphml_files = glob.glob(os.path.join(output_folder, "*.graphml"))
-    vis_result = visualize_graph(output_folder)
-    if graphml_files:
-        return f"Graph generated: {graphml_files[0]}\n{vis_result}"
-    else:
-        return f"Graph generation completed, but no .graphml file found.\n{vis_result}"
-
 
 # def analyze_url(policy: PolicyAnalysisResult):
 #     try:
@@ -170,14 +176,13 @@ def get_providers(csv_file: str):
     for name, group in df.groupby("Provider"):
         provider = PolicyDocumentProvider(name, industry=group.iloc[0]["Industry"])
         for _, row in group.iterrows():
-            doc = PolicyDocumentInfo(
+            doc = add_document_to_provider(
+                provider=provider,
                 path=row.get("Policy URL"),
-                output_dir=f"./output/{row.get('Provider','').replace(' ', '_')}",
                 source=_safe_enum_from_value(row.get("Source")),
                 capture_date=row.get("Date"),
                 has_results=row.get("Status", False),
             )
-            provider.add_document(doc)
             # Safe GraphKind parsing (CSV may hold value or name, case-insensitive)
             gk_val = row.get("Graph Kind")
             graph_kind = None
@@ -213,7 +218,8 @@ with gr.Blocks() as block1:
 
     def on_submit_click(company_name, privacy_policy_url, kind):
         url = privacy_policy_url
-        return process_policy(url, kind, company_name)
+        return None
+        # return process_policy(url, kind, company_name)
 
     submit_btn.click(
         on_submit_click,
@@ -224,17 +230,8 @@ with gr.Blocks() as block1:
 
 with gr.Blocks() as block2:
     gr.Markdown("#### Company Privacy Policy List")
-
-    get_providers("./poligrapher/gradio_app/policy_list.csv")
-    # Count successes and errors from Status column
-    # Ensure boolean counts (Status is maintained as bool and persisted to CSV as bool)
-    num_success = sum(
-        1 for p in providers if p.documents and p.documents[0].has_results
-    )
-    num_error = len(providers) - num_success
-    gr.Markdown(
-        f"**Status Summary:** {num_success} successful, {num_error} with incomplete YML generation."
-    )
+    # Lazy load: summary placeholder (populated on .load())
+    status_md = gr.Markdown("")
     # Enable the button for demonstration and add a progress bar
     score_btn = gr.Button("Score All", interactive=True)
     # Show only relevant columns, including Status
@@ -303,7 +300,19 @@ with gr.Blocks() as block2:
 
     with gr.Row():
         company_df = gr.Dataframe(
-            value=_build_display_df(), label="Companies", interactive=False
+            headers=[
+                "Status",
+                "Provider",
+                "Policy URL",
+                "Industry",
+                "Source",
+                "Date",
+                "Score",
+                "Graph Kind",
+            ],
+            value=[],
+            label="Companies",
+            interactive=False,
         )
 
     # ----- Policies (Documents) View (filtered by selected provider) -----
@@ -539,20 +548,22 @@ with gr.Blocks() as block2:
                 uploaded_file,
             )
 
-        # Map UI source choice to enum
+        # Map UI source choice to enum (remote/local pdf both -> PDF)
         if source_val == "webpage":
             src_enum = DocumentCaptureSource.WEBPAGE
-        else:  # both pdf_remote and pdf_local map to PDF enum
+        else:
             src_enum = DocumentCaptureSource.PDF
 
-        doc = PolicyDocumentInfo(
+        # Ensure a capture date string (fallback to placeholder if empty so path is unique)
+        capture_date = (date_str or "unknown-date").strip()
+        # Delegate creation to helper so output_dir follows pattern capture_date_source
+        add_document_to_provider(
+            provider=prov,
             path=path_value,
-            output_dir=f"./output/{prov.name.replace(' ', '_')}",
             source=src_enum,
-            capture_date=date_str or "",
+            capture_date=capture_date,
             has_results=False,
         )
-        prov.add_document(doc)
 
         return (
             _build_policies_df(provider_name),
@@ -693,6 +704,20 @@ with gr.Blocks() as block2:
     )
     score_btn.click(score_all, inputs=[], outputs=scoring_output, show_progress="full")
 
+    # initial load (after client connects)
+    def _initial_load():
+        get_providers("./poligrapher/gradio_app/policy_list.csv")
+        df = _build_display_df()
+        num_success = sum(
+            1 for p in providers if p.documents and p.documents[0].has_results
+        )
+        num_error = len(providers) - num_success
+        summary = f"**Status Summary:** {num_success} successful, {num_error} with incomplete YML generation."
+        return gr.update(value=df), gr.update(value=summary)
+
+    block2.load(_initial_load, inputs=None, outputs=[company_df, status_md])
+
 if __name__ == "__main__":
     app = gr.TabbedInterface([block1, block2], tab_names=["Demo", "Companies"])
+    app.queue(concurrency_count=2)
     app.launch(share=True)
