@@ -1,14 +1,11 @@
 import os
 
 os.environ.setdefault("TOKENIZERS_PARALLELISM", "false")
-import glob
 import gradio as gr
 import logging
-from numpy import add
 import pandas as pd
 
 from poligrapher.gradio_app import functions
-from poligrapher.gradio_app.functions import visualize_graph
 from poligrapher.gradio_app.policy_analysis import (
     DocumentCaptureSource,
     GraphKind,
@@ -16,7 +13,7 @@ from poligrapher.gradio_app.policy_analysis import (
     PolicyDocumentInfo,
     PolicyDocumentProvider,
 )
-from poligrapher.scripts import build_graph, html_crawler, pdf_parser, run_annotators
+# (Legacy direct script imports removed; generation orchestrated through functions.generate_graph)
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
@@ -64,6 +61,7 @@ def add_document_to_provider(
     source: DocumentCaptureSource,
     capture_date: str,
     has_results: bool,
+    generate_if_missing: bool = True,
 ) -> PolicyDocumentInfo:
     # output_dir // document capture date + source
     output_dir = f"{provider.output_dir}/{capture_date}_{source.value}"
@@ -76,26 +74,14 @@ def add_document_to_provider(
         has_results=has_results,
     )
 
-    if document.has_graph() and document.has_image():
-        provider.add_document(document)
+    # If initial load or already present, register and optionally generate.
+    provider.add_document(document)
+
+    if not generate_if_missing:
         return document
 
-    if not document.has_graph():
-        os.makedirs(output_dir, exist_ok=True)
-        # Only generate a graph if we don't already have results and a graph file isn't present.
-        graph_png = os.path.join(output_dir, "knowledge_graph.png")
-        if (not has_results) and (not os.path.exists(graph_png)):
-            try:
-                functions.generate_graph(document)
-                logger.info("✅ Adding document %s to provider %s", path, provider.name)
-                provider.add_document(document)
-            except BaseException as e:
-                logger.error("❌ Graph generation failed for %s: %s", path, e)
-                document.has_results = False
-                return document
-
-    if not document.has_image():
-        functions.visualize_graph(document)
+    if generate_if_missing:
+        _ensure_graph_assets(document)
 
     return document
 
@@ -182,6 +168,7 @@ def get_providers(csv_file: str):
                 source=_safe_enum_from_value(row.get("Source")),
                 capture_date=row.get("Date"),
                 has_results=row.get("Status", False),
+                generate_if_missing=False,  # Avoid heavy generation on initial load
             )
             # Safe GraphKind parsing (CSV may hold value or name, case-insensitive)
             gk_val = row.get("Graph Kind")
@@ -566,7 +553,8 @@ with gr.Blocks() as block2:
         )
 
         return (
-            _build_policies_df(provider_name),
+            _build_display_df(),                 # updated company (providers) table including status
+            _build_policies_df(provider_name),   # updated policies list
             gr.update(visible=False),
             "",
             "webpage",
@@ -633,6 +621,7 @@ with gr.Blocks() as block2:
             new_policy_file,
         ],
         outputs=[
+            company_df,        # newly added to refresh status column
             policies_df,
             add_policy_modal,
             new_policy_url,
@@ -642,7 +631,44 @@ with gr.Blocks() as block2:
         ],
     )
 
+    # ---- Shared generation helper ----
+    def _ensure_graph_assets(doc: PolicyDocumentInfo, force: bool = False) -> bool:
+        """Ensure graph (YAML) and PNG image exist; update has_results accordingly.
+
+        has_results is set True only when BOTH the graph and image exist.
+        Returns True on full success, False otherwise.
+        """
+        success = False
+        try:
+            # Generate graph if missing or forced
+            if force or (not doc.has_graph()):
+                os.makedirs(doc.output_dir, exist_ok=True)
+                functions.generate_graph(doc)
+                logger.info("✅ Graph ready for %s", doc.path)
+            # Generate image if missing but graph exists
+            if doc.has_graph() and (not doc.has_image()):
+                try:
+                    functions.visualize_graph(doc)
+                    logger.info("🖼️ Image created for %s", doc.path)
+                except BaseException as e:
+                    logger.warning("⚠️ Image generation failed for %s: %s", doc.path, e)
+            # Final status evaluation
+            success = doc.has_graph() and doc.has_image()
+            doc.has_results = success
+            if not success:
+                logger.debug("Artifacts incomplete for %s (graph=%s, image=%s)", doc.path, doc.has_graph(), doc.has_image())
+        except BaseException as e:
+            logger.error("❌ Graph generation failed for %s: %s", doc.path, e)
+            doc.has_results = False
+            success = False
+        return success
+
     def _refresh_all(curr_provider):
+        """Refresh tables and lazily generate any missing artifacts."""
+        for provider in providers:
+            for doc in provider.documents:
+                if not doc.has_graph() or not doc.has_image():
+                    _ensure_graph_assets(doc)
         return _build_display_df(), _build_policies_df(curr_provider)
 
     refresh_policies.click(
@@ -650,11 +676,25 @@ with gr.Blocks() as block2:
     )
 
     def on_policy_select(_df: pd.DataFrame, selection: gr.SelectData):
+        """Policy selection handler using SelectData.index (Gradio 3.48.0).
+
+        selection.index -> (row, col) or list/tuple; we only need row.
+        """
         if selection is None:
             return gr.update(), gr.update()
-        row = selection.row_value
-        prov = row[0]
-        policy_url = row[1]
+        try:
+            # selection.index may be a tuple (row, col) or an int
+            if isinstance(selection.index, (list, tuple)):
+                row_idx = selection.index[0]
+            else:
+                row_idx = selection.index
+            if row_idx is None or row_idx == "" or row_idx >= len(_df):
+                return gr.update(), gr.update()
+            row_series = _df.iloc[row_idx]
+        except Exception:
+            return gr.update(), gr.update()
+        prov = row_series.get("Provider", "Unknown")
+        policy_url = row_series.get("Policy URL", "")
         info_md = f"<h1>{prov}</h1><br><b>Policy:</b> {policy_url}"
         png_path = f"./output/{prov.replace(' ', '_')}/knowledge_graph.png"
         return info_md, png_path if os.path.exists(png_path) else None
@@ -664,23 +704,40 @@ with gr.Blocks() as block2:
     )
 
     def on_company_select(_df: pd.DataFrame, selection: gr.SelectData):
-        """Handle provider/company row selection: update info panel only and clear image.
-
-        PNG preview is now reserved for policy (document) selection in the Policies accordion.
-        """
-        _ = _df  # avoid unused warning
+        """Provider/company selection handler using SelectData.index."""
         if selection is None:
             return "", None, _build_policies_df(""), "", gr.update(open=False)
-        row_value = selection.row_value
-        company_name = row_value[1] if len(row_value) > 0 else ""
-        company_url = row_value[2] if len(row_value) > 1 else ""
-        info_md = f"<h1>{company_name}</h1><br><b>Website:</b> {company_url}"
-        # Return info, cleared image, filtered policies df, and selected provider state
-        # Open the policies accordion when a provider is selected
+        try:
+            if isinstance(selection.index, (list, tuple)):
+                row_idx = selection.index[0]
+            else:
+                row_idx = selection.index
+            if row_idx is None or row_idx == "" or row_idx >= len(_df):
+                return "", None, _build_policies_df(""), "", gr.update(open=False)
+            row_series = _df.iloc[row_idx]
+        except Exception:
+            return "", None, _build_policies_df(""), "", gr.update(open=False)
+        company_name = row_series.get("Provider", "")
+        policies_df_val = _build_policies_df(company_name)
+        # Attempt auto-select of first document (no Dataframe programmatic select API, emulate by populating info + image)
+        first_image = None
+        info_md: str
+        provider_obj = next((p for p in providers if p.name == company_name), None)
+        if provider_obj and provider_obj.documents:
+            first_doc = provider_obj.documents[0]
+            policy_url = first_doc.path
+            info_md = f"<h1>{company_name}</h1><br><b>Policy:</b> {policy_url}"
+            img_path = os.path.join(first_doc.output_dir, "knowledge_graph.png")
+            if os.path.exists(img_path):
+                first_image = img_path
+        else:
+            # Fallback to original provider-only info
+            policy_url = row_series.get("Policy URL", "")
+            info_md = f"<h1>{company_name}</h1><br><b>Website:</b> {policy_url}"
         return (
             info_md,
-            None,
-            _build_policies_df(company_name),
+            first_image,
+            policies_df_val,
             company_name,
             gr.update(open=True),
         )
