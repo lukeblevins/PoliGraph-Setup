@@ -1,5 +1,7 @@
 from database import get_db_connection
 
+# The following functions are currently not in use
+# TODO: Reassess the utility of these functions and remove if unnecessary.
 
 def fetch_all_grades():
     """Return all rows from grade table"""

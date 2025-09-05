@@ -4,6 +4,9 @@ from psycopg2.extensions import connection
 import json
 import os
 
+# The contents of this file are currently not in use, as we are temporarily saving data to local storage.
+# TODO: This will be re-integrated with a proper database soon
+
 # Database connection parameters
 db_params = {
     "dbname": "privacy_analysis",

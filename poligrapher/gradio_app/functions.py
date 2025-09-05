@@ -191,53 +191,6 @@ def generate_graph(policy: PolicyDocumentInfo):
     generate_graph_from_html(policy.path, policy.output_dir, capture_pdf)
     return True
 
-
-# def process_policy_url(policy: PolicyAnalysisResult):
-#     validation_result = validate_url(policy.privacy_policy_url)
-#     if not validation_result["valid"]:
-#         return {"success": False, "message": validation_result["message"]}
-
-#     print(f"Processing policy URL: {policy.privacy_policy_url}")
-
-#     try:
-#         # check if folder exists, if not create it
-#         output_folder = "../../PoliGraph-Setup/output/" + policy.company_name.replace(" ", "_")
-#         if not os.path.exists(output_folder):
-#             os.makedirs(output_folder)
-
-#         result = run_poligrapher(policy.privacy_policy_url, output_folder=output_folder)
-#         if not result:
-#             return {"success": False, "message": "Failed to analyze privacy policy"}
-
-#         total_score = result["total_score"]
-#         grade = result["grade"]
-#         category_scores = result["category_scores"]
-#         feedback = result["feedback"]
-#         graphml_path = result.get("poligraph")
-
-#         graph_json_path = graphml_to_json(graphml_path) if graphml_path else None
-
-#         # Update the policy object with score and flags
-#         policy.score = total_score
-#         policy.has_score = total_score is not None
-#         policy.has_name = bool(policy.company_name and policy.company_name.strip())
-
-#         return {
-#             "success": True,
-#             "message": "Analysis complete",
-#             "result": {
-#                 "total_score": total_score,
-#                 "grade": grade,
-#                 "category_scores": category_scores,
-#                 "feedback": feedback,
-#                 "graph_json_path": graph_json_path,
-#                 "structured": policy,
-#             },
-#         }
-#     except Exception as e:
-#         return {"success": False, "message": f"Error processing policy: {str(e)}"}
-
-
 # def score_existing_policy(policy: PolicyDocumentInfo):
 #     """Score an existing policy without regenerating the knowledge graph.
 
