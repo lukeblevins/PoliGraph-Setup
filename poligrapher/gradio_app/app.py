@@ -4,6 +4,7 @@ os.environ.setdefault("TOKENIZERS_PARALLELISM", "false")
 import gradio as gr
 import logging
 import pandas as pd
+from datetime import date
 
 from poligrapher.gradio_app import functions
 from poligrapher.gradio_app.policy_analysis import (
@@ -13,37 +14,12 @@ from poligrapher.gradio_app.policy_analysis import (
     PolicyDocumentInfo,
     PolicyDocumentProvider,
 )
-# (Legacy direct script imports removed; generation orchestrated through functions.generate_graph)
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
 # Global in‑memory provider registry
 providers: list[PolicyDocumentProvider] = []
-## (Legacy CSV Status augmentation code omitted for clarity)
-
-# def get_analysis_results():
-#     try:
-#         df = get_company_df()
-#         results = []
-#         return results
-#     except Exception as e:
-#         logger.error("Error loading companies from CSV: %s", e)
-#         return [PolicyAnalysisResult(company_name="error", privacy_policy_url="", score=None, kind="auto", has_name=False, has_score=False)]
-
-# TODO: Modify to use PolicyAnalysisResult.get_graph_image_path()
-# def get_png_for_company(selected_row):
-#     if selected_row is None or not isinstance(selected_row, list) or len(selected_row) == 0:
-#         return None
-#     idx = selected_row[1]
-#     df = get_analysis_results()
-#     if idx >= len(df):
-#         return None
-#     domain = df.iloc[idx]["Domain Name"]
-#     png_path = f"./output/{domain}/knowledge_graph.png"
-#     if os.path.exists(png_path):
-#         return png_path
-#     return None
-
+CSV_PATH = "./poligrapher/gradio_app/policy_list.csv"
 
 def add_provider(name: str, industry: str):
     provider = PolicyDocumentProvider(name=name, industry=industry)
@@ -93,55 +69,6 @@ def add_result_to_provider(
     kind: GraphKind,
 ):
     provider.add_result(PolicyAnalysisResult(document=document, score=score, kind=kind))
-
-# def analyze_url(policy: PolicyAnalysisResult):
-#     try:
-#         logger.info("API triggered: analyze_url for company: %s, URL: %s", policy.company_name, policy.privacy_policy_url)
-#         if getattr(policy, "has_graph", False):
-#             logger.info(
-#                 "Existing graph detected for %s; skipping regeneration and only scoring.",
-#                 policy.company_name,
-#             )
-#             output_info = score_existing_policy(policy)
-#         else:
-#             output_info = process_policy_url(policy)
-
-#         if (output_info is None) or (not output_info.get("success", True)):
-#             logger.error("Error processing policy URL: %s", output_info.get('message', 'Unknown error'))
-#             return {"error": output_info.get("message", "Unknown error")}
-
-#         # output_info follows shape { success: True, message: ..., result: { ... } }
-#         result_payload = output_info.get("result", {})
-#         total_score = result_payload.get("total_score")
-#         grade = result_payload.get("grade")
-#         category_scores = result_payload.get("category_scores")
-#         feedback = result_payload.get("feedback")
-#         graph_json_path = result_payload.get("graph_json_path")
-#         structured = result_payload.get("structured")
-
-#         logger.info(
-#             "API analyze_url completed: %s",
-#             {
-#                 "company": policy.company_name,
-#                 "score": total_score,
-#                 "grade": grade,
-#                 "has_graph": getattr(policy, "has_graph", False),
-#             },
-#         )
-
-#         return {
-#             "total_score": total_score,
-#             "grade": grade,
-#             "category_scores": category_scores,
-#             "feedback": feedback,
-#             "graph_json_path": graph_json_path,
-#             "structured": structured,
-#         }
-
-#     except Exception as e:
-#         logger.error("Error in analyze_url: %s", e)
-#         return {"error": str(e)}
-
 
 def get_providers(csv_file: str):
     # Reset existing providers to avoid duplicates on repeated calls
@@ -195,6 +122,65 @@ def get_providers(csv_file: str):
         providers.append(provider)
 
 
+def _providers_to_dataframe() -> pd.DataFrame:
+    rows = []
+    for provider in providers:
+        for doc in provider.documents:
+            result = next((r for r in provider.results if r.document == doc), None)
+            rows.append(
+                {
+                    "Provider": provider.name,
+                    "Policy URL": doc.path,
+                    "Industry": provider.industry,
+                    "Source": getattr(doc.source, "value", doc.source),
+                    "Date": doc.capture_date,
+                    "Status": bool(doc.has_results),
+                    "Score": getattr(result, "score", None),
+                    "Graph Kind": (
+                        getattr(result.kind, "value", None)
+                        if result and result.kind
+                        else None
+                    ),
+                }
+            )
+    return pd.DataFrame(
+        rows,
+        columns=[
+            "Provider",
+            "Policy URL",
+            "Industry",
+            "Source",
+            "Date",
+            "Status",
+            "Score",
+            "Graph Kind",
+        ],
+    )
+
+
+def _save_providers_to_csv(path: str = CSV_PATH, allow_empty: bool = False):
+    """Persist in-memory providers to CSV.
+
+    Protection: Previously this function was invoked before any load, causing
+    an existing populated CSV to be overwritten by an empty header line.
+    We now skip writing when the in-memory provider list is empty unless
+    explicitly forced (allow_empty=True).
+    """
+    try:
+        df = _providers_to_dataframe()
+        if df.empty and not allow_empty and os.path.exists(path):
+            logger.debug(
+                "Skip saving providers: would overwrite existing non-empty CSV with empty dataset (%s)",
+                path,
+            )
+            return
+        os.makedirs(os.path.dirname(path), exist_ok=True)
+        df.to_csv(path, index=False)
+        logger.debug("Providers persisted to %s (rows=%d)", path, len(df))
+    except Exception as e:
+        logger.error("Failed to persist providers to CSV: %s", e)
+
+
 with gr.Blocks() as block1:
     gr.Markdown("#### PoliGraph-er Demo")
     company_name_input = gr.Textbox(label="Company Name")
@@ -219,8 +205,6 @@ with gr.Blocks() as block2:
     gr.Markdown("#### Company Privacy Policy List")
     # Lazy load: summary placeholder (populated on .load())
     status_md = gr.Markdown("")
-    # Enable the button for demonstration and add a progress bar
-    score_btn = gr.Button("Score All", interactive=True)
     # Show only relevant columns, including Status
     display_cols = [
         "Status",
@@ -357,8 +341,6 @@ with gr.Blocks() as block2:
         )
 
     # Policies UI will be added after company_info & png_image definitions
-
-    # ----- Add Provider Modal UI -----
     add_provider_btn = gr.Button("Add Provider")
     with gr.Group(visible=False, elem_id="add-provider-modal") as add_provider_modal:
         with gr.Column(elem_classes="modal-card"):
@@ -448,11 +430,12 @@ with gr.Blocks() as block2:
                         file_types=[".pdf", ".html", ".htm"],
                         visible=False,
                     )
-                    new_policy_date = gr.Textbox(label="Capture Date (YYYY-MM-DD)")
+                    with gr.Row():
+                        new_policy_date = gr.Textbox(label="Capture Date (YYYY-MM-DD)")
+                        new_policy_today = gr.Button("Today")
                     with gr.Row():
                         save_new_policy = gr.Button("Save", variant="primary")
                         cancel_new_policy = gr.Button("Cancel")
-    scoring_output = gr.Textbox(label="Scoring Results", interactive=False)
 
     def _show_add_policy_modal(provider_name: str):
         if not provider_name:
@@ -551,7 +534,8 @@ with gr.Blocks() as block2:
             capture_date=capture_date,
             has_results=False,
         )
-
+        # Persist after adding new document
+        _save_providers_to_csv()
         return (
             _build_display_df(),                 # updated company (providers) table including status
             _build_policies_df(provider_name),   # updated policies list
@@ -582,6 +566,14 @@ with gr.Blocks() as block2:
         _on_policy_source_change,
         inputs=[new_policy_source],
         outputs=[new_policy_file, new_policy_url],
+    )
+
+    def _set_new_policy_date_today():
+        """Set the new policy date textbox to today's date (YYYY-MM-DD)."""
+        return gr.update(value=date.today().isoformat())
+
+    new_policy_today.click(
+        _set_new_policy_date_today, inputs=[], outputs=[new_policy_date]
     )
 
     # Auto-adjust source dropdown when a file is uploaded
@@ -655,6 +647,8 @@ with gr.Blocks() as block2:
             # Final status evaluation
             success = doc.has_graph() and doc.has_image()
             doc.has_results = success
+            # Persist status change if success or partial
+            _save_providers_to_csv()
             if not success:
                 logger.debug("Artifacts incomplete for %s (graph=%s, image=%s)", doc.path, doc.has_graph(), doc.has_image())
         except BaseException as e:
@@ -759,11 +753,10 @@ with gr.Blocks() as block2:
             policies_accordion,
         ],
     )
-    score_btn.click(score_all, inputs=[], outputs=scoring_output, show_progress="full")
 
     # initial load (after client connects)
     def _initial_load():
-        get_providers("./poligrapher/gradio_app/policy_list.csv")
+        get_providers(CSV_PATH)
         df = _build_display_df()
         num_success = sum(
             1 for p in providers if p.documents and p.documents[0].has_results
