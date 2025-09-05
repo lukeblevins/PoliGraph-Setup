@@ -5,6 +5,8 @@ import gradio as gr
 import logging
 import pandas as pd
 from datetime import date
+import subprocess
+import sys
 
 from poligrapher.gradio_app import functions
 from poligrapher.gradio_app.policy_analysis import (
@@ -71,33 +73,43 @@ def add_result_to_provider(
     provider.add_result(PolicyAnalysisResult(document=document, score=score, kind=kind))
 
 def get_providers(csv_file: str):
-    # Reset existing providers to avoid duplicates on repeated calls
+    """Load providers & documents from CSV, then recompute status from filesystem.
+
+    We intentionally ignore the persisted Status column as authoritative and
+    derive has_results from current artifacts (graph YAML + image). After the
+    load completes, refreshed statuses are persisted back to disk once.
+    """
     providers.clear()
+    if not os.path.exists(csv_file):  # Nothing to load
+        return
     df = pd.read_csv(csv_file)
 
-    # Assume the CSV "Source" values are already normalized to enum values
-    # (e.g. "pdf" or "webpage"). Provide a tiny safe helper to construct
-    # the enum from that value and fallback to WEBPAGE on error or missing.
     def _safe_enum_from_value(val) -> DocumentCaptureSource:
         try:
-            if val is None:
+            if val is None or (isinstance(val, float) and pd.isna(val)):
                 return DocumentCaptureSource.WEBPAGE
             return DocumentCaptureSource(str(val))
         except Exception:
             return DocumentCaptureSource.WEBPAGE
 
     for name, group in df.groupby("Provider"):
-        provider = PolicyDocumentProvider(name, industry=group.iloc[0]["Industry"])
+        provider = PolicyDocumentProvider(
+            name, industry=group.iloc[0].get("Industry", "Unknown")
+        )
         for _, row in group.iterrows():
+            # Always start with False; recompute below
             doc = add_document_to_provider(
                 provider=provider,
                 path=row.get("Policy URL"),
                 source=_safe_enum_from_value(row.get("Source")),
                 capture_date=row.get("Date"),
-                has_results=row.get("Status", False),
-                generate_if_missing=False,  # Avoid heavy generation on initial load
+                has_results=False,
+                generate_if_missing=False,
             )
-            # Safe GraphKind parsing (CSV may hold value or name, case-insensitive)
+            # Recompute from existing artifacts (source of truth)
+            doc.has_results = doc.has_graph() and doc.has_image()
+
+            # Parse GraphKind and Score if present
             gk_val = row.get("Graph Kind")
             graph_kind = None
             if isinstance(gk_val, str) and gk_val.strip():
@@ -105,21 +117,22 @@ def get_providers(csv_file: str):
                 try:
                     graph_kind = GraphKind[key]
                 except KeyError:
-                    # Try match by enum value
                     for m in GraphKind:
                         if m.value.lower() == gk_val.strip().lower():
                             graph_kind = m
                             break
-            # Only add a result if score present or graph_kind present
-            if (row.get("Score") is not None) or (graph_kind is not None):
+            score_val = row.get("Score")
+            if (score_val is not None) or (graph_kind is not None):
                 provider.add_result(
                     PolicyAnalysisResult(
                         document=doc,
-                        score=row.get("Score"),
+                        score=score_val,
                         kind=graph_kind,
                     )
                 )
         providers.append(provider)
+    # Persist refreshed statuses
+    _save_providers_to_csv()
 
 
 def _providers_to_dataframe() -> pd.DataFrame:
@@ -179,6 +192,23 @@ def _save_providers_to_csv(path: str = CSV_PATH, allow_empty: bool = False):
         logger.debug("Providers persisted to %s (rows=%d)", path, len(df))
     except Exception as e:
         logger.error("Failed to persist providers to CSV: %s", e)
+
+
+def _rescan_and_persist_status() -> int:
+    """Re-scan filesystem for each document; update has_results; persist if changed.
+
+    Returns the number of documents whose status value changed.
+    """
+    changed = 0
+    for provider in providers:
+        for doc in provider.documents:
+            new_status = doc.has_graph() and doc.has_image()
+            if new_status != doc.has_results:
+                doc.has_results = new_status
+                changed += 1
+    if changed:
+        _save_providers_to_csv()
+    return changed
 
 
 with gr.Blocks() as block1:
@@ -406,6 +436,10 @@ with gr.Blocks() as block2:
                 with gr.Row():
                     refresh_policies = gr.Button("Refresh Policies")
                     add_policy_btn = gr.Button("Add Policy", variant="secondary")
+                    open_provider_folder_btn = gr.Button(
+                        "Open Folder", variant="secondary"
+                    )
+                folder_open_msg = gr.Markdown(visible=True, value="")
             # Add Policy Modal (initially hidden)
             with gr.Group(
                 visible=False, elem_id="add-policy-modal"
@@ -552,6 +586,33 @@ with gr.Blocks() as block2:
         outputs=[add_policy_modal],
     )
 
+    # ---- Open provider folder helper ----
+    def _open_provider_folder(provider_name: str):
+        if not provider_name:
+            return "No provider selected."
+        prov = next((p for p in providers if p.name == provider_name), None)
+        if prov is None:
+            return f"Provider '{provider_name}' not found."
+        folder = prov.output_dir
+        if not os.path.isdir(folder):
+            return f"Directory missing: {folder}"
+        try:
+            if sys.platform == "darwin":
+                subprocess.Popen(["open", folder])
+            elif sys.platform.startswith("win"):
+                os.startfile(folder)  # type: ignore[attr-defined]
+            else:
+                subprocess.Popen(["xdg-open", folder])
+            return f"Opened folder: {folder}"
+        except Exception as e:
+            return f"Failed to open folder: {e}"
+
+    open_provider_folder_btn.click(
+        _open_provider_folder,
+        inputs=[selected_provider],
+        outputs=[folder_open_msg],
+    )
+
     # Toggle file upload and URL visibility based on custom source type
     def _on_policy_source_change(source_val: str):
         is_local_pdf = source_val == "pdf_local"
@@ -658,11 +719,14 @@ with gr.Blocks() as block2:
         return success
 
     def _refresh_all(curr_provider):
-        """Refresh tables and lazily generate any missing artifacts."""
+        """Refresh tables: rescan status, attempt generation for missing, rescan again."""
+        _rescan_and_persist_status()
         for provider in providers:
             for doc in provider.documents:
-                if not doc.has_graph() or not doc.has_image():
-                    _ensure_graph_assets(doc)
+                if not doc.has_results:  # Only attempt for incomplete docs
+                    if not doc.has_graph() or not doc.has_image():
+                        _ensure_graph_assets(doc)
+        _rescan_and_persist_status()
         return _build_display_df(), _build_policies_df(curr_provider)
 
     refresh_policies.click(
@@ -757,12 +821,15 @@ with gr.Blocks() as block2:
     # initial load (after client connects)
     def _initial_load():
         get_providers(CSV_PATH)
+        # get_providers already persisted refreshed statuses
+        total_docs = sum(len(p.documents) for p in providers)
+        ready_docs = sum(1 for p in providers for d in p.documents if d.has_results)
         df = _build_display_df()
-        num_success = sum(
-            1 for p in providers if p.documents and p.documents[0].has_results
+        summary = (
+            f"**Status Summary:** {ready_docs}/{total_docs} documents have complete artifacts."
+            if total_docs
+            else "**Status Summary:** No documents loaded."
         )
-        num_error = len(providers) - num_success
-        summary = f"**Status Summary:** {num_success} successful, {num_error} with incomplete YML generation."
         return gr.update(value=df), gr.update(value=summary)
 
     block2.load(_initial_load, inputs=None, outputs=[company_df, status_md])
