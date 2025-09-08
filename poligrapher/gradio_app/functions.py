@@ -6,7 +6,6 @@ import logging as logger
 import httpx
 from matplotlib import pyplot as plt
 import networkx as nx
-import test
 import yaml
 
 from poligrapher.gradio_app.policy_analysis import (
@@ -148,7 +147,22 @@ def score_policy(policy: PolicyDocumentInfo):
 
 
 def test_document_url(url: str) -> bool:
-    """Test if the document URL is reachable and returns a 200 status code."""
+    """Test if the document URL is reachable with a 200 response.
+
+    Notes:
+    - Returns False silently for local file paths or values without http/https scheme.
+    - Avoids emitting noisy errors for non-URL inputs (e.g., absolute file paths).
+    """
+    if not url:
+        return False
+    try:
+        parsed = urllib.parse.urlparse(url)
+        # Not an http(s) URL → treat as non-URL; return False without logging
+        if parsed.scheme not in ("http", "https"):
+            return False
+    except Exception:
+        return False
+
     try:
         response = httpx.head(url, follow_redirects=True, timeout=10.0)
         if response.status_code == 405:  # Method not allowed
@@ -160,8 +174,21 @@ def test_document_url(url: str) -> bool:
 
 
 def generate_graph_from_html(path, output_folder, capture_pdf: bool):
-    if (test_document_url(path) is False) and (not os.path.isfile(path)):
-        raise FileNotFoundError(f"Document is not accessible or does not exist: {path}")
+    # Normalize file:// URIs to filesystem paths
+    try:
+        parsed = urllib.parse.urlparse(path)
+        if parsed.scheme == "file":
+            path = parsed.path
+    except Exception:
+        pass
+    # Prefer local file check first to avoid URL probes on file paths
+    if os.path.isfile(path):
+        pass
+    else:
+        if test_document_url(path) is False:
+            raise FileNotFoundError(
+                f"Document is not accessible or does not exist: {path}"
+            )
     if capture_pdf:
         pdf_parser.main(path, output_folder)
         html_path = os.path.join(output_folder, "output.html")

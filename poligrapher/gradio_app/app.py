@@ -7,6 +7,7 @@ import pandas as pd
 from datetime import date
 import subprocess
 import sys
+from shutil import copy
 
 from poligrapher.gradio_app import functions
 from poligrapher.gradio_app.policy_analysis import (
@@ -172,24 +173,53 @@ def _providers_to_dataframe() -> pd.DataFrame:
 
 
 def _save_providers_to_csv(path: str = CSV_PATH, allow_empty: bool = False):
-    """Persist in-memory providers to CSV.
+    """Persist providers to CSV, preserving existing rows with a simple de-dup.
 
-    Protection: Previously this function was invoked before any load, causing
-    an existing populated CSV to be overwritten by an empty header line.
-    We now skip writing when the in-memory provider list is empty unless
-    explicitly forced (allow_empty=True).
+    Behavior:
+    - If in-memory is empty and a file exists, skip writing unless allow_empty.
+    - Else, concatenate existing CSV (if any) with in-memory rows and
+      drop duplicates on (Provider, Policy URL, Date, Source), keeping the last.
     """
     try:
-        df = _providers_to_dataframe()
-        if df.empty and not allow_empty and os.path.exists(path):
+        new_df = _providers_to_dataframe()
+        if new_df.empty and not allow_empty and os.path.exists(path):
             logger.debug(
                 "Skip saving providers: would overwrite existing non-empty CSV with empty dataset (%s)",
                 path,
             )
             return
+        cols = [
+            "Provider",
+            "Policy URL",
+            "Industry",
+            "Source",
+            "Date",
+            "Status",
+            "Score",
+            "Graph Kind",
+        ]
+        key_cols = ["Provider", "Policy URL", "Date", "Source"]
+        # Load existing if present
+        if os.path.exists(path):
+            try:
+                existing = pd.read_csv(path)
+            except Exception as e:
+                logger.warning("Could not read existing CSV at %s: %s", path, e)
+                existing = pd.DataFrame(columns=cols)
+        else:
+            existing = pd.DataFrame(columns=cols)
+
+        # Ensure both frames share the same columns
+        existing = existing.reindex(columns=cols, fill_value=None)
+        new_df = new_df.reindex(columns=cols, fill_value=None)
+
+        combined = pd.concat([existing, new_df], ignore_index=True)
+        if not combined.empty:
+            combined = combined.drop_duplicates(subset=key_cols, keep="last")
+
         os.makedirs(os.path.dirname(path), exist_ok=True)
-        df.to_csv(path, index=False)
-        logger.debug("Providers persisted to %s (rows=%d)", path, len(df))
+        combined.to_csv(path, index=False)
+        logger.debug("Providers persisted to %s (rows=%d)", path, len(combined))
     except Exception as e:
         logger.error("Failed to persist providers to CSV: %s", e)
 
@@ -216,18 +246,174 @@ with gr.Blocks() as block1:
     company_name_input = gr.Textbox(label="Company Name")
     privacy_policy_input = gr.Textbox(label="Privacy Policy URL")
     kind_input = gr.Radio(choices=["Auto", "Webpage", "PDF"], label="Document Method", value="Auto")
+    # Only visible when PDF is selected
+    demo_pdf_file = gr.File(
+        label="Upload PDF (optional)", file_types=[".pdf"], visible=False
+    )
     submit_btn = gr.Button("Generate Graph")
     output_text = gr.Textbox(label="Result", interactive=False)
+    demo_output_dir_state = gr.State("")
+    demo_open_folder_btn = gr.Button("Open Folder", visible=False)
+    demo_open_folder_msg = gr.Markdown("", visible=True)
 
-    def on_submit_click(company_name, privacy_policy_url, kind):
-        url = privacy_policy_url
-        return None
-        # return process_policy(url, kind, company_name)
+    def on_submit_click(company_name, privacy_policy_url, kind, uploaded_pdf):
+        name = (company_name or "").strip()
+        url = (privacy_policy_url or "").strip()
+        sel = (kind or "Auto").strip()
+        if not name:
+            return (
+                "Please provide both a Company Name and a Policy URL.",
+                gr.update(visible=False),
+                "",
+                gr.update(value=""),
+            )
+        if sel == "PDF":
+            if (uploaded_pdf is None) and (not url):
+                return (
+                    "For PDF, upload a file or provide a PDF URL.",
+                    gr.update(visible=False),
+                    "",
+                    gr.update(value=""),
+                )
+        else:
+            if not url:
+                return (
+                    "Please provide both a Company Name and a Policy URL.",
+                    gr.update(visible=False),
+                    "",
+                    gr.update(value=""),
+                )
+
+        # Determine capture source based on selection
+        if sel == "PDF":
+            src_enum = DocumentCaptureSource.PDF
+        elif sel == "Webpage":
+            src_enum = DocumentCaptureSource.WEBPAGE
+        else:
+            src_enum = (
+                DocumentCaptureSource.PDF
+                if url.lower().endswith(".pdf")
+                else DocumentCaptureSource.WEBPAGE
+            )
+
+        capture_date = date.today().isoformat()
+        provider_slug = name.replace(" ", "_")
+        base_dir = f"./output/{provider_slug}"
+        output_dir = f"{base_dir}/{capture_date}_{src_enum.value}"
+        # Determine path to use: prefer uploaded file when PDF selected
+        path_to_use = url
+        if sel == "PDF" and uploaded_pdf is not None:
+            try:
+                src_path = getattr(uploaded_pdf, "name", None) or uploaded_pdf
+                filename = os.path.basename(src_path)
+                os.makedirs(output_dir, exist_ok=True)
+                dest_path = os.path.join(output_dir, filename)
+                copy(src_path, dest_path)
+                # Use absolute path to ensure downstream file checks succeed
+                path_to_use = os.path.abspath(dest_path)
+            except Exception:
+                # Fallback to URL if copy fails and a URL was provided
+                path_to_use = url
+
+        doc = PolicyDocumentInfo(
+            path=path_to_use,
+            output_dir=output_dir,
+            source=src_enum,
+            capture_date=capture_date,
+            has_results=False,
+        )
+
+        try:
+            os.makedirs(doc.output_dir, exist_ok=True)
+            if not doc.has_graph():
+                functions.generate_graph(doc)
+            if doc.has_graph() and not doc.has_image():
+                try:
+                    functions.visualize_graph(doc)
+                except BaseException:
+                    # Keep going; image is optional for demo status
+                    pass
+            doc.has_results = doc.has_graph() and doc.has_image()
+        except BaseException:
+            doc.has_results = False
+
+        status = "✅ ready" if doc.has_results else "❌ incomplete"
+        img_path = os.path.join(doc.output_dir, "knowledge_graph.png")
+        img_note = img_path if os.path.exists(img_path) else "(image missing)"
+        summary = f"Provider: {name}\nOutput: {doc.output_dir}\nStatus: {status}\nImage: {img_note}"
+
+        return (
+            summary,
+            gr.update(visible=True),
+            doc.output_dir,
+            gr.update(value=""),
+        )
+
+    # Helper to open the last generated output folder
+    def _open_demo_folder(output_dir: str):
+        if not output_dir:
+            return "No output directory available. Run the demo first."
+        try:
+            if sys.platform == "darwin":
+                subprocess.Popen(["open", output_dir])
+            elif sys.platform.startswith("win"):
+                os.startfile(output_dir)  # type: ignore[attr-defined]
+            else:
+                subprocess.Popen(["xdg-open", output_dir])
+            return f"Opened folder: {output_dir}"
+        except Exception as e:
+            return f"Failed to open folder: {e}"
+
+    # Hide the Open Folder button if the user edits any demo input
+    def _on_demo_field_change():
+        return gr.update(visible=False), "", gr.update(value="")
 
     submit_btn.click(
         on_submit_click,
-        inputs=[company_name_input, privacy_policy_input, kind_input],
-        outputs=output_text
+        inputs=[company_name_input, privacy_policy_input, kind_input, demo_pdf_file],
+        outputs=[
+            output_text,
+            demo_open_folder_btn,
+            demo_output_dir_state,
+            demo_open_folder_msg,
+        ],
+    )
+    demo_open_folder_btn.click(
+        _open_demo_folder,
+        inputs=[demo_output_dir_state],
+        outputs=[demo_open_folder_msg],
+    )
+    company_name_input.change(
+        _on_demo_field_change,
+        inputs=[],
+        outputs=[demo_open_folder_btn, demo_output_dir_state, demo_open_folder_msg],
+    )
+    privacy_policy_input.change(
+        _on_demo_field_change,
+        inputs=[],
+        outputs=[demo_open_folder_btn, demo_output_dir_state, demo_open_folder_msg],
+    )
+    kind_input.change(
+        _on_demo_field_change,
+        inputs=[],
+        outputs=[demo_open_folder_btn, demo_output_dir_state, demo_open_folder_msg],
+    )
+
+    # Toggle PDF file picker visibility when method changes
+    def _on_demo_kind_change(kind_val: str):
+        show = (kind_val or "").strip() == "PDF"
+        return gr.update(visible=show, value=None if not show else None)
+
+    kind_input.change(
+        _on_demo_kind_change,
+        inputs=[kind_input],
+        outputs=[demo_pdf_file],
+    )
+    # Hide open-folder on file change too
+    demo_pdf_file.change(
+        _on_demo_field_change,
+        inputs=[],
+        outputs=[demo_open_folder_btn, demo_output_dir_state, demo_open_folder_msg],
     )
 
 
@@ -528,9 +714,7 @@ with gr.Blocks() as block2:
                 out_dir = f"./output/{provider_name.replace(' ', '_')}"
                 os.makedirs(out_dir, exist_ok=True)
                 dest_path = os.path.join(out_dir, filename)
-                import shutil
-
-                shutil.copy(src_path, dest_path)
+                copy(src_path, dest_path)
                 file_path = dest_path
                 # If a file is uploaded, enforce local PDF selection
                 if filename.lower().endswith(".pdf"):

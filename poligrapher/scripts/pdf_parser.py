@@ -97,41 +97,48 @@ def download_pdf(url, args):
 def url_arg_handler(url, args):
     parsed_url = urlparse.urlparse(url)
     logging.info("Parsed URL: %s", parsed_url)
-    # check if URL or local file:
-    if not parsed_url.scheme in ["https", "http"] and not parsed_url.netloc:
-        # No scheme or netloc: local file path
-        logging.info("Interpreting %r as a local file path", url)
-        parsed_path = Path(url).absolute()
-
+    # Local file via file:// URI
+    if parsed_url.scheme == "file":
+        parsed_path = Path(parsed_url.path)
         if not parsed_path.is_file():
             logging.error("File %r not found", url)
             return None
-
         logging.info("Local file path %r is valid", parsed_path)
-        return parsed_path.as_uri()
-    else:
-        # No scheme: assume HTTPS
+        # Return plain filesystem path for downstream libs
+        return str(parsed_path)
+    # Plain local path (no scheme/netloc)
+    if parsed_url.scheme == "" and parsed_url.netloc == "":
+        logging.info("Interpreting %r as a local file path", url)
+        parsed_path = Path(url).absolute()
+        if not parsed_path.is_file():
+            logging.error("File %r not found", url)
+            return None
+        logging.info("Local file path %r is valid", parsed_path)
+        return str(parsed_path)
+    # Remote URL (http/https or with netloc)
+    if parsed_url.scheme not in ("http", "https"):
+        # Default to https if a non-empty netloc exists without scheme
         parsed_url = parsed_url._replace(scheme="https")
         url = parsed_url.geturl()
 
-        # Determine if website or PDF link
-        if url.endswith(".pdf") or url.endswith(".PDF"):
-            logging.info("Interpreting %r as a PDF URL", url)
-            # Download and return the local file path
-            downloaded = download_pdf(url, args)
-            if downloaded is None:
-                logging.error("Failed to download PDF from %r", url)
-                return None
-            logging.info("PDF downloaded successfully from %r", url)
-            return downloaded
-        else:
-            logging.info("Interpreting %r as a website URL", url)
-            exported = create_pdf(url, args)
-            if exported is None:
-                logging.error("Failed to create PDF from website %r", url)
-                return None
-            logging.info("PDF created successfully from website %r", url)
-            return exported
+    # Determine if website or PDF link
+    if url.endswith((".pdf", ".PDF")):
+        logging.info("Interpreting %r as a PDF URL", url)
+        # Download and return the local file path
+        downloaded = download_pdf(url, args)
+        if downloaded is None:
+            logging.error("Failed to download PDF from %r", url)
+            return None
+        logging.info("PDF downloaded successfully from %r", url)
+        return downloaded
+    else:
+        logging.info("Interpreting %r as a website URL", url)
+        exported = create_pdf(url, args)
+        if exported is None:
+            logging.error("Failed to create PDF from website %r", url)
+            return None
+        logging.info("PDF created successfully from website %r", url)
+        return exported
 
 
 def main(url, output):
