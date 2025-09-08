@@ -10,6 +10,7 @@ import yaml
 
 from poligrapher.gradio_app.policy_analysis import (
     DocumentCaptureSource,
+    GraphKind,
     PolicyDocumentInfo,
 )
 from poligrapher.analysis.privacy_scorer import PrivacyScorer
@@ -135,15 +136,19 @@ def visualize_graph(policy: PolicyDocumentInfo):
 
 def score_policy(policy: PolicyDocumentInfo):
     policy.has_results = False
-    scorer = PrivacyScorer()
-    results = scorer.score_policy(policy.get_document_text())
-    if results.get("success") is True:
-        policy.score = results.get("total_score")
-        policy.has_results = True
+    if policy.has_graph() is False:
+        logger.error("No graph was found to score document at %s", policy.output_dir)
+        return None
     else:
-        policy.score = None
-        policy.has_results = False
-    return results
+        scorer = PrivacyScorer()
+        results = scorer.score_policy(policy.get_document_text())
+        if results.get("success") is True:
+            policy.score = results.get("total_score")
+            policy.has_results = True
+        else:
+            policy.score = None
+            policy.has_results = False
+        return policy.score
 
 
 def test_document_url(url: str) -> bool:
@@ -217,6 +222,20 @@ def generate_graph(policy: PolicyDocumentInfo):
 
     generate_graph_from_html(policy.path, policy.output_dir, capture_pdf)
     return True
+
+
+def infer_graph_kind(policy: PolicyDocumentInfo) -> GraphKind:
+    """Infer the graph kind (STANDARD, LLM, NONE) based on available files."""
+    standard_yml = os.path.join(policy.output_dir, "graph-original.yml")
+    # TODO: update this when LLM graph generation is added
+    llm_yml = os.path.join(policy.output_dir, "graph-llm.yml")
+    if os.path.exists(llm_yml):
+        return GraphKind.LLM
+    elif os.path.exists(standard_yml):
+        return GraphKind.STANDARD
+    else:
+        return GraphKind.NONE
+
 
 # def score_existing_policy(policy: PolicyDocumentInfo):
 #     """Score an existing policy without regenerating the knowledge graph.

@@ -140,7 +140,10 @@ def _providers_to_dataframe() -> pd.DataFrame:
     rows = []
     for provider in providers:
         for doc in provider.documents:
-            result = next((r for r in provider.results if r.document == doc), None)
+            # Use the most recent result for this document (append order)
+            result = next(
+                (r for r in reversed(provider.results) if r.document == doc), None
+            )
             rows.append(
                 {
                     "Provider": provider.name,
@@ -151,8 +154,8 @@ def _providers_to_dataframe() -> pd.DataFrame:
                     "Status": bool(doc.has_results),
                     "Score": getattr(result, "score", None),
                     "Graph Kind": (
-                        getattr(result.kind, "value", None)
-                        if result and result.kind
+                        getattr(getattr(result, "kind", None), "value", None)
+                        if result
                         else None
                     ),
                 }
@@ -449,6 +452,11 @@ with gr.Blocks() as block2:
         for provider in providers:
             if provider.documents:
                 for doc in provider.documents:
+                    # Prefer the most recent result for this doc (append order)
+                    latest_result = next(
+                        (r for r in reversed(provider.results) if r.document == doc),
+                        None,
+                    )
                     rows.append(
                         {
                             "Status": _status_to_emoji(doc.has_results),
@@ -457,17 +465,13 @@ with gr.Blocks() as block2:
                             "Policy URL": doc.path,
                             "Source": doc.source,
                             "Date": doc.capture_date,
-                            "Score": next(
-                                (
-                                    r.score
-                                    for r in provider.results
-                                    if r.document == doc
-                                ),
-                                None,
-                            ),
-                            "Graph Kind": next(
-                                (r.kind for r in provider.results if r.document == doc),
-                                None,
+                            "Score": getattr(latest_result, "score", None),
+                            "Graph Kind": (
+                                getattr(
+                                    getattr(latest_result, "kind", None), "value", None
+                                )
+                                if latest_result
+                                else None
                             ),
                         }
                     )
@@ -524,6 +528,10 @@ with gr.Blocks() as block2:
             if provider.name != provider_filter:
                 continue
             for doc in provider.documents:
+                latest_result = next(
+                    (r for r in reversed(provider.results) if r.document == doc),
+                    None,
+                )
                 rows.append(
                     {
                         "Provider": provider.name,
@@ -535,13 +543,11 @@ with gr.Blocks() as block2:
                         ),
                         "Date": doc.capture_date,
                         "Status": "✅" if doc.has_results else "❌",
-                        "Score": next(
-                            (r.score for r in provider.results if r.document == doc),
-                            None,
-                        ),
-                        "Graph Kind": next(
-                            (r.kind for r in provider.results if r.document == doc),
-                            None,
+                        "Score": getattr(latest_result, "score", None),
+                        "Graph Kind": (
+                            getattr(getattr(latest_result, "kind", None), "value", None)
+                            if latest_result
+                            else None
                         ),
                     }
                 )
@@ -562,6 +568,7 @@ with gr.Blocks() as block2:
     with gr.Row():
         new_provider_btn = gr.Button("New Provider")
         refresh_all_btn = gr.Button("Refresh")
+        score_btn = gr.Button("Score")
     with gr.Group(visible=False, elem_id="add-provider-modal") as add_provider_modal:
         with gr.Column(elem_classes="modal-card"):
             gr.Markdown("### Add Provider")
@@ -916,12 +923,56 @@ with gr.Blocks() as block2:
         _rescan_and_persist_status()
         return _build_display_df(), _build_policies_df(curr_provider)
 
+    def _refresh_provider(curr_provider: str):
+        """Refresh only the selected provider's policies and update tables.
+
+        If no provider is selected, this is a no-op aside from a status rescan.
+        """
+        _rescan_and_persist_status()
+        if curr_provider:
+            prov = next((p for p in providers if p.name == curr_provider), None)
+            if prov is not None:
+                for doc in prov.documents:
+                    if not doc.has_results:
+                        if not doc.has_graph() or not doc.has_image():
+                            _ensure_graph_assets(doc)
+        _rescan_and_persist_status()
+        return _build_display_df(), _build_policies_df(curr_provider)
+
+    def score_all(curr_provider, progress=gr.Progress()):
+        progress(0, "Starting...")
+        for company in progress.tqdm(providers, desc="Scoring Policies"):
+            for policy in company.documents:
+                score = functions.score_policy(policy)
+                kind = functions.infer_graph_kind(policy)
+                if score is not None or kind is not None:
+                    company.add_result(
+                        PolicyAnalysisResult(
+                            document=policy,
+                            score=score,
+                            kind=kind,
+                        )
+                    )
+                    logger.info(
+                        "Scored %s: score=%s, kind=%s", policy.path, score, kind
+                    )
+        _save_providers_to_csv()
+        progress(100, "Completed.")
+        return _build_display_df(), _build_policies_df(curr_provider)
+
     refresh_policies.click(
-        _refresh_all, inputs=[selected_provider], outputs=[company_df, policies_df]
+        _refresh_provider, inputs=[selected_provider], outputs=[company_df, policies_df]
     )
     # Global top-level refresh to attempt generation for all providers
     refresh_all_btn.click(
         _refresh_all, inputs=[selected_provider], outputs=[company_df, policies_df]
+    )
+
+    score_btn.click(
+        score_all,
+        inputs=[selected_provider],
+        outputs=[company_df, policies_df],
+        queue=True,
     )
 
     def on_policy_select(_df: pd.DataFrame, selection: gr.SelectData):
@@ -991,12 +1042,6 @@ with gr.Blocks() as block2:
             gr.update(open=True),
         )
 
-    def score_all(progress=gr.Progress()):
-        progress(0, "Starting...")
-        for company in progress.tqdm(providers, desc="Scoring Policies"):
-            for policy in company.documents:
-                functions.score_policy(policy)
-
     company_df.select(
         fn=on_company_select,
         inputs=[company_df],
@@ -1028,4 +1073,4 @@ with gr.Blocks() as block2:
 if __name__ == "__main__":
     app = gr.TabbedInterface([block1, block2], tab_names=["Demo", "Companies"])
     app.queue(concurrency_count=2)
-    app.launch(share=True)
+    app.launch(share=False)
