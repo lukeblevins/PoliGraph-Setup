@@ -1,201 +1,201 @@
 Provider,Policy URL,Industry,Source,Date,Status,Score,Graph Kind
-AbbVie,https://privacy.abbvie/privacy-policies/us-privacy-policy.html,Healthcare,pdf,2025-09-05,False,,standard
-Abbott Laboratories,https://www.abbott.com/privacy-policy.html,Healthcare,pdf,2025-09-05,True,,standard
-Accenture,https://www.accenture.com/us-en/support/privacy-policy,Information Technology,pdf,2025-09-05,True,,standard
-Adobe Inc.,https://www.adobe.com/privacy/policy.html,Information Technology,pdf,2025-09-05,False,,standard
-Advanced Micro Devices,https://www.amd.com/en/legal/privacy.html,Information Technology,pdf,2025-09-05,False,,standard
-Aflac,https://www.aflac.com/privacy-policy,Financials,pdf,2025-09-05,False,,standard
-Agilent Technologies,https://www.agilent.com/home/privacy-policy,Healthcare,pdf,2025-09-05,False,,standard
-Akamai Technologies,https://www.akamai.com/legal/privacy-statement,Information Technology,pdf,2025-09-05,False,,standard
-Align Technology,https://www.aligntech.com/privacy_policy,Healthcare,pdf,2025-09-05,False,,standard
-Allstate,https://www.allstate.com/privacy-center/aic-privacy-statement,Financials,pdf,2025-09-05,True,,standard
-American Express,https://www.americanexpress.com/us/company/privacy-center/online-privacy-disclosures/#privacy-statement,Financials,pdf,2025-09-05,True,,standard
-American International Group,https://www.aig.com/privacy-policy,Financials,pdf,2025-09-05,True,,standard
+AbbVie,https://privacy.abbvie/privacy-policies/us-privacy-policy.html,Healthcare,pdf,2025-09-05,False,,none
+Abbott Laboratories,https://www.abbott.com/privacy-policy.html,Healthcare,pdf,2025-09-05,True,70.8,standard
+Accenture,https://www.accenture.com/us-en/support/privacy-policy,Information Technology,pdf,2025-09-05,True,75.0,standard
+Adobe Inc.,https://www.adobe.com/privacy/policy.html,Information Technology,pdf,2025-09-05,False,,none
+Advanced Micro Devices,https://www.amd.com/en/legal/privacy.html,Information Technology,pdf,2025-09-05,False,,none
+Aflac,https://www.aflac.com/privacy-policy,Financials,pdf,2025-09-05,False,,none
+Agilent Technologies,https://www.agilent.com/home/privacy-policy,Healthcare,pdf,2025-09-05,False,,none
+Akamai Technologies,https://www.akamai.com/legal/privacy-statement,Information Technology,pdf,2025-09-05,False,,none
+Align Technology,https://www.aligntech.com/privacy_policy,Healthcare,pdf,2025-09-05,False,,none
+Allstate,https://www.allstate.com/privacy-center/aic-privacy-statement,Financials,pdf,2025-09-05,True,83.3,standard
+American Express,https://www.americanexpress.com/us/company/privacy-center/online-privacy-disclosures/#privacy-statement,Financials,pdf,2025-09-05,True,54.2,standard
+American International Group,https://www.aig.com/privacy-policy,Financials,pdf,2025-09-05,True,79.2,standard
 Ameriprise Financial,https://www.ameriprise.com/binaries/content/assets/ampcom/wcm/AMP_PRIVACY-NOTICE.PDF,Financials,pdf,2025-09-05,False,,none
-Amgen,https://www.amgen.com/privacy-statement,Healthcare,pdf,2025-09-05,False,,standard
-Amphenol,https://amphenol.com/privacy-policy,Information Technology,pdf,2025-09-05,False,,standard
-Analog Devices,https://www.analog.com/en/who-we-are/legal-and-risk-oversight/data-privacy/privacy-policy.html,Information Technology,pdf,2025-09-05,False,,standard
-Ansys,https://www.ansys.com/legal/privacy-notice,Information Technology,pdf,2025-09-05,False,,standard
-Aon plc,https://www.aon.com/privacy-statement,Financials,pdf,2025-09-05,False,,standard
-Apollo Global Management,https://www.apollo.com/governance/privacy-policy,Financials,pdf,2025-09-05,True,,standard
-Apple Inc.,https://www.apple.com/legal/privacy/pdfs/apple-privacy-policy-en-ww.pdf,Information Technology,pdf,2025-09-05,True,,standard
-Applied Materials,https://www.appliedmaterials.com/us/en/pages/privacy.html,Information Technology,pdf,2025-09-05,True,,standard
-Arch Capital Group,https://www.archgroup.com/privacy-policy/,Financials,pdf,2025-09-05,False,,standard
-Arista Networks,https://www.arista.com/en/privacy-policy,Information Technology,pdf,2025-09-05,False,,standard
-Arthur J. Gallagher & Co.,https://www.ajg.com/us/privacy-policy/,Financials,pdf,2025-09-05,False,,standard
-Assurant,https://www.assurant.com/privacypolicy,Financials,pdf,2025-09-05,False,,standard
-Autodesk,https://www.autodesk.com/company/legal-notices-trademarks/privacy-statement,Information Technology,pdf,2025-09-05,False,,standard
-BNY Mellon,https://www.bny.com/corporate/global/en/disclaimers/privacy-california.html,Financials,pdf,2025-09-05,True,,standard
-Bank of America,https://www.bankofamerica.com/content/documents/privacy/us-consumer-privacy-notice-en.pdf,Financials,pdf,2025-09-05,True,,standard
-Baxter International,https://www.baxter.com/us-privacy,Healthcare,pdf,2025-09-05,True,,standard
-Becton Dickinson,https://www.bd.com/en-us/about-bd/policies/privacy-policy-statement,Healthcare,pdf,2025-09-05,True,,standard
-Berkshire Hathaway,https://www.bhhs.com/privacy-policy,Financials,pdf,2025-09-05,False,,standard
-Bio-Techne,https://www.bio-techne.com/privacy-and-cookie-policy#privacy,Healthcare,pdf,2025-09-05,False,,standard
-Biogen,https://www.biogen.com/privacy-center.html,Healthcare,pdf,2025-09-05,True,,standard
-BlackRock,https://www.blackrock.com/corporate/compliance/privacy-notice,Financials,pdf,2025-09-05,False,,standard
-Blackstone Inc.,https://www.blackstone.com/privacy/online-privacy-notice/,Financials,pdf,2025-09-05,True,,standard
-Boston Scientific,https://www.bostonscientific.com/en-US/privacy-policy.html,Healthcare,pdf,2025-09-05,True,,standard
-Bristol Myers Squibb,https://www.bms.com/assets/bms/us/en-us/pdf/general-privacy-notice.pdf,Healthcare,pdf,2025-09-05,True,,standard
-Broadcom,https://www.broadcom.com/company/legal/privacy/policy,Information Technology,pdf,2025-09-05,True,,standard
-Brown & Brown,https://www.bbinsurance.com/privacy-statement/,Financials,pdf,2025-09-05,False,,standard
-CDW Corporation,https://www.cdw.com/content/cdw/en/terms-conditions/privacy-notice.html,Information Technology,pdf,2025-09-05,False,,standard
-CME Group,https://www.cmegroup.com/privacy-policy/general.html,Financials,pdf,2025-09-05,False,,standard
-CVS Health,https://www.cvshealth.com/privacy-policy.html,Healthcare,pdf,2025-09-05,True,,standard
-Cadence Design Systems,https://www.cadence.com/en_US/home/privacy/privacy-policy.html,Information Technology,pdf,2025-09-05,False,,standard
-Capital One,https://ecm.capitalone.com/WCM/privacy/2025-capital-one-online-privacy-policy.pdf,Financials,pdf,2025-09-05,True,,standard
-Cardinal Health,https://www.cardinalhealth.com/en/support/privacy-policy.html,Healthcare,pdf,2025-09-05,False,,standard
-Cboe Global Markets,https://www.cboe.com/privacy,Financials,pdf,2025-09-05,True,,standard
-Cencora,https://www.cencora.com/global-privacy-statement,Healthcare,pdf,2025-09-05,False,,standard
-Centene Corporation,https://www.centene.com/privacy-policy.html,Healthcare,pdf,2025-09-05,True,,standard
-Charles River Laboratories,https://criver.widen.net/content/t093dbdulb/original/CRL---Website-Privacy-Notice.pdf,Healthcare,pdf,2025-09-05,True,,none
+Amgen,https://www.amgen.com/privacy-statement,Healthcare,pdf,2025-09-05,False,,none
+Amphenol,https://amphenol.com/privacy-policy,Information Technology,pdf,2025-09-05,False,,none
+Analog Devices,https://www.analog.com/en/who-we-are/legal-and-risk-oversight/data-privacy/privacy-policy.html,Information Technology,pdf,2025-09-05,False,,none
+Ansys,https://www.ansys.com/legal/privacy-notice,Information Technology,pdf,2025-09-05,False,,none
+Aon plc,https://www.aon.com/privacy-statement,Financials,pdf,2025-09-05,False,,none
+Apollo Global Management,https://www.apollo.com/governance/privacy-policy,Financials,pdf,2025-09-05,True,87.5,standard
+Apple Inc.,https://www.apple.com/legal/privacy/pdfs/apple-privacy-policy-en-ww.pdf,Information Technology,pdf,2025-09-05,True,79.2,standard
+Applied Materials,https://www.appliedmaterials.com/us/en/pages/privacy.html,Information Technology,pdf,2025-09-05,True,83.3,standard
+Arch Capital Group,https://www.archgroup.com/privacy-policy/,Financials,pdf,2025-09-05,False,,none
+Arista Networks,https://www.arista.com/en/privacy-policy,Information Technology,pdf,2025-09-05,False,,none
+Arthur J. Gallagher & Co.,https://www.ajg.com/us/privacy-policy/,Financials,pdf,2025-09-05,False,,none
+Assurant,https://www.assurant.com/privacypolicy,Financials,pdf,2025-09-05,False,,none
+Autodesk,https://www.autodesk.com/company/legal-notices-trademarks/privacy-statement,Information Technology,pdf,2025-09-05,False,,none
+BNY Mellon,https://www.bny.com/corporate/global/en/disclaimers/privacy-california.html,Financials,pdf,2025-09-05,True,66.7,standard
+Bank of America,https://www.bankofamerica.com/content/documents/privacy/us-consumer-privacy-notice-en.pdf,Financials,pdf,2025-09-05,True,50.0,standard
+Baxter International,https://www.baxter.com/us-privacy,Healthcare,pdf,2025-09-05,True,54.2,standard
+Becton Dickinson,https://www.bd.com/en-us/about-bd/policies/privacy-policy-statement,Healthcare,pdf,2025-09-05,True,79.2,standard
+Berkshire Hathaway,https://www.bhhs.com/privacy-policy,Financials,pdf,2025-09-05,False,,none
+Bio-Techne,https://www.bio-techne.com/privacy-and-cookie-policy#privacy,Healthcare,pdf,2025-09-05,False,,none
+Biogen,https://www.biogen.com/privacy-center.html,Healthcare,pdf,2025-09-05,True,50.0,standard
+BlackRock,https://www.blackrock.com/corporate/compliance/privacy-notice,Financials,pdf,2025-09-05,False,,none
+Blackstone Inc.,https://www.blackstone.com/privacy/online-privacy-notice/,Financials,pdf,2025-09-05,True,83.3,standard
+Boston Scientific,https://www.bostonscientific.com/en-US/privacy-policy.html,Healthcare,pdf,2025-09-05,True,70.8,standard
+Bristol Myers Squibb,https://www.bms.com/assets/bms/us/en-us/pdf/general-privacy-notice.pdf,Healthcare,pdf,2025-09-05,True,83.3,standard
+Broadcom,https://www.broadcom.com/company/legal/privacy/policy,Information Technology,pdf,2025-09-05,True,70.8,standard
+Brown & Brown,https://www.bbinsurance.com/privacy-statement/,Financials,pdf,2025-09-05,False,,none
+CDW Corporation,https://www.cdw.com/content/cdw/en/terms-conditions/privacy-notice.html,Information Technology,pdf,2025-09-05,False,,none
+CME Group,https://www.cmegroup.com/privacy-policy/general.html,Financials,pdf,2025-09-05,False,,none
+CVS Health,https://www.cvshealth.com/privacy-policy.html,Healthcare,pdf,2025-09-05,True,70.8,standard
+Cadence Design Systems,https://www.cadence.com/en_US/home/privacy/privacy-policy.html,Information Technology,pdf,2025-09-05,False,,none
+Capital One,https://ecm.capitalone.com/WCM/privacy/2025-capital-one-online-privacy-policy.pdf,Financials,pdf,2025-09-05,True,70.8,standard
+Cardinal Health,https://www.cardinalhealth.com/en/support/privacy-policy.html,Healthcare,pdf,2025-09-05,False,,none
+Cboe Global Markets,https://www.cboe.com/privacy,Financials,pdf,2025-09-05,True,87.5,standard
+Cencora,https://www.cencora.com/global-privacy-statement,Healthcare,pdf,2025-09-05,False,,none
+Centene Corporation,https://www.centene.com/privacy-policy.html,Healthcare,pdf,2025-09-05,True,75.0,standard
+Charles River Laboratories,https://criver.widen.net/content/t093dbdulb/original/CRL---Website-Privacy-Notice.pdf,Healthcare,pdf,2025-09-05,True,87.5,standard
 Charles Schwab Corporation,https://disclosures.schwab.com/SchwabDashboard/61306/REG60835FM.pdf,Financials,pdf,2025-09-05,False,,none
-Chubb Limited,https://www.chubb.com/us-en/online-privacy-policy.html,Financials,pdf,2025-09-05,True,,standard
-Cigna,https://www.cigna.com/static/www-cigna-com/docs/cigna-health-care-and-cigna-supplemental-benefits-privacy-notice-eng.pdf,Healthcare,pdf,2025-09-05,True,,standard
-Cincinnati Financial,https://edge.sitecorecloud.io/cincinna-x33xq9h6/media/Project/Cincinnati-Financial/CinFin/Files/legal-footer/privacy-policy/Electronic-Privacy-Policy.pdf,Financials,pdf,2025-09-05,False,,standard
-Cisco,https://www.cisco.com/c/en/us/about/legal/privacy-full.html,Information Technology,pdf,2025-09-05,True,,standard
-Citigroup,https://www.citi.com/policies/us-privacy-notice-for-consumers,Financials,pdf,2025-09-05,False,,standard
-Citizens Financial Group,https://www.citizensbank.com/account-safeguards/privacy.aspx#online-privacy-policy,Financials,pdf,2025-09-05,False,,standard
-Cognizant,https://www.cognizant.com/en_us/general/documents/cognizant-privacy-notice.pdf,Information Technology,pdf,2025-09-05,True,,standard
-Coinbase,https://www.coinbase.com/legal/privacy,Financials,pdf,2025-09-05,False,,standard
-Cooper Companies (The),https://www.coopersurgical.com/privacy-policy/,Healthcare,pdf,2025-09-05,False,,standard
-Corning Inc.,https://www.corning.com/worldwide/en/privacy-policy/privacy-notice-for-customers.html,Information Technology,pdf,2025-09-05,False,,standard
-Corpay,https://www.corpay.com/privacy-policy/unitedstates,Financials,pdf,2025-09-05,True,,standard
-CrowdStrike,https://www.crowdstrike.com/en-us/legal/privacy-notice/,Information Technology,pdf,2025-09-05,False,,standard
-DaVita,https://www.davita.com/privacy-policy,Healthcare,pdf,2025-09-05,True,,standard
-Danaher Corporation,https://www.danaher.com/data-privacy-policy,Healthcare,pdf,2025-09-05,True,,standard
-Dell Technologies,https://www.dell.com/en-us/lp/legal/policies-privacy,Information Technology,pdf,2025-09-05,False,,standard
-Dexcom,https://www.dexcom.com/legal/privacy-policy,Healthcare,pdf,2025-09-05,False,,standard
-EPAM Systems,https://privacy.epam.com/core/interaction/showpolicy?type=CommonPrivacyPolicy,Information Technology,pdf,2025-09-05,True,,standard
-Edwards Lifesciences,https://assets-us-01.kc-usercontent.com/6239a81e-8f0f-0040-a1df-b4932a10f6ae/91f57e11-7fba-4a99-91c3-2d586c807c3c/Privacy-Policy_US.pdf,Healthcare,pdf,2025-09-05,True,,standard
-Elevance Health,https://www.elevancehealth.com/privacy-policy,Healthcare,pdf,2025-09-05,True,,standard
-Enphase Energy,https://enphase.com/legal/privacy-policy,Information Technology,pdf,2025-09-05,True,,standard
-Erie Indemnity,https://edge.sitecorecloud.io/erieindemni8d2b-erieinsurandcab-prd6c2e-0c08/media/Project/ErieInsurance/ErieWebsite/Files/PrivacyNotice.pdf,Financials,pdf,2025-09-05,False,,standard
-Everest Group,https://www.everestglobal.com/us-en/about-us/privacy/privacy-security-and-trust,Financials,pdf,2025-09-05,True,,standard
-"F5, Inc.",https://www.f5.com/company/policies/privacy-notice,Information Technology,pdf,2025-09-05,True,,standard
-FactSet,https://www.factset.com/legal,Financials,pdf,2025-09-05,True,,standard
-Fair Isaac,https://www.fico.com/en/privacy-policy,Information Technology,pdf,2025-09-05,False,,standard
-Fidelity National Information Services,https://www.fisglobal.com/privacy/online-privacy-notice,Financials,pdf,2025-09-05,False,,standard
+Chubb Limited,https://www.chubb.com/us-en/online-privacy-policy.html,Financials,pdf,2025-09-05,True,83.3,standard
+Cigna,https://www.cigna.com/static/www-cigna-com/docs/cigna-health-care-and-cigna-supplemental-benefits-privacy-notice-eng.pdf,Healthcare,pdf,2025-09-05,True,66.7,standard
+Cincinnati Financial,https://edge.sitecorecloud.io/cincinna-x33xq9h6/media/Project/Cincinnati-Financial/CinFin/Files/legal-footer/privacy-policy/Electronic-Privacy-Policy.pdf,Financials,pdf,2025-09-05,False,,none
+Cisco,https://www.cisco.com/c/en/us/about/legal/privacy-full.html,Information Technology,pdf,2025-09-05,True,83.3,standard
+Citigroup,https://www.citi.com/policies/us-privacy-notice-for-consumers,Financials,pdf,2025-09-05,False,,none
+Citizens Financial Group,https://www.citizensbank.com/account-safeguards/privacy.aspx#online-privacy-policy,Financials,pdf,2025-09-05,False,,none
+Cognizant,https://www.cognizant.com/en_us/general/documents/cognizant-privacy-notice.pdf,Information Technology,pdf,2025-09-05,True,66.7,standard
+Coinbase,https://www.coinbase.com/legal/privacy,Financials,pdf,2025-09-05,False,,none
+Cooper Companies (The),https://www.coopersurgical.com/privacy-policy/,Healthcare,pdf,2025-09-05,False,,none
+Corning Inc.,https://www.corning.com/worldwide/en/privacy-policy/privacy-notice-for-customers.html,Information Technology,pdf,2025-09-05,False,,none
+Corpay,https://www.corpay.com/privacy-policy/unitedstates,Financials,pdf,2025-09-05,True,83.3,standard
+CrowdStrike,https://www.crowdstrike.com/en-us/legal/privacy-notice/,Information Technology,pdf,2025-09-05,False,,none
+DaVita,https://www.davita.com/privacy-policy,Healthcare,pdf,2025-09-05,True,70.8,standard
+Danaher Corporation,https://www.danaher.com/data-privacy-policy,Healthcare,pdf,2025-09-05,True,79.2,standard
+Dell Technologies,https://www.dell.com/en-us/lp/legal/policies-privacy,Information Technology,pdf,2025-09-05,False,,none
+Dexcom,https://www.dexcom.com/legal/privacy-policy,Healthcare,pdf,2025-09-05,False,,none
+EPAM Systems,https://privacy.epam.com/core/interaction/showpolicy?type=CommonPrivacyPolicy,Information Technology,pdf,2025-09-05,True,66.7,standard
+Edwards Lifesciences,https://assets-us-01.kc-usercontent.com/6239a81e-8f0f-0040-a1df-b4932a10f6ae/91f57e11-7fba-4a99-91c3-2d586c807c3c/Privacy-Policy_US.pdf,Healthcare,pdf,2025-09-05,True,83.3,standard
+Elevance Health,https://www.elevancehealth.com/privacy-policy,Healthcare,pdf,2025-09-05,True,83.3,standard
+Enphase Energy,https://enphase.com/legal/privacy-policy,Information Technology,pdf,2025-09-05,True,87.5,standard
+Erie Indemnity,https://edge.sitecorecloud.io/erieindemni8d2b-erieinsurandcab-prd6c2e-0c08/media/Project/ErieInsurance/ErieWebsite/Files/PrivacyNotice.pdf,Financials,pdf,2025-09-05,False,,none
+Everest Group,https://www.everestglobal.com/us-en/about-us/privacy/privacy-security-and-trust,Financials,pdf,2025-09-05,True,29.2,standard
+"F5, Inc.",https://www.f5.com/company/policies/privacy-notice,Information Technology,pdf,2025-09-05,True,79.2,standard
+FactSet,https://www.factset.com/legal,Financials,pdf,2025-09-05,True,25.0,standard
+Fair Isaac,https://www.fico.com/en/privacy-policy,Information Technology,pdf,2025-09-05,False,,none
+Fidelity National Information Services,https://www.fisglobal.com/privacy/online-privacy-notice,Financials,pdf,2025-09-05,False,,none
 Fifth Third Bancorp,https://www.53.com/content/dam/fifth-third/docs/legal/privacy-notice-for-consumers.pdf,Financials,pdf,2025-09-05,False,,none
-First Solar,https://www.firstsolar.com/en/Policies/Privacy-Policy,Information Technology,pdf,2025-09-05,True,,standard
-Fiserv,https://www.fiserv.com/en/about-fiserv/privacy-notice.html,Financials,pdf,2025-09-05,False,,standard
-Fortinet,https://www.fortinet.com/corporate/about-us/privacy,Information Technology,pdf,2025-09-05,True,,standard
-Franklin Resources,https://www.franklintempleton.com/help/privacy-policy,Financials,pdf,2025-09-05,False,,standard
-GE HealthCare,https://www.gehealthcare.com/about/privacy/privacy-policy?showPopup=false,Healthcare,pdf,2025-09-05,False,,standard
-Gartner,https://www.gartner.com/en/about/policies/privacy,Information Technology,pdf,2025-09-05,False,,standard
-Gen Digital,https://www.nortonlifelock.com/us/en/privacy/global-privacy-statement/?inid=nortonlifelock-privacy_teaser-1_global-privacy-statement,Information Technology,pdf,2025-09-05,True,,standard
-Gilead Sciences,https://www.gilead.com/privacy-statement,Healthcare,pdf,2025-09-05,True,,standard
-Global Payments,https://www.globalpayments.com/privacy-statement,Financials,pdf,2025-09-05,False,,standard
-Globe Life,https://home.globelifeinsurance.com/privacy-policy,Financials,pdf,2025-09-05,True,,standard
-GoDaddy,https://www.godaddy.com/legal/agreements/privacy-policy,Information Technology,pdf,2025-09-05,False,,standard
-Goldman Sachs,https://www.goldmansachs.com/privacy-and-cookies.html,Financials,pdf,2025-09-05,True,,standard
-HCA Healthcare,https://hcahealthcare.com/legal/index.dot#privacy-policy,Healthcare,pdf,2025-09-05,True,,standard
-HP Inc.,https://www.hp.com/us-en/privacy/privacy.html,Information Technology,pdf,2025-09-05,False,,standard
-Hartford (The),https://www.thehartford.com/online-privacy-policy,Financials,pdf,2025-09-05,False,,standard
-Henry Schein,https://www.henryschein.com/us-en/Privacy.aspx?PageType=popup#,Healthcare,pdf,2025-09-05,False,,standard
-Hewlett Packard Enterprise,https://www.hpe.com/us/en/legal/privacy.html,Information Technology,pdf,2025-09-05,False,,standard
-Hologic,https://www.hologic.com/privacy-policy,Healthcare,pdf,2025-09-05,True,,standard
-Humana,https://www.humana.com/legal/privacy-policy,Healthcare,pdf,2025-09-05,True,,standard
+First Solar,https://www.firstsolar.com/en/Policies/Privacy-Policy,Information Technology,pdf,2025-09-05,True,91.7,standard
+Fiserv,https://www.fiserv.com/en/about-fiserv/privacy-notice.html,Financials,pdf,2025-09-05,False,,none
+Fortinet,https://www.fortinet.com/corporate/about-us/privacy,Information Technology,pdf,2025-09-05,True,79.2,standard
+Franklin Resources,https://www.franklintempleton.com/help/privacy-policy,Financials,pdf,2025-09-05,False,,none
+GE HealthCare,https://www.gehealthcare.com/about/privacy/privacy-policy?showPopup=false,Healthcare,pdf,2025-09-05,False,,none
+Gartner,https://www.gartner.com/en/about/policies/privacy,Information Technology,pdf,2025-09-05,False,,none
+Gen Digital,https://www.nortonlifelock.com/us/en/privacy/global-privacy-statement/?inid=nortonlifelock-privacy_teaser-1_global-privacy-statement,Information Technology,pdf,2025-09-05,True,79.2,standard
+Gilead Sciences,https://www.gilead.com/privacy-statement,Healthcare,pdf,2025-09-05,True,33.3,standard
+Global Payments,https://www.globalpayments.com/privacy-statement,Financials,pdf,2025-09-05,False,,none
+Globe Life,https://home.globelifeinsurance.com/privacy-policy,Financials,pdf,2025-09-05,True,20.8,standard
+GoDaddy,https://www.godaddy.com/legal/agreements/privacy-policy,Information Technology,pdf,2025-09-05,False,,none
+Goldman Sachs,https://www.goldmansachs.com/privacy-and-cookies.html,Financials,pdf,2025-09-05,True,62.5,standard
+HCA Healthcare,https://hcahealthcare.com/legal/index.dot#privacy-policy,Healthcare,pdf,2025-09-05,True,16.7,standard
+HP Inc.,https://www.hp.com/us-en/privacy/privacy.html,Information Technology,pdf,2025-09-05,False,,none
+Hartford (The),https://www.thehartford.com/online-privacy-policy,Financials,pdf,2025-09-05,False,,none
+Henry Schein,https://www.henryschein.com/us-en/Privacy.aspx?PageType=popup#,Healthcare,pdf,2025-09-05,False,,none
+Hewlett Packard Enterprise,https://www.hpe.com/us/en/legal/privacy.html,Information Technology,pdf,2025-09-05,False,,none
+Hologic,https://www.hologic.com/privacy-policy,Healthcare,pdf,2025-09-05,True,62.5,standard
+Humana,https://www.humana.com/legal/privacy-policy,Healthcare,pdf,2025-09-05,True,83.3,standard
 Huntington Bancshares,https://www.huntington.com/-/media/pdf/privacypolicy.pdf,Financials,pdf,2025-09-05,False,,none
-IBM,https://www.ibm.com/us-en/privacy,Information Technology,pdf,2025-09-05,True,,standard
-IQVIA,https://www.iqvia.com/about-us/privacy/privacy-policy,Healthcare,pdf,2025-09-05,False,,standard
-Idexx Laboratories,https://www.idexx.com/en/about-idexx/privacy-policy/,Healthcare,pdf,2025-09-05,False,,standard
-Incyte,https://incyte.com/privacy-policy,Healthcare,pdf,2025-09-05,True,,standard
-Insulet Corporation,https://www.insulet.com/privacy-policy,Healthcare,pdf,2025-09-05,True,,standard
-Intel,https://www.intel.com/content/www/us/en/privacy/intel-privacy-notice.html,Information Technology,pdf,2025-09-05,True,,standard
-Intercontinental Exchange,https://www.ice.com/privacy-security-center#intercontinental-exchange-privacy-policy,Financials,pdf,2025-09-05,True,,standard
-Intuit,https://www.intuit.com/privacy/statement/,Information Technology,pdf,2025-09-05,False,,standard
-Intuitive Surgical,https://www.intuitive.com/en-us/about-us/company/legal/privacy-policy,Healthcare,pdf,2025-09-05,True,,standard
+IBM,https://www.ibm.com/us-en/privacy,Information Technology,pdf,2025-09-05,True,87.5,standard
+IQVIA,https://www.iqvia.com/about-us/privacy/privacy-policy,Healthcare,pdf,2025-09-05,False,,none
+Idexx Laboratories,https://www.idexx.com/en/about-idexx/privacy-policy/,Healthcare,pdf,2025-09-05,False,,none
+Incyte,https://incyte.com/privacy-policy,Healthcare,pdf,2025-09-05,True,37.5,standard
+Insulet Corporation,https://www.insulet.com/privacy-policy,Healthcare,pdf,2025-09-05,True,70.8,standard
+Intel,https://www.intel.com/content/www/us/en/privacy/intel-privacy-notice.html,Information Technology,pdf,2025-09-05,True,54.2,standard
+Intercontinental Exchange,https://www.ice.com/privacy-security-center#intercontinental-exchange-privacy-policy,Financials,pdf,2025-09-05,True,70.8,standard
+Intuit,https://www.intuit.com/privacy/statement/,Information Technology,pdf,2025-09-05,False,,none
+Intuitive Surgical,https://www.intuitive.com/en-us/about-us/company/legal/privacy-policy,Healthcare,pdf,2025-09-05,True,75.0,standard
 Invesco,https://www.invesco.com/us-rest/contentdetail?contentId=4b607f49-7548-4a82-8c5a-77cfaeb3ea87,Financials,pdf,2025-09-05,False,,none
-JPMorgan Chase,https://www.jpmorgan.com/privacy,Financials,pdf,2025-09-05,False,,standard
-Jabil,https://www.jabil.com/about-us/the-jabil-code/privacy.html,Information Technology,pdf,2025-09-05,False,,standard
-Jack Henry & Associates,https://www.jackhenry.com/privacy-policy,Financials,pdf,2025-09-05,True,,standard
-Johnson & Johnson,https://www.jnj.com/privacy-policy,Healthcare,pdf,2025-09-05,True,,standard
-Juniper Networks,https://www.juniper.net/us/en/privacy-policy.html,Information Technology,pdf,2025-09-05,True,,standard
-KKR & Co.,https://www.kkr.com/privacy-and-cookies,Financials,pdf,2025-09-05,True,,standard
-KLA Corporation,https://www.kla.com/privacy-policy,Information Technology,pdf,2025-09-05,False,,standard
-KeyCorp,https://online1.keybank.com/dcm/GetEdasDisclosure?action=special&pa=PRIV&pg=PVY&sp=OLPS&bn=101&pd=101&output=html_complete&name=KOP-Stmt,Financials,pdf,2025-09-05,False,,standard
-Keysight Technologies,https://www.keysight.com/us/en/contact/privacy.html,Information Technology,pdf,2025-09-05,False,,standard
-Labcorp,https://www.labcorp.com/compliance/privacy/web,Healthcare,pdf,2025-09-05,False,,standard
-Lam Research,https://www.lamresearch.com/privacy/,Information Technology,pdf,2025-09-05,False,,standard
-Lilly (Eli),https://www.lilly.com/privacy,Healthcare,pdf,2025-09-05,True,,standard
-Loews Corporation,https://loews.com/privacy-policy/default.aspx,Financials,pdf,2025-09-05,False,,standard
-MSCI Inc.,https://www.msci.com/privacy-pledge,Financials,pdf,2025-09-05,True,,standard
-MT Bank,https://www.mtb.com/content/dam/mtb-web/pdfs/US%20Consumer%20Privacy%20Notice_052022.pdf,Financials,pdf,2025-09-05,False,,standard
-MarketAxess,https://www.marketaxess.com/privacy-policy/,Financials,pdf,2025-09-05,False,,standard
-Marsh McLennan,https://www.marsh.com/en/compliance-pages/us-privacy-notice.html,Financials,pdf,2025-09-05,True,,standard
-Mastercard,https://www.mastercard.us/en-us/vision/corp-responsibility/commitment-to-privacy/privacy.html,Financials,pdf,2025-09-05,False,,standard
-McKesson Corporation,https://www.mckesson.com/privacy-notice/,Healthcare,pdf,2025-09-05,False,,standard
+JPMorgan Chase,https://www.jpmorgan.com/privacy,Financials,pdf,2025-09-05,False,,none
+Jabil,https://www.jabil.com/about-us/the-jabil-code/privacy.html,Information Technology,pdf,2025-09-05,False,,none
+Jack Henry & Associates,https://www.jackhenry.com/privacy-policy,Financials,pdf,2025-09-05,True,66.7,standard
+Johnson & Johnson,https://www.jnj.com/privacy-policy,Healthcare,pdf,2025-09-05,True,75.0,standard
+Juniper Networks,https://www.juniper.net/us/en/privacy-policy.html,Information Technology,pdf,2025-09-05,True,87.5,standard
+KKR & Co.,https://www.kkr.com/privacy-and-cookies,Financials,pdf,2025-09-05,True,62.5,standard
+KLA Corporation,https://www.kla.com/privacy-policy,Information Technology,pdf,2025-09-05,False,,none
+KeyCorp,https://online1.keybank.com/dcm/GetEdasDisclosure?action=special&pa=PRIV&pg=PVY&sp=OLPS&bn=101&pd=101&output=html_complete&name=KOP-Stmt,Financials,pdf,2025-09-05,False,,none
+Keysight Technologies,https://www.keysight.com/us/en/contact/privacy.html,Information Technology,pdf,2025-09-05,False,,none
+Labcorp,https://www.labcorp.com/compliance/privacy/web,Healthcare,pdf,2025-09-05,False,,none
+Lam Research,https://www.lamresearch.com/privacy/,Information Technology,pdf,2025-09-05,False,,none
+Lilly (Eli),https://www.lilly.com/privacy,Healthcare,pdf,2025-09-05,True,79.2,standard
+Loews Corporation,https://loews.com/privacy-policy/default.aspx,Financials,pdf,2025-09-05,False,,none
+MSCI Inc.,https://www.msci.com/privacy-pledge,Financials,pdf,2025-09-05,True,70.8,standard
+MT Bank,https://www.mtb.com/content/dam/mtb-web/pdfs/US%20Consumer%20Privacy%20Notice_052022.pdf,Financials,pdf,2025-09-05,False,,none
+MarketAxess,https://www.marketaxess.com/privacy-policy/,Financials,pdf,2025-09-05,False,,none
+Marsh McLennan,https://www.marsh.com/en/compliance-pages/us-privacy-notice.html,Financials,pdf,2025-09-05,True,75.0,standard
+Mastercard,https://www.mastercard.us/en-us/vision/corp-responsibility/commitment-to-privacy/privacy.html,Financials,pdf,2025-09-05,False,,none
+McKesson Corporation,https://www.mckesson.com/privacy-notice/,Healthcare,pdf,2025-09-05,False,,none
 Medtronic,https://www.medtronic.com/content/dam/medtronic-wide/public/brand-corporate-assets/company-information/october-2024-privacy-notice.pdf,Healthcare,pdf,2025-09-05,False,,none
-Merck & Co.,https://www.msdprivacy.com/us/en/,Healthcare,pdf,2025-09-05,True,,standard
-MetLife,https://www.metlife.com/about-us/privacy-policy/us-consumer/,Financials,pdf,2025-09-05,True,,standard
-Microchip Technology,https://www.microchip.com/en-us/about/legal-information/privacy-notice,Information Technology,pdf,2025-09-05,False,,standard
-Micron Technology,https://assets.micron.com/adobe/assets/urn:aaid:aem:4bfdaf4e-099d-46a2-ace1-854cd58fd299/renditions/original/as/micronprivacynotice-en-us.pdf,Information Technology,pdf,2025-09-05,True,,standard
-Microsoft,https://www.microsoft.com/en-us/privacy/privacystatement,Information Technology,pdf,2025-09-05,True,,standard
-Moderna,https://www.modernatx.com/privacy-policy,Healthcare,pdf,2025-09-05,True,,standard
-Molina Healthcare,https://www.molinahealthcare.com/members/common/en-US/terms_privacy.aspx,Healthcare,pdf,2025-09-05,False,,standard
-Monolithic Power Systems,https://www.monolithicpower.com/en/privacy-policy/,Information Technology,pdf,2025-09-05,True,,standard
-Moody's Corporation,https://www.moodys.com/web/en/us/legal/privacy-policy.html,Financials,pdf,2025-09-05,True,,standard
-Morgan Stanley,https://www.morganstanley.com/disclaimers/us-privacy-policy-and-notice,Financials,pdf,2025-09-05,False,,standard
-Motorola Solutions,https://www.motorolasolutions.com/en_us/about/privacy-policy.html,Information Technology,pdf,2025-09-05,False,,standard
-NXP Semiconductors,https://www.nxp.com/pages/privacy-statement:PRIVACYPRACTICES,Information Technology,pdf,2025-09-05,False,,standard
-"Nasdaq, Inc.",https://www.nasdaq.com/privacy-statement,Financials,pdf,2025-09-05,False,,standard
-NetApp,https://www.netapp.com/company/legal/privacy-policy/,Information Technology,pdf,2025-09-05,False,,standard
+Merck & Co.,https://www.msdprivacy.com/us/en/,Healthcare,pdf,2025-09-05,True,37.5,standard
+MetLife,https://www.metlife.com/about-us/privacy-policy/us-consumer/,Financials,pdf,2025-09-05,True,25.0,standard
+Microchip Technology,https://www.microchip.com/en-us/about/legal-information/privacy-notice,Information Technology,pdf,2025-09-05,False,,none
+Micron Technology,https://assets.micron.com/adobe/assets/urn:aaid:aem:4bfdaf4e-099d-46a2-ace1-854cd58fd299/renditions/original/as/micronprivacynotice-en-us.pdf,Information Technology,pdf,2025-09-05,True,70.8,standard
+Microsoft,https://www.microsoft.com/en-us/privacy/privacystatement,Information Technology,pdf,2025-09-05,True,66.7,standard
+Moderna,https://www.modernatx.com/privacy-policy,Healthcare,pdf,2025-09-05,True,87.5,standard
+Molina Healthcare,https://www.molinahealthcare.com/members/common/en-US/terms_privacy.aspx,Healthcare,pdf,2025-09-05,False,,none
+Monolithic Power Systems,https://www.monolithicpower.com/en/privacy-policy/,Information Technology,pdf,2025-09-05,True,66.7,standard
+Moody's Corporation,https://www.moodys.com/web/en/us/legal/privacy-policy.html,Financials,pdf,2025-09-05,True,83.3,standard
+Morgan Stanley,https://www.morganstanley.com/disclaimers/us-privacy-policy-and-notice,Financials,pdf,2025-09-05,False,,none
+Motorola Solutions,https://www.motorolasolutions.com/en_us/about/privacy-policy.html,Information Technology,pdf,2025-09-05,False,,none
+NXP Semiconductors,https://www.nxp.com/pages/privacy-statement:PRIVACYPRACTICES,Information Technology,pdf,2025-09-05,False,,none
+"Nasdaq, Inc.",https://www.nasdaq.com/privacy-statement,Financials,pdf,2025-09-05,False,,none
+NetApp,https://www.netapp.com/company/legal/privacy-policy/,Information Technology,pdf,2025-09-05,False,,none
 Northern Trust,https://www.northerntrust.com/content/dam/northerntrust/pws/nt/documents/legal/us-privacy-notice.pdf,Financials,pdf,2025-09-05,False,,none
-Nvidia,https://www.nvidia.com/en-us/about-nvidia/privacy-policy/,Information Technology,pdf,2025-09-05,False,,standard
-ON Semiconductor,https://www.onsemi.com/privacy,Information Technology,pdf,2025-09-05,True,,standard
-Oracle Corporation,https://www.oracle.com/legal/privacy/privacy-policy/,Information Technology,pdf,2025-09-05,True,,standard
+Nvidia,https://www.nvidia.com/en-us/about-nvidia/privacy-policy/,Information Technology,pdf,2025-09-05,False,,none
+ON Semiconductor,https://www.onsemi.com/privacy,Information Technology,pdf,2025-09-05,True,83.3,standard
+Oracle Corporation,https://www.oracle.com/legal/privacy/privacy-policy/,Information Technology,pdf,2025-09-05,True,79.2,standard
 PNC Financial Services,https://www.pnc.com/content/dam/pnc-com/pdf/Privacy%20Policy/privacy_notice_english.pdf,Financials,pdf,2025-09-05,False,,none
-PTC Inc.,https://www.ptc.com/en/documents/policies/privacy,Information Technology,pdf,2025-09-05,False,,standard
-Palantir Technologies,https://www.palantir.com/privacy-and-security/,Information Technology,pdf,2025-09-05,False,,standard
-Palo Alto Networks,https://www.paloaltonetworks.com/legal-notices/privacy.html,Information Technology,pdf,2025-09-05,True,,standard
-PayPal,https://www.paypal.com/us/legalhub/privacy-full,Financials,pdf,2025-09-05,True,,standard
-Pfizer,https://www.pfizer.com/privacy,Healthcare,pdf,2025-09-05,True,,standard
+PTC Inc.,https://www.ptc.com/en/documents/policies/privacy,Information Technology,pdf,2025-09-05,False,,none
+Palantir Technologies,https://www.palantir.com/privacy-and-security/,Information Technology,pdf,2025-09-05,False,,none
+Palo Alto Networks,https://www.paloaltonetworks.com/legal-notices/privacy.html,Information Technology,pdf,2025-09-05,True,87.5,standard
+PayPal,https://www.paypal.com/us/legalhub/privacy-full,Financials,pdf,2025-09-05,True,75.0,standard
+Pfizer,https://www.pfizer.com/privacy,Healthcare,pdf,2025-09-05,True,50.0,standard
 Principal Financial Group,https://secure02.principal.com/publicvsupply/GetFile?fm=WW728&ty=VOP&EXT=.VOP,Financials,pdf,2025-09-05,False,,none
-Progressive Corporation,https://www.progressive.com/privacy/#GA,Financials,pdf,2025-09-05,True,,standard
-Prudential Financial,https://www.prudential.com/links/privacy-policy,Financials,pdf,2025-09-05,False,,standard
-Qualcomm,https://www.qualcomm.com/site/privacy,Information Technology,pdf,2025-09-05,True,,standard
-Quest Diagnostics,https://www.questdiagnostics.com/our-company/privacy/privacy-notice,Healthcare,pdf,2025-09-05,True,,standard
-Raymond James Financial,https://www.raymondjames.com/privacy-security-and-account-protection/privacy-notice,Financials,pdf,2025-09-05,False,,standard
-Regeneron Pharmaceuticals,https://www.regeneron.com/privacy-policy,Healthcare,pdf,2025-09-05,False,,standard
-Regions Financial Corporation,https://www.regions.com/about-regions/privacy-security/online-privacy-notice,Financials,pdf,2025-09-05,False,,standard
-ResMed,https://www.resmed.com/en-us/privacy/,Healthcare,pdf,2025-09-05,False,,standard
-Revvity,https://www.revvity.com/policies/website-privacy-notice,Healthcare,pdf,2025-09-05,False,,standard
-Roper Technologies,https://www.ropertech.com/privacy-policy,Information Technology,pdf,2025-09-05,False,,standard
+Progressive Corporation,https://www.progressive.com/privacy/#GA,Financials,pdf,2025-09-05,True,62.5,standard
+Prudential Financial,https://www.prudential.com/links/privacy-policy,Financials,pdf,2025-09-05,False,,none
+Qualcomm,https://www.qualcomm.com/site/privacy,Information Technology,pdf,2025-09-05,True,87.5,standard
+Quest Diagnostics,https://www.questdiagnostics.com/our-company/privacy/privacy-notice,Healthcare,pdf,2025-09-05,True,83.3,standard
+Raymond James Financial,https://www.raymondjames.com/privacy-security-and-account-protection/privacy-notice,Financials,pdf,2025-09-05,False,,none
+Regeneron Pharmaceuticals,https://www.regeneron.com/privacy-policy,Healthcare,pdf,2025-09-05,False,,none
+Regions Financial Corporation,https://www.regions.com/about-regions/privacy-security/online-privacy-notice,Financials,pdf,2025-09-05,False,,none
+ResMed,https://www.resmed.com/en-us/privacy/,Healthcare,pdf,2025-09-05,False,,none
+Revvity,https://www.revvity.com/policies/website-privacy-notice,Healthcare,pdf,2025-09-05,False,,none
+Roper Technologies,https://www.ropertech.com/privacy-policy,Information Technology,pdf,2025-09-05,False,,none
 S&P Global,https://www.spglobal.com/content/dam/spglobal/corporate/en/privacy/Corp_SPGI-Corporate-Privacy-Policy-March-2025.pdf,Financials,pdf,2025-09-05,False,,none
-Salesforce,https://www.salesforce.com/company/legal/privacy/#privacy-statement,Information Technology,pdf,2025-09-05,False,,standard
-Seagate Technology,https://www.seagate.com/legal/privacy/privacy-policy/,Information Technology,pdf,2025-09-05,False,,standard
-ServiceNow,https://www.servicenow.com/privacy-statement.html,Information Technology,pdf,2025-09-05,False,,standard
-Skyworks Solutions,https://www.skyworksinc.com/en/Articles/Privacy-Policy,Information Technology,pdf,2025-09-05,False,,standard
-Solventum,https://www.solventum.com/en-us/home/our-company/hipaa-privacy/,Healthcare,pdf,2025-09-05,True,,standard
-State Street Corporation,https://www.statestreet.com/disclosures-and-disclaimers/privacy,Financials,pdf,2025-09-05,True,,standard
-Steris,https://www.steris.com/sustainability/corporate-governance/privacy,Healthcare,pdf,2025-09-05,True,,standard
-Stryker Corporation,https://www.stryker.com/us/en/legal/privacy.html,Healthcare,pdf,2025-09-05,False,,standard
-Supermicro,https://www.supermicro.com/en/about/policies/privacy,Information Technology,pdf,2025-09-05,True,,standard
+Salesforce,https://www.salesforce.com/company/legal/privacy/#privacy-statement,Information Technology,pdf,2025-09-05,False,,none
+Seagate Technology,https://www.seagate.com/legal/privacy/privacy-policy/,Information Technology,pdf,2025-09-05,False,,none
+ServiceNow,https://www.servicenow.com/privacy-statement.html,Information Technology,pdf,2025-09-05,False,,none
+Skyworks Solutions,https://www.skyworksinc.com/en/Articles/Privacy-Policy,Information Technology,pdf,2025-09-05,False,,none
+Solventum,https://www.solventum.com/en-us/home/our-company/hipaa-privacy/,Healthcare,pdf,2025-09-05,True,70.8,standard
+State Street Corporation,https://www.statestreet.com/disclosures-and-disclaimers/privacy,Financials,pdf,2025-09-05,True,66.7,standard
+Steris,https://www.steris.com/sustainability/corporate-governance/privacy,Healthcare,pdf,2025-09-05,True,66.7,standard
+Stryker Corporation,https://www.stryker.com/us/en/legal/privacy.html,Healthcare,pdf,2025-09-05,False,,none
+Supermicro,https://www.supermicro.com/en/about/policies/privacy,Information Technology,pdf,2025-09-05,True,75.0,standard
 Synchrony Financial,https://www.synchrony.com/legal/privacy-policy,Financials,pdf,2025-09-05,False,,none
-Synopsys,https://www.synopsys.com/content/dam/synopsys/company/about/legal/synopsys-data-privacy-and-protection-statement_31May2024.pdf,Information Technology,pdf,2025-09-05,True,,standard
-T. Rowe Price,https://www.troweprice.com/enterprise/legal/us/en/privacy-notices.html,Financials,pdf,2025-09-05,True,,standard
-TE Connectivity,https://www.te.com/en/policies-agreements/privacy-policy.html,Information Technology,pdf,2025-09-05,False,,standard
-Teledyne Technologies,https://www.teledyne.com/en-us/Pages/Privacy-Notice.aspx,Information Technology,pdf,2025-09-05,True,,standard
-Teradyne,https://www.teradyne.com/privacy-policy/,Information Technology,pdf,2025-09-05,False,,standard
-Texas Instruments,https://www.ti.com/legal/terms-conditions/privacy-policy/north-america.html,Information Technology,pdf,2025-09-05,True,,standard
-Thermo Fisher Scientific,https://www.thermofisher.com/us/en/home/global/privacy-policy.html,Healthcare,pdf,2025-09-05,True,,standard
-Travelers Companies (The),https://www.travelers.com/about-travelers/privacy-statements,Financials,pdf,2025-09-05,True,,standard
-Trimble Inc.,https://www.trimble.com/en/our-commitment/responsible-business/data-privacy-and-security/data-privacy-center/privacy-notice,Information Technology,pdf,2025-09-05,False,,standard
-Truist Financial,https://www.truist.com/content/dam/truist-bank/us/en/documents/footer/privacy-policy-truist-english.pdf,Financials,pdf,2025-09-05,False,,standard
-Tyler Technologies,https://www.tylertech.com/privacy-03-10-23,Information Technology,pdf,2025-09-05,False,,standard
-U.S. Bancorp,https://www.usbank.com/dam/en/documents/pdfs/disclosures/consumer-privacy-notice.pdf,Financials,pdf,2025-09-05,False,,standard
-UnitedHealth Group,https://www.unitedhealthgroup.com/privacy.html,Healthcare,pdf,2025-09-05,False,,standard
-Universal Health Services,https://uhs.com/compliance-ethics-program/online-privacy-policy/,Healthcare,pdf,2025-09-05,False,,standard
-Verisign,https://www.verisign.com/en_US/verisign-privacy-statement/index.xhtml,Information Technology,pdf,2025-09-05,True,,standard
-Viatris,https://www.viatris.com/en/privacy-policy,Healthcare,pdf,2025-09-05,False,,standard
-Visa Inc.,https://usa.visa.com/legal/global-privacy-notice.html,Financials,pdf,2025-09-05,False,,standard
-W. R. Berkley Corporation,https://www.berkley.com/privacy#websitePrivacyPolicy,Financials,pdf,2025-09-05,True,,standard
-Waters Corporation,https://waters.navexone.com/content/dotNet/documents/download.aspx?docid=1755&DocRevisionNum=0&access=3LxDCV8eguNjS9P8GYcIbTtxmKk8xrTVekQtZHrU2OM!,Healthcare,pdf,2025-09-05,False,,standard
-Wells Fargo,https://www.wellsfargo.com/assets/pdf/personal/privacy-security/us_consumer_privacy_notice_english.pdf,Financials,pdf,2025-09-05,True,,standard
-West Pharmaceutical Services,https://www.westpharma.com/privacy-policy,Healthcare,pdf,2025-09-05,False,,standard
-Western Digital,https://documents.westerndigital.com/content/dam/doc-library/en_us/assets/public/western-digital/collateral/company/western-digital-privacy-policy-en.pdf,Information Technology,pdf,2025-09-05,True,,standard
-Willis Towers Watson,https://www.wtwco.com/en-us/notices/global-website-privacy-notice,Financials,pdf,2025-09-05,True,,standard
-"Workday, Inc.",https://www.workday.com/content/dam/web/en-us/documents/legal/workday-privacy-statement.pdf,Information Technology,pdf,2025-09-05,False,,standard
-Zebra Technologies,https://www.zebra.com/us/en/about-zebra/company-information/legal/privacy-statement.html,Information Technology,pdf,2025-09-05,False,,standard
-Zimmer Biomet,https://www.zimmerbiomet.com/en/corporate/privacy-notice.html,Healthcare,pdf,2025-09-05,True,,standard
-Zoetis,https://www.zoetis.com/privacy-policy,Healthcare,pdf,2025-09-05,False,,standard
+Synopsys,https://www.synopsys.com/content/dam/synopsys/company/about/legal/synopsys-data-privacy-and-protection-statement_31May2024.pdf,Information Technology,pdf,2025-09-05,True,70.8,standard
+T. Rowe Price,https://www.troweprice.com/enterprise/legal/us/en/privacy-notices.html,Financials,pdf,2025-09-05,True,91.7,standard
+TE Connectivity,https://www.te.com/en/policies-agreements/privacy-policy.html,Information Technology,pdf,2025-09-05,False,,none
+Teledyne Technologies,https://www.teledyne.com/en-us/Pages/Privacy-Notice.aspx,Information Technology,pdf,2025-09-05,True,87.5,standard
+Teradyne,https://www.teradyne.com/privacy-policy/,Information Technology,pdf,2025-09-05,False,,none
+Texas Instruments,https://www.ti.com/legal/terms-conditions/privacy-policy/north-america.html,Information Technology,pdf,2025-09-05,True,66.7,standard
+Thermo Fisher Scientific,https://www.thermofisher.com/us/en/home/global/privacy-policy.html,Healthcare,pdf,2025-09-05,True,79.2,standard
+Travelers Companies (The),https://www.travelers.com/about-travelers/privacy-statements,Financials,pdf,2025-09-05,True,75.0,standard
+Trimble Inc.,https://www.trimble.com/en/our-commitment/responsible-business/data-privacy-and-security/data-privacy-center/privacy-notice,Information Technology,pdf,2025-09-05,False,,none
+Truist Financial,https://www.truist.com/content/dam/truist-bank/us/en/documents/footer/privacy-policy-truist-english.pdf,Financials,pdf,2025-09-05,False,,none
+Tyler Technologies,https://www.tylertech.com/privacy-03-10-23,Information Technology,pdf,2025-09-05,False,,none
+U.S. Bancorp,https://www.usbank.com/dam/en/documents/pdfs/disclosures/consumer-privacy-notice.pdf,Financials,pdf,2025-09-05,False,,none
+UnitedHealth Group,https://www.unitedhealthgroup.com/privacy.html,Healthcare,pdf,2025-09-05,False,,none
+Universal Health Services,https://uhs.com/compliance-ethics-program/online-privacy-policy/,Healthcare,pdf,2025-09-05,False,,none
+Verisign,https://www.verisign.com/en_US/verisign-privacy-statement/index.xhtml,Information Technology,pdf,2025-09-05,True,75.0,standard
+Viatris,https://www.viatris.com/en/privacy-policy,Healthcare,pdf,2025-09-05,False,,none
+Visa Inc.,https://usa.visa.com/legal/global-privacy-notice.html,Financials,pdf,2025-09-05,False,,none
+W. R. Berkley Corporation,https://www.berkley.com/privacy#websitePrivacyPolicy,Financials,pdf,2025-09-05,True,83.3,standard
+Waters Corporation,https://waters.navexone.com/content/dotNet/documents/download.aspx?docid=1755&DocRevisionNum=0&access=3LxDCV8eguNjS9P8GYcIbTtxmKk8xrTVekQtZHrU2OM!,Healthcare,pdf,2025-09-05,False,,none
+Wells Fargo,https://www.wellsfargo.com/assets/pdf/personal/privacy-security/us_consumer_privacy_notice_english.pdf,Financials,pdf,2025-09-05,True,45.8,standard
+West Pharmaceutical Services,https://www.westpharma.com/privacy-policy,Healthcare,pdf,2025-09-05,False,,none
+Western Digital,https://documents.westerndigital.com/content/dam/doc-library/en_us/assets/public/western-digital/collateral/company/western-digital-privacy-policy-en.pdf,Information Technology,pdf,2025-09-05,True,83.3,standard
+Willis Towers Watson,https://www.wtwco.com/en-us/notices/global-website-privacy-notice,Financials,pdf,2025-09-05,True,70.8,standard
+"Workday, Inc.",https://www.workday.com/content/dam/web/en-us/documents/legal/workday-privacy-statement.pdf,Information Technology,pdf,2025-09-05,False,,none
+Zebra Technologies,https://www.zebra.com/us/en/about-zebra/company-information/legal/privacy-statement.html,Information Technology,pdf,2025-09-05,False,,none
+Zimmer Biomet,https://www.zimmerbiomet.com/en/corporate/privacy-notice.html,Healthcare,pdf,2025-09-05,True,83.3,standard
+Zoetis,https://www.zoetis.com/privacy-policy,Healthcare,pdf,2025-09-05,False,,none
