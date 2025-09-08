@@ -235,6 +235,8 @@ with gr.Blocks() as block2:
     gr.Markdown("#### Company Privacy Policy List")
     # Lazy load: summary placeholder (populated on .load())
     status_md = gr.Markdown("")
+    # Selected provider shared state (defined early so top-level buttons can access it)
+    selected_provider = gr.State("")
     # Show only relevant columns, including Status
     display_cols = [
         "Status",
@@ -371,7 +373,9 @@ with gr.Blocks() as block2:
         )
 
     # Policies UI will be added after company_info & png_image definitions
-    add_provider_btn = gr.Button("Add Provider")
+    with gr.Row():
+        new_provider_btn = gr.Button("New Provider")
+        refresh_all_btn = gr.Button("Refresh")
     with gr.Group(visible=False, elem_id="add-provider-modal") as add_provider_modal:
         with gr.Column(elem_classes="modal-card"):
             gr.Markdown("### Add Provider")
@@ -402,7 +406,7 @@ with gr.Blocks() as block2:
             "",
         )
 
-    add_provider_btn.click(
+    new_provider_btn.click(
         _show_add_provider_modal, inputs=[], outputs=[add_provider_modal]
     )
     cancel_new_provider.click(
@@ -426,8 +430,7 @@ with gr.Blocks() as block2:
         with gr.Column(scale=1):
             png_image = gr.Image(label="Knowledge Graph", visible=True)
         with gr.Column(scale=1):
-            # Policies (documents) sidebar next to image
-            selected_provider = gr.State("")
+            # Policies (documents) sidebar next to image (selected_provider state created earlier)
             with gr.Accordion("Provider Policies", open=False) as policies_accordion:
                 with gr.Row():
                     policies_df = gr.Dataframe(
@@ -730,6 +733,10 @@ with gr.Blocks() as block2:
         return _build_display_df(), _build_policies_df(curr_provider)
 
     refresh_policies.click(
+        _refresh_all, inputs=[selected_provider], outputs=[company_df, policies_df]
+    )
+    # Global top-level refresh to attempt generation for all providers
+    refresh_all_btn.click(
         _refresh_all, inputs=[selected_provider], outputs=[company_df, policies_df]
     )
 
