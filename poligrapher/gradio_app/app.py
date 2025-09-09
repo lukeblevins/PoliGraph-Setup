@@ -456,11 +456,7 @@ with gr.Blocks() as block2:
         for provider in providers:
             if provider.documents:
                 for doc in provider.documents:
-                    # Prefer the most recent result for this doc (append order)
-                    latest_result = next(
-                        (r for r in reversed(provider.results) if r.document == doc),
-                        None,
-                    )
+                    # Append one row per document; results shown in policies table
                     rows.append(
                         {
                             "Status": _status_to_emoji(doc.has_results),
@@ -505,12 +501,11 @@ with gr.Blocks() as block2:
             # No provider selected => empty table
             return pd.DataFrame(
                 columns=[
-                    "Provider",
+                    "Date",
+                    "Score",
                     "Policy URL",
                     "Source",
-                    "Date",
                     "Status",
-                    "Score",
                     "Graph Kind",
                 ]
             )
@@ -524,16 +519,15 @@ with gr.Blocks() as block2:
                 )
                 rows.append(
                     {
-                        "Provider": provider.name,
+                        "Date": doc.capture_date,
+                        "Score": getattr(latest_result, "score", None),
                         "Policy URL": doc.path,
                         "Source": (
                             doc.source.value
                             if hasattr(doc.source, "value")
                             else doc.source
                         ),
-                        "Date": doc.capture_date,
                         "Status": "✅" if doc.has_results else "❌",
-                        "Score": getattr(latest_result, "score", None),
                         "Graph Kind": (
                             getattr(getattr(latest_result, "kind", None), "value", None)
                             if latest_result
@@ -544,12 +538,11 @@ with gr.Blocks() as block2:
         return pd.DataFrame(
             rows,
             columns=[
-                "Provider",
+                "Date",
+                "Score",
                 "Policy URL",
                 "Source",
-                "Date",
                 "Status",
-                "Score",
                 "Graph Kind",
             ],
         )
@@ -965,7 +958,9 @@ with gr.Blocks() as block2:
         queue=True,
     )
 
-    def on_policy_select(_df: pd.DataFrame, selection: gr.SelectData):
+    def on_policy_select(
+        _df: pd.DataFrame, selection: gr.SelectData, current_provider: str
+    ):
         """Policy selection handler using SelectData.index (Gradio 3.48.0).
 
         selection.index -> (row, col) or list/tuple; we only need row.
@@ -983,14 +978,33 @@ with gr.Blocks() as block2:
             row_series = _df.iloc[row_idx]
         except Exception:
             return gr.update(), gr.update()
-        prov = row_series.get("Provider", "Unknown")
+        prov_name = (current_provider or "").strip() or "Unknown"
         policy_url = row_series.get("Policy URL", "")
-        info_md = f"<h1>{prov}</h1><br><b>Policy:</b> {policy_url}"
-        png_path = f"./output/{prov.replace(' ', '_')}/knowledge_graph.png"
-        return info_md, png_path if os.path.exists(png_path) else None
+        info_md = f"<h1>{prov_name}</h1><br><b>Policy:</b> {policy_url}"
+
+        prov_obj = next((p for p in providers if p.name == prov_name), None)
+        if prov_obj is None:
+            return info_md, None
+
+        # Prefer the selected document's image
+        doc = next((d for d in prov_obj.documents if d.path == policy_url), None)
+        if doc is not None:
+            png_path = os.path.join(doc.output_dir, "knowledge_graph.png")
+            if os.path.exists(png_path):
+                return info_md, png_path
+
+        # Fallback: show the first available image for the provider
+        for d in prov_obj.documents:
+            alt_png = os.path.join(d.output_dir, "knowledge_graph.png")
+            if os.path.exists(alt_png):
+                return info_md, alt_png
+
+        return info_md, None
 
     policies_df.select(
-        fn=on_policy_select, inputs=[policies_df], outputs=[company_info, png_image]
+        fn=on_policy_select,
+        inputs=[policies_df, selected_provider],
+        outputs=[company_info, png_image],
     )
 
     def on_company_select(_df: pd.DataFrame, selection: gr.SelectData):
@@ -1009,17 +1023,23 @@ with gr.Blocks() as block2:
             return "", None, _build_policies_df(""), "", gr.update(open=False)
         company_name = row_series.get("Provider", "")
         policies_df_val = _build_policies_df(company_name)
-        # Attempt auto-select of first document (no Dataframe programmatic select API, emulate by populating info + image)
+        # Show the first available policy image for the provider, if any
         first_image = None
         info_md: str
         provider_obj = next((p for p in providers if p.name == company_name), None)
         if provider_obj and provider_obj.documents:
-            first_doc = provider_obj.documents[0]
-            policy_url = first_doc.path
+            image_doc = None
+            for d in provider_obj.documents:
+                img_path = os.path.join(d.output_dir, "knowledge_graph.png")
+                if os.path.exists(img_path):
+                    image_doc = d
+                    first_image = img_path
+                    break
+            # Fallback to first doc if none has an image
+            if image_doc is None:
+                image_doc = provider_obj.documents[0]
+            policy_url = image_doc.path
             info_md = f"<h1>{company_name}</h1><br><b>Policy:</b> {policy_url}"
-            img_path = os.path.join(first_doc.output_dir, "knowledge_graph.png")
-            if os.path.exists(img_path):
-                first_image = img_path
         else:
             # Fallback to original provider-only info
             policy_url = row_series.get("Policy URL", "")
