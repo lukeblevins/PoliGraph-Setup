@@ -245,7 +245,15 @@ def _rescan_and_persist_status() -> int:
 
 
 with gr.Blocks() as block1:
-    gr.Markdown("#### PoliGraph-er Demo")
+    gr.Markdown("### Demo: generate a policy knowledge graph")
+    gr.Markdown(
+        "Build a knowledge graph from a privacy policy. Enter a company name and a policy URL. "
+        "Choose Webpage or PDF (upload a file or use a direct PDF link), then select Generate graph. "
+        "When the run finishes, open the output folder to view the graph and image."
+    )
+    gr.Markdown(
+        "This demo leverages [PoliGrapher](https://github.com/UCI-Networking-Group/PoliGraph) for analysis."
+    )
     company_name_input = gr.Textbox(label="Company Name")
     privacy_policy_input = gr.Textbox(label="Privacy Policy URL")
     kind_input = gr.Radio(choices=["Auto", "Webpage", "PDF"], label="Document Method", value="Auto")
@@ -421,7 +429,7 @@ with gr.Blocks() as block1:
 
 
 with gr.Blocks() as block2:
-    gr.Markdown("#### Company Privacy Policy List")
+    gr.Markdown("#### Company Privacy Policies")
     # Lazy load: summary placeholder (populated on .load())
     status_md = gr.Markdown("")
     # Selected provider shared state (defined early so top-level buttons can access it)
@@ -432,10 +440,6 @@ with gr.Blocks() as block2:
         "Provider",
         "Policy URL",
         "Industry",
-        "Source",
-        "Date",
-        "Score",
-        "Graph Kind",
     ]
 
     # Prepare a display copy where Status is shown as an emoji, but keep the underlying CSV boolean-only
@@ -463,16 +467,6 @@ with gr.Blocks() as block2:
                             "Provider": provider.name,
                             "Industry": provider.industry,
                             "Policy URL": doc.path,
-                            "Source": doc.source,
-                            "Date": doc.capture_date,
-                            "Score": getattr(latest_result, "score", None),
-                            "Graph Kind": (
-                                getattr(
-                                    getattr(latest_result, "kind", None), "value", None
-                                )
-                                if latest_result
-                                else None
-                            ),
                         }
                     )
             else:
@@ -483,13 +477,13 @@ with gr.Blocks() as block2:
                         "Provider": provider.name,
                         "Industry": provider.industry,
                         "Policy URL": "",
-                        "Source": "",
-                        "Date": "",
-                        "Score": None,
-                        "Graph Kind": None,
                     }
                 )
-        return pd.DataFrame(rows, columns=display_cols)
+        df = pd.DataFrame(rows, columns=display_cols)
+        # Ensure one row per provider in the Companies table
+        if not df.empty:
+            df = df.drop_duplicates(subset=["Provider"], keep="last")
+        return df
 
     with gr.Row():
         company_df = gr.Dataframe(
@@ -498,10 +492,6 @@ with gr.Blocks() as block2:
                 "Provider",
                 "Policy URL",
                 "Industry",
-                "Source",
-                "Date",
-                "Score",
-                "Graph Kind",
             ],
             value=[],
             label="Companies",
