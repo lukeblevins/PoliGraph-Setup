@@ -8,6 +8,7 @@ from datetime import date
 import subprocess
 import sys
 from shutil import copy
+from PIL import Image as PILImage
 
 from poligrapher.gradio_app import functions
 from poligrapher.gradio_app.policy_analysis import (
@@ -449,8 +450,11 @@ with gr.Blocks() as block2:
         except Exception:
             return "❌"
 
-    def _build_display_df():
-        """Build dataframe rows from providers (include providers without documents)."""
+    def _build_display_df(selected: str | None = None):
+        """Build dataframe rows from providers (include providers without documents).
+
+        If `selected` is provided, place that provider's row at the top of the table.
+        """
         rows = []
         for provider in providers:
             rows.append(
@@ -470,6 +474,15 @@ with gr.Blocks() as block2:
         # Ensure one row per provider in the Companies table
         if not df.empty:
             df = df.drop_duplicates(subset=["Provider"], keep="last")
+            # If selection is provided, move it to top (without adding extra columns)
+            if selected:
+                top = df[df["Provider"] == selected]
+                rest = (
+                    df[df["Provider"] != selected]
+                    .sort_values(by=["Provider"])
+                    .reset_index(drop=True)
+                )
+                df = pd.concat([top, rest], ignore_index=True)
         return df
 
     with gr.Row():
@@ -562,14 +575,37 @@ with gr.Blocks() as block2:
         return gr.update(visible=False), "", ""
 
     def _save_new_provider(name: str, industry: str):
+        selected_name = None
         if name and industry:
-            add_provider(name.strip(), industry.strip())
+            selected_name = name.strip()
+            add_provider(selected_name, industry.strip())
         updated_df = _build_display_df()
+        if selected_name:
+            # Build right-hand view as if the provider row was selected
+            info_md = f"<h1>{selected_name}</h1><br><b>Website:</b> "
+            pol_df = _build_policies_df(selected_name)
+            return (
+                updated_df,  # company_df
+                gr.update(visible=False),  # close modal
+                "",  # clear name input
+                "",  # clear industry input
+                info_md,  # company_info
+                None,  # png_image (no image yet)
+                pol_df,  # policies_df
+                selected_name,  # selected_provider
+                gr.update(open=True),  # open policies accordion
+            )
+        # No provider added; keep UI largely unchanged aside from table & closing modal
         return (
-            updated_df,
-            gr.update(visible=False),
-            "",
-            "",
+            updated_df,  # company_df
+            gr.update(visible=False),  # close modal
+            "",  # clear name input
+            "",  # clear industry input
+            gr.update(),  # company_info (no change)
+            gr.update(),  # png_image (no change)
+            gr.update(),  # policies_df (no change)
+            gr.update(),  # selected_provider (no change)
+            gr.update(),  # policies_accordion (no change)
         )
 
     new_provider_btn.click(
@@ -580,21 +616,12 @@ with gr.Blocks() as block2:
         inputs=[],
         outputs=[add_provider_modal, new_provider_name, new_provider_industry],
     )
-    save_new_provider.click(
-        _save_new_provider,
-        inputs=[new_provider_name, new_provider_industry],
-        outputs=[
-            company_df,
-            add_provider_modal,
-            new_provider_name,
-            new_provider_industry,
-        ],
-    )
+    # save_new_provider click wiring is added after dependent components are defined below
     with gr.Row():
         company_info = gr.Markdown("", visible=True)
     with gr.Row():
         with gr.Column(scale=1):
-            png_image = gr.Image(label="Knowledge Graph", visible=True)
+            png_image = gr.Image(label="Knowledge Graph", visible=True, type="pil")
         with gr.Column(scale=1):
             # Policies (documents) sidebar next to image (selected_provider state created earlier)
             with gr.Accordion("Provider Policies", open=False) as policies_accordion:
@@ -851,6 +878,23 @@ with gr.Blocks() as block2:
         ],
     )
 
+    # Now that dependent components exist, wire the save_new_provider button
+    save_new_provider.click(
+        _save_new_provider,
+        inputs=[new_provider_name, new_provider_industry],
+        outputs=[
+            company_df,
+            add_provider_modal,
+            new_provider_name,
+            new_provider_industry,
+            company_info,
+            png_image,
+            policies_df,
+            selected_provider,
+            policies_accordion,
+        ],
+    )
+
     # ---- Shared generation helper ----
     def _ensure_graph_assets(doc: PolicyDocumentInfo, force: bool = False) -> bool:
         """Ensure graph (YAML) and PNG image exist; update has_results accordingly.
@@ -894,7 +938,7 @@ with gr.Blocks() as block2:
                     if not doc.has_graph() or not doc.has_image():
                         _ensure_graph_assets(doc)
         _rescan_and_persist_status()
-        return _build_display_df(), _build_policies_df(curr_provider)
+        return _build_display_df(curr_provider), _build_policies_df(curr_provider)
 
     def _refresh_provider(curr_provider: str):
         """Refresh only the selected provider's policies and update tables.
@@ -910,7 +954,7 @@ with gr.Blocks() as block2:
                         if not doc.has_graph() or not doc.has_image():
                             _ensure_graph_assets(doc)
         _rescan_and_persist_status()
-        return _build_display_df(), _build_policies_df(curr_provider)
+        return _build_display_df(curr_provider), _build_policies_df(curr_provider)
 
     def score_all(curr_provider, progress=gr.Progress()):
         progress(0, "Starting...")
@@ -931,7 +975,7 @@ with gr.Blocks() as block2:
                     )
         _save_providers_to_csv()
         progress(100, "Completed.")
-        return _build_display_df(), _build_policies_df(curr_provider)
+        return _build_display_df(curr_provider), _build_policies_df(curr_provider)
 
     refresh_policies.click(
         _refresh_provider, inputs=[selected_provider], outputs=[company_df, policies_df]
@@ -948,52 +992,91 @@ with gr.Blocks() as block2:
         queue=True,
     )
 
-    def on_policy_select(
-        _df: pd.DataFrame, selection: gr.SelectData, current_provider: str
-    ):
+    def on_policy_select(selection: gr.SelectData, current_provider: str):
         """Policy selection handler using SelectData.index (Gradio 3.48.0).
 
         selection.index -> (row, col) or list/tuple; we only need row.
+        The policies_df DataFrame is accessible via the component state when the
+        event fires, so we read the selected row index from SelectData and map
+        to the corresponding policy in the provider's documents. Return explicit
+        None or gr.update(value=None) for the image so Gradio updates correctly.
         """
+        # Guard: no selection
         if selection is None:
-            return gr.update(), gr.update()
+            return "", gr.update(value=None)
+
         try:
-            # selection.index may be a tuple (row, col) or an int
+            # selection.index may be a tuple (row, col) or an int/list
             if isinstance(selection.index, (list, tuple)):
                 row_idx = selection.index[0]
             else:
                 row_idx = selection.index
-            if row_idx is None or row_idx == "" or row_idx >= len(_df):
-                return gr.update(), gr.update()
-            row_series = _df.iloc[row_idx]
+            # invalid index
+            if row_idx is None or row_idx == "":
+                return "", gr.update(value=None)
         except Exception:
-            return gr.update(), gr.update()
+            return "", gr.update(value=None)
+
+        # Rebuild the policies dataframe for the current provider and index into it
+        df = _build_policies_df(current_provider)
+        try:
+            if row_idx >= len(df):
+                return "", gr.update(value=None)
+            row_series = df.iloc[int(row_idx)]
+        except Exception:
+            return "", gr.update(value=None)
+
         prov_name = (current_provider or "").strip() or "Unknown"
         policy_url = row_series.get("Policy URL", "")
+        date_val = row_series.get("Date", "")
+        source_val = row_series.get("Source", "")
         info_md = f"<h1>{prov_name}</h1><br><b>Policy:</b> {policy_url}"
 
         prov_obj = next((p for p in providers if p.name == prov_name), None)
         if prov_obj is None:
-            return info_md, None
+            return info_md, gr.update(value=None)
 
-        # Prefer the selected document's image
-        doc = next((d for d in prov_obj.documents if d.path == policy_url), None)
+        # Prefer the exact selected document (URL + Date + Source)
+        def _src_value(s):
+            try:
+                return s.value if hasattr(s, "value") else s
+            except Exception:
+                return s
+
+        doc = next(
+            (
+                d
+                for d in prov_obj.documents
+                if d.path == policy_url
+                and (d.capture_date == date_val)
+                and (_src_value(d.source) == source_val)
+            ),
+            None,
+        )
         if doc is not None:
             png_path = os.path.join(doc.output_dir, "knowledge_graph.png")
             if os.path.exists(png_path):
-                return info_md, png_path
+                try:
+                    img = PILImage.open(png_path)
+                    return info_md, img
+                except Exception:
+                    return info_md, gr.update(value=None)
 
         # Fallback: show the first available image for the provider
         for d in prov_obj.documents:
             alt_png = os.path.join(d.output_dir, "knowledge_graph.png")
             if os.path.exists(alt_png):
-                return info_md, alt_png
+                try:
+                    img = PILImage.open(alt_png)
+                    return info_md, img
+                except Exception:
+                    break
 
-        return info_md, None
+        return info_md, gr.update(value=None)
 
     policies_df.select(
         fn=on_policy_select,
-        inputs=[policies_df, selected_provider],
+        inputs=[selected_provider],
         outputs=[company_info, png_image],
     )
 
@@ -1023,7 +1106,10 @@ with gr.Blocks() as block2:
                 img_path = os.path.join(d.output_dir, "knowledge_graph.png")
                 if os.path.exists(img_path):
                     image_doc = d
-                    first_image = img_path
+                    try:
+                        first_image = PILImage.open(img_path)
+                    except Exception:
+                        first_image = None
                     break
             # Fallback to first doc if none has an image
             if image_doc is None:
