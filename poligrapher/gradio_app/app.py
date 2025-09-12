@@ -438,7 +438,6 @@ with gr.Blocks() as block2:
     display_cols = [
         "Status",
         "Provider",
-        "Policy URL",
         "Industry",
     ]
 
@@ -454,27 +453,19 @@ with gr.Blocks() as block2:
         """Build dataframe rows from providers (include providers without documents)."""
         rows = []
         for provider in providers:
-            if provider.documents:
-                for doc in provider.documents:
-                    # Append one row per document; results shown in policies table
-                    rows.append(
-                        {
-                            "Status": _status_to_emoji(doc.has_results),
-                            "Provider": provider.name,
-                            "Industry": provider.industry,
-                            "Policy URL": doc.path,
-                        }
-                    )
-            else:
-                # Placeholder row so newly added provider (no documents yet) is visible
-                rows.append(
-                    {
-                        "Status": _status_to_emoji(False),
-                        "Provider": provider.name,
-                        "Industry": provider.industry,
-                        "Policy URL": "",
-                    }
-                )
+            rows.append(
+                {
+                    "Status": (
+                        _status_to_emoji(
+                            all(doc.has_results for doc in provider.documents)
+                        )
+                        if provider.documents
+                        else _status_to_emoji(False)
+                    ),
+                    "Provider": provider.name,
+                    "Industry": provider.industry,
+                }
+            )
         df = pd.DataFrame(rows, columns=display_cols)
         # Ensure one row per provider in the Companies table
         if not df.empty:
@@ -486,7 +477,6 @@ with gr.Blocks() as block2:
             headers=[
                 "Status",
                 "Provider",
-                "Policy URL",
                 "Industry",
             ],
             value=[],
