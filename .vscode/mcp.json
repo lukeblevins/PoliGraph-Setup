@@ -1,0 +1,15 @@
+{
+	"servers": {
+		"gradio-docs-server": {
+			"type": "stdio",
+			"command": "npx",
+			"args": [
+				"mcp-remote",
+				"https://gradio-docs-mcp.hf.space/gradio_api/mcp/sse",
+				"--transport",
+				"sse-only"
+			]
+		}
+	},
+	"inputs": []
+}
