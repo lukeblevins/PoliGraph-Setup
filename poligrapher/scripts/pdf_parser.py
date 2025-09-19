@@ -1,5 +1,23 @@
 #!/usr/bin/env python3
-"""Convert an imported PDF to a HTML document for parsing."""
+"""PDF (or Web Page) -> HTML Converter Script.
+
+This utility accepts one input argument that can be:
+    * A local filesystem path to a PDF (`/path/to/file.pdf`).
+    * A `file://` URI pointing at a local PDF.
+    * A local filesystem path / `file://` URI to an **HTML/web** resource (we will
+        render it to PDF first using Playwright, then extract text).
+    * An `http(s)://` URL that is either:
+            - A direct link to a PDF (detected via extension), which we download, or
+            - A regular web page which we load headlessly and print to PDF.
+
+Once a PDF is obtained (either downloaded or generated via headless Chromium),
+we convert its textual content to Markdown via `pymupdf4llm.to_markdown`, then
+render that Markdown to HTML and save `output.html` alongside the intermediate
+`output.pdf` inside the specified output directory.
+
+This script is intentionally stand‑alone so it can be invoked before the rest
+of the PoliGraph pipeline when only a PDF/HTML normalization step is needed.
+"""
 
 import argparse
 import logging
@@ -15,10 +33,28 @@ from playwright.sync_api import (
     sync_playwright,
 )
 
-REQUESTS_TIMEOUT = 10
+REQUESTS_TIMEOUT = 10  # Seconds for network & page load timeouts
 
 
 def create_pdf(url, args):
+    """Render a web page to a tagged PDF and return its temporary path.
+
+    We use Playwright (Chromium / Edge channel) in headless mode to:
+      1. Navigate to the URL.
+      2. Wait (best effort) for network idle.
+      3. Capture a PDF (`output.pdf`).
+
+    The function performs light error handling:
+      * Collects response statuses and fails on any >=400 for navigated frames.
+      * On fatal issues, logs and exits the process (mirrors original CLI style).
+
+    Parameters
+    ----------
+    url : str
+        Remote web page URL.
+    args : argparse.Namespace
+        Parsed arguments containing the output directory path.
+    """
     if url is None:
         logging.error("URL failed pre-tests. Exiting...")
         sys.exit(-1)
@@ -72,6 +108,12 @@ def create_pdf(url, args):
 
 
 def download_pdf(url, args):
+    """Download a remote PDF and store it as `output.pdf` in the output dir.
+
+    We stream the response to keep memory usage modest and rely on `requests`
+    for network + HTTP error handling. The filename in the URL path is not
+    preserved (we standardize to `output.pdf`) to simplify downstream code.
+    """
     logging.info("Downloading PDF from %r", url)
     try:
         response = requests.get(url, stream=True, timeout=REQUESTS_TIMEOUT)
@@ -95,6 +137,19 @@ def download_pdf(url, args):
 
 
 def url_arg_handler(url, args):
+    """Normalize the user-supplied input (local path / URI / URL) into a PDF.
+
+    Decision flow:
+      1. If input is a `file://` URI or a plain path: verify existence and
+         return its filesystem path.
+      2. If remote and ends with `.pdf`: download it.
+      3. Otherwise: treat as a web page and print to PDF via Playwright.
+
+    Returns
+    -------
+    str | None
+        Path to a local PDF file, or `None` on unrecoverable error.
+    """
     parsed_url = urlparse.urlparse(url)
     logging.info("Parsed URL: %s", parsed_url)
     # Local file via file:// URI
@@ -142,6 +197,13 @@ def url_arg_handler(url, args):
 
 
 def main(url, output):
+    """Entry point used by both the CLI and potential programmatic calls.
+
+    After producing / locating a PDF, we:
+      * Convert PDF -> Markdown (structured extraction via PyMuPDF LLM adapter).
+      * Convert Markdown -> HTML using the `markdown` library.
+      * Write `output.html` in the provided output directory.
+    """
     args = argparse.Namespace(url=url, output=output)
     pdf_path = url_arg_handler(args.url, args)
 
@@ -155,7 +217,7 @@ def main(url, output):
 
 
 if __name__ == "__main__":
-    # fallback to original CLI behavior
+    # Fallback to original CLI behavior: enforce exactly two positional args.
     if len(sys.argv) != 3:
         print("usage: pdf_parser.py <url_or_path> <output_dir>")
         sys.exit(1)
